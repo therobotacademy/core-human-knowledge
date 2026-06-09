@@ -1,0 +1,83 @@
+<svg width="820" height="488" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#78909c"/></marker>
+    <marker id="arrD" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#b0bec5"/></marker>
+    <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#2e7d32"/></marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+  </defs>
+  <rect width="820" height="488" rx="10" fill="#f1f3f4"/>
+  <rect width="820" height="30" rx="10" fill="#263238"/>
+  <rect y="20" width="820" height="10" fill="#263238"/>
+  <text x="410" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="white">Proceso · Slides / decks COIIAOC — guión único → PPTX + HTML + PDF</text>
+  <rect x="40" y="46" width="250" height="52" rx="9" fill="#eceff1" stroke="#90a4ae" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="46" width="250" height="22" rx="9" fill="#546e7a"/>
+  <rect x="40" y="58" width="250" height="10" fill="#546e7a"/>
+  <text x="165" y="61" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">FUENTES</text>
+  <text x="165" y="84" text-anchor="middle" font-size="7.3" fill="#455a64">README_sesión · contexto</text>
+  <text x="165" y="97" text-anchor="middle" font-size="7.3" fill="#455a64">código (freeze) 🔒</text>
+  <rect x="40" y="120" width="250" height="46" rx="9" fill="#fff8e1" stroke="#f9a825" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="120" width="250" height="22" rx="9" fill="#f9a825"/>
+  <rect x="40" y="132" width="250" height="10" fill="#f9a825"/>
+  <text x="165" y="135" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">guion_&lt;sesion&gt;.json</text>
+  <text x="165" y="158" text-anchor="middle" font-size="7.3" fill="#455a64">FUENTE ÚNICA</text>
+  <rect x="40" y="188" width="250" height="64" rx="9" fill="#ffffff" stroke="#1565c0" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="188" width="250" height="22" rx="9" fill="#1565c0"/>
+  <rect x="40" y="200" width="250" height="10" fill="#1565c0"/>
+  <text x="165" y="203" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">pptx-slides-builder</text>
+  <text x="165" y="226" text-anchor="middle" font-size="7.3" fill="#455a64">build_from_guion.js</text>
+  <text x="165" y="239" text-anchor="middle" font-size="7.3" fill="#455a64">build_html_from_guion.js</text>
+  <rect x="40" y="278" width="120" height="42" rx="9" fill="#ffffff" stroke="#2e7d32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="278" width="120" height="22" rx="9" fill="#2e7d32"/>
+  <rect x="40" y="290" width="120" height="10" fill="#2e7d32"/>
+  <text x="100" y="293" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">PPTX</text>
+  <text x="100" y="316" text-anchor="middle" font-size="7.3" fill="#455a64">editable</text>
+  <rect x="170" y="278" width="120" height="42" rx="9" fill="#ffffff" stroke="#2e7d32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="170" y="278" width="120" height="22" rx="9" fill="#2e7d32"/>
+  <rect x="170" y="290" width="120" height="10" fill="#2e7d32"/>
+  <text x="230" y="293" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">HTML 16:9</text>
+  <text x="230" y="316" text-anchor="middle" font-size="7.3" fill="#455a64">navegable</text>
+  <rect x="40" y="342" width="250" height="50" rx="9" fill="#fff8e1" stroke="#ffb300" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="342" width="250" height="22" rx="9" fill="#ff8f00"/>
+  <rect x="40" y="354" width="250" height="10" fill="#ff8f00"/>
+  <text x="165" y="357" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">QA visual</text>
+  <text x="165" y="380" text-anchor="middle" font-size="7.3" fill="#455a64">👤 export JPG / print-to-pdf</text>
+  <rect x="40" y="414" width="250" height="50" rx="9" fill="#ffffff" stroke="#2e7d32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="414" width="250" height="22" rx="9" fill="#2e7d32"/>
+  <rect x="40" y="426" width="250" height="10" fill="#2e7d32"/>
+  <text x="165" y="429" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">DECK</text>
+  <text x="165" y="452" text-anchor="middle" font-size="7.3" fill="#455a64">PPTX + HTML + PDF 📦</text>
+  <line x1="165" y1="98" x2="165" y2="120" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="165" y1="166" x2="165" y2="188" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="165" y1="252" x2="165" y2="278" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="165" y1="320" x2="165" y2="342" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="165" y1="392" x2="165" y2="414" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="360" y="188" width="230" height="52" rx="9" fill="#ffffff" stroke="#1565c0" stroke-width="2" filter="url(#sh)"/>
+  <rect x="360" y="188" width="230" height="22" rx="9" fill="#1565c0"/>
+  <rect x="360" y="200" width="230" height="10" fill="#1565c0"/>
+  <text x="475" y="203" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">marco-teorico-pbl</text>
+  <text x="475" y="226" text-anchor="middle" font-size="7.3" fill="#455a64">inserta 4 slides A–D</text>
+  <rect x="360" y="278" width="230" height="56" rx="9" fill="#ffffff" stroke="#1565c0" stroke-width="2" filter="url(#sh)"/>
+  <rect x="360" y="278" width="230" height="22" rx="9" fill="#1565c0"/>
+  <rect x="360" y="290" width="230" height="10" fill="#1565c0"/>
+  <text x="475" y="293" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">html-slides-builder</text>
+  <text x="475" y="316" text-anchor="middle" font-size="7.3" fill="#455a64">ruta alt · respaldo</text>
+  <text x="475" y="329" text-anchor="middle" font-size="7.3" fill="#455a64">html_to_pptx.py</text>
+  <polyline points="590,214 614,214 614,440 290,440" fill="none" stroke="#90a4ae" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arrD)"/>
+  <text x="620" y="332" text-anchor="start" font-size="6.8" fill="#90a4ae">inserta A–D</text>
+  <polyline points="360,306 338,306 338,368 290,368" fill="none" stroke="#90a4ae" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arrD)"/>
+  <text x="352" y="360" text-anchor="end" font-size="6.8" fill="#90a4ae">ruta alt</text>
+  <rect x="360" y="410" width="230" height="26" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="372" y="418" width="12" height="11" rx="3" fill="#546e7a"/>
+  <text x="389" y="427" text-anchor="start" font-size="7" fill="#455a64">fuente</text>
+  <rect x="438" y="418" width="12" height="11" rx="3" fill="#f9a825"/>
+  <text x="455" y="427" text-anchor="start" font-size="7" fill="#455a64">interfaz</text>
+  <rect x="360" y="444" width="230" height="26" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="372" y="452" width="12" height="11" rx="3" fill="#1565c0"/>
+  <text x="389" y="461" text-anchor="start" font-size="7" fill="#455a64">skill</text>
+  <rect x="432" y="452" width="12" height="11" rx="3" fill="#2e7d32"/>
+  <text x="449" y="461" text-anchor="start" font-size="7" fill="#455a64">entregable</text>
+</svg>

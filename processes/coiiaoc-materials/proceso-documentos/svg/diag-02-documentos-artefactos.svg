@@ -1,0 +1,39 @@
+<svg width="760" height="308" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#78909c"/></marker>
+    <marker id="arrD" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#b0bec5"/></marker>
+    <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#2e7d32"/></marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+  </defs>
+  <rect width="760" height="308" rx="10" fill="#f1f3f4"/>
+  <rect width="760" height="30" rx="10" fill="#263238"/>
+  <rect y="20" width="760" height="10" fill="#263238"/>
+  <text x="380" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="white">Proceso · Documentos — arquitectura de artefactos (capas)</text>
+  <rect x="40" y="50" width="680" height="64" rx="9" fill="#eceff1" stroke="#90a4ae" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="50" width="190" height="64" rx="9" fill="#546e7a"/>
+  <rect x="216" y="50" width="14" height="64" fill="#546e7a"/>
+  <text x="135" y="78" text-anchor="middle" font-size="9" font-weight="700" fill="white">FUENTES 🔒</text>
+  <text x="135" y="96" text-anchor="middle" font-size="7.3" fill="#ffffffdd">inmutable</text>
+  <text x="250" y="76" text-anchor="start" font-size="8" font-weight="600" fill="#37474f">material del curso en Markdown (M2 · M4)</text>
+  <text x="250" y="94" text-anchor="start" font-size="7.2" fill="#78909c">propietario: —</text>
+  <line x1="380" y1="114" x2="380" y2="128" stroke="#b0bec5" stroke-width="2" marker-end="url(#arrD)"/>
+  <rect x="40" y="128" width="680" height="64" rx="9" fill="#fff8e1" stroke="#f9a825" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="128" width="190" height="64" rx="9" fill="#f9a825"/>
+  <rect x="216" y="128" width="14" height="64" fill="#f9a825"/>
+  <text x="135" y="156" text-anchor="middle" font-size="9" font-weight="700" fill="white">INTERMEDIOS</text>
+  <text x="135" y="174" text-anchor="middle" font-size="7.3" fill="#ffffffdd">regenerable</text>
+  <text x="250" y="154" text-anchor="start" font-size="8" font-weight="600" fill="#37474f">gen_Mx_Bx_docx.js + docx-apm-utils.js</text>
+  <text x="250" y="172" text-anchor="start" font-size="7.2" fill="#78909c">propietario: el proceso</text>
+  <line x1="380" y1="192" x2="380" y2="206" stroke="#b0bec5" stroke-width="2" marker-end="url(#arrD)"/>
+  <rect x="40" y="206" width="680" height="64" rx="9" fill="#ffffff" stroke="#2e7d32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="206" width="190" height="64" rx="9" fill="#2e7d32"/>
+  <rect x="216" y="206" width="14" height="64" fill="#2e7d32"/>
+  <text x="135" y="234" text-anchor="middle" font-size="9" font-weight="700" fill="white">ENTREGABLES</text>
+  <text x="135" y="252" text-anchor="middle" font-size="7.3" fill="#ffffffdd">mutable</text>
+  <text x="250" y="232" text-anchor="start" font-size="8" font-weight="600" fill="#37474f">&lt;material&gt;.docx (ZIP≥26, XML válido) · (global) PDF</text>
+  <text x="250" y="250" text-anchor="start" font-size="7.2" fill="#78909c">propietario: el humano</text>
+</svg>

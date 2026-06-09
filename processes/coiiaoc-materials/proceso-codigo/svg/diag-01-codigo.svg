@@ -1,0 +1,79 @@
+<svg width="800" height="478" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#78909c"/></marker>
+    <marker id="arrD" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#b0bec5"/></marker>
+    <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#2e7d32"/></marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00000018"/></filter>
+  </defs>
+  <rect width="800" height="478" rx="10" fill="#f1f3f4"/>
+  <rect width="800" height="30" rx="10" fill="#263238"/>
+  <rect y="20" width="800" height="10" fill="#263238"/>
+  <text x="400" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="white">Proceso · Documentación de código — repo → diagramas + DOCX (repo-code-explainer)</text>
+  <rect x="60" y="46" width="360" height="50" rx="9" fill="#eceff1" stroke="#90a4ae" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="46" width="360" height="22" rx="9" fill="#546e7a"/>
+  <rect x="60" y="58" width="360" height="10" fill="#546e7a"/>
+  <text x="240" y="61" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">repositorio (código) 🔒</text>
+  <text x="240" y="84" text-anchor="middle" font-size="7.3" fill="#455a64">MVP-Crew_NCR · agents·tasks·tools·main</text>
+  <rect x="60" y="114" width="360" height="42" rx="9" fill="#ffffff" stroke="#5d4037" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="114" width="360" height="22" rx="9" fill="#5d4037"/>
+  <rect x="60" y="126" width="360" height="10" fill="#5d4037"/>
+  <text x="240" y="129" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">1 · inventariar</text>
+  <text x="240" y="152" text-anchor="middle" font-size="7.3" fill="#455a64">unidades + patrón  ·  criterio</text>
+  <rect x="60" y="174" width="360" height="42" rx="9" fill="#ffffff" stroke="#5d4037" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="174" width="360" height="22" rx="9" fill="#5d4037"/>
+  <rect x="60" y="186" width="360" height="10" fill="#5d4037"/>
+  <text x="240" y="189" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">2 · diagramar</text>
+  <text x="240" y="212" text-anchor="middle" font-size="7.3" fill="#455a64">SVG por unidad · pseudo-código literal</text>
+  <rect x="60" y="234" width="360" height="42" rx="9" fill="#ffffff" stroke="#5d4037" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="234" width="360" height="22" rx="9" fill="#5d4037"/>
+  <rect x="60" y="246" width="360" height="10" fill="#5d4037"/>
+  <text x="240" y="249" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">3 · rasterizar</text>
+  <text x="240" y="272" text-anchor="middle" font-size="7.3" fill="#455a64">SVG → PNG (PyMuPDF)</text>
+  <rect x="60" y="294" width="360" height="42" rx="9" fill="#ffffff" stroke="#5d4037" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="294" width="360" height="22" rx="9" fill="#5d4037"/>
+  <rect x="60" y="306" width="360" height="10" fill="#5d4037"/>
+  <text x="240" y="309" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">4 · ensamblar</text>
+  <text x="240" y="332" text-anchor="middle" font-size="7.3" fill="#455a64">DOCX embebe imágenes + narrativa</text>
+  <rect x="60" y="354" width="360" height="42" rx="9" fill="#fff8e1" stroke="#ffb300" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="354" width="360" height="22" rx="9" fill="#ff8f00"/>
+  <rect x="60" y="366" width="360" height="10" fill="#ff8f00"/>
+  <text x="240" y="369" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">5 · QA</text>
+  <text x="240" y="392" text-anchor="middle" font-size="7.3" fill="#455a64">👤 DOCX válido + revisión visual</text>
+  <rect x="60" y="414" width="360" height="44" rx="9" fill="#ffffff" stroke="#2e7d32" stroke-width="2" filter="url(#sh)"/>
+  <rect x="60" y="414" width="360" height="22" rx="9" fill="#2e7d32"/>
+  <rect x="60" y="426" width="360" height="10" fill="#2e7d32"/>
+  <text x="240" y="429" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">M_codigo_&lt;repo&gt;.docx 📦</text>
+  <text x="240" y="452" text-anchor="middle" font-size="7.3" fill="#455a64">8 SVG+PNG · validado</text>
+  <line x1="240" y1="96" x2="240" y2="114" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="240" y1="156" x2="240" y2="174" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="240" y1="216" x2="240" y2="234" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="240" y1="276" x2="240" y2="294" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="240" y1="336" x2="240" y2="354" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="240" y1="396" x2="240" y2="414" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="460" y="174" width="320" height="42" rx="9" fill="#ffffff" stroke="#00838f" stroke-width="2" stroke-dasharray="6 4" filter="url(#sh)"/>
+  <rect x="460" y="174" width="320" height="22" rx="9" fill="#00838f"/>
+  <rect x="460" y="186" width="320" height="10" fill="#00838f"/>
+  <text x="620" y="189" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">code-diagram-explainer</text>
+  <text x="620" y="212" text-anchor="middle" font-size="7.3" fill="#455a64">gramática SVG v1.1</text>
+  <rect x="460" y="294" width="320" height="42" rx="9" fill="#ffffff" stroke="#8e24aa" stroke-width="2" stroke-dasharray="6 4" filter="url(#sh)"/>
+  <rect x="460" y="294" width="320" height="22" rx="9" fill="#8e24aa"/>
+  <rect x="460" y="306" width="320" height="10" fill="#8e24aa"/>
+  <text x="620" y="309" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">apm-docx-builder</text>
+  <text x="620" y="332" text-anchor="middle" font-size="7.3" fill="#455a64">infra DOCX (paleta v1.1)</text>
+  <line x1="460" y1="195" x2="420" y2="195" stroke="#90a4ae" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <text x="440" y="191" text-anchor="middle" font-size="6.8" fill="#78909c">informa</text>
+  <line x1="460" y1="315" x2="420" y2="315" stroke="#90a4ae" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <text x="440" y="311" text-anchor="middle" font-size="6.8" fill="#78909c">informa</text>
+  <text x="620" y="246" text-anchor="middle" font-size="6.8" fill="#90a4ae">compone — no reimplementa</text>
+  <rect x="460" y="372" width="320" height="26" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="472" y="380" width="12" height="11" rx="3" fill="#546e7a"/>
+  <text x="489" y="389" text-anchor="start" font-size="7" fill="#455a64">fuente</text>
+  <rect x="538" y="380" width="12" height="11" rx="3" fill="#5d4037"/>
+  <text x="555" y="389" text-anchor="start" font-size="7" fill="#455a64">skill</text>
+  <rect x="598" y="380" width="12" height="11" rx="3" fill="#2e7d32"/>
+  <text x="615" y="389" text-anchor="start" font-size="7" fill="#455a64">entregable</text>
+</svg>

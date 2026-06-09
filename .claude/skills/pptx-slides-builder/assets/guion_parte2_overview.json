@@ -1,0 +1,375 @@
+{
+  "meta": {
+    "title": "Parte 2 — Arquitectura y Desarrollo de un Agente IA Industrial",
+    "parte": "Parte 2",
+    "sesion": "Overview",
+    "duracion_min": 30,
+    "caso_ancla": "VERBEX COMPOSITES S.L.",
+    "output_name": "parte2_overview"
+  },
+  "_comentario": "Guión completo de la presentación generada el 12/05/2026. 18 slides. Reproduce la lógica de build_parte2_overview.js mediante el pipeline del skill.",
+  "slides": [
+    {
+      "type": "portada",
+      "kicker": "AUTOMATIZACIÓN · COIIAOC · PARTE 2",
+      "h1_blanco": "Arquitectura y Desarrollo",
+      "h2_naranja": "de un Agente IA Industrial",
+      "subtitulo": "Presentación overview · 30 minutos",
+      "fondo": "azul",
+      "content": {
+        "chip": "VERBEX COMPOSITES · Caso ancla Parte 2",
+        "stats": [
+          { "val": "6",   "label": "sesiones"  },
+          { "val": "15h", "label": "lectivas"  },
+          { "val": "2",   "label": "MVPs"      }
+        ]
+      },
+      "notas": "Apertura. 30 minutos sin Q&A. El objetivo no es explicar las 6 sesiones sino que salgan con una imagen mental clara de qué vais a construir y por qué tiene sentido industrial real."
+    },
+    {
+      "type": "contenido_cards",
+      "kicker": "PUENTE PARTE 1 → PARTE 2",
+      "h1": "Lo que ya sabéis",
+      "subtitulo": "Cuatro contratos ya firmados. En Parte 2 no los re-explicamos — los desplegamos.",
+      "fondo": "crema",
+      "content": {
+        "cards_2x2": [
+          { "title": "IO/RE", "sub": "Inputs · Outputs · Reglas · Excepciones", "body": "\"Primero el diagrama, luego la herramienta\" — plantilla entregada en I2.", "accent": "azul" },
+          { "title": "PRDA",  "sub": "Percibir → Razonar → Decidir → Actuar",   "body": "Ciclo agéntico que estructura cada módulo de Parte 2.", "accent": "azul" },
+          { "title": "E5",    "sub": "El LLM no calcula ni decide",              "body": "Introducido en I5. En Parte 2 es arquitectura obligatoria, no consejo.", "accent": "azul" },
+          { "title": "n8n",   "sub": "Herramienta dominante desde I4",           "body": "Parte 2 es íntegramente n8n + Anthropic Claude API. Python como alternativa.", "accent": "azul" }
+        ]
+      }
+    },
+    {
+      "type": "dos_columnas",
+      "kicker": "PUENTE PARTE 1 → PARTE 2",
+      "h1": "El salto cualitativo",
+      "fondo": "crema",
+      "content": {
+        "col_izq": {
+          "header_bg": "borde",
+          "header_label": "PARTE 1",
+          "items": ["Un agente", "Un dominio", "Un canal de entrada", "Flujos secuenciales", "LLM como cerebro conectado"]
+        },
+        "col_der": {
+          "header_bg": "azul",
+          "header_label": "PARTE 2",
+          "items_con_acento": [
+            { "text": "Ingesta multicanal (3 canales)",          "color": "inputs"  },
+            { "text": "Reglas deterministas R01–R09",            "color": "reglas"  },
+            { "text": "LLM semántico + parser anti-alucinación", "color": "outputs" },
+            { "text": "Routing + notificación multicanal",       "color": "narOsc"  },
+            { "text": "Resiliencia · Deploy · MVP operable",     "color": "azul"    }
+          ]
+        }
+      }
+    },
+    {
+      "type": "portada_secundaria",
+      "kicker": "CASO ANCLA · HILO CONDUCTOR II1–II6",
+      "h1": "VERBEX COMPOSITES S.L.",
+      "subtitulo": "Tier 2 composites · Sevilla · Sector aeronáutico · AS9100",
+      "fondo": "azul",
+      "content": {
+        "banner": "El problema: Purchase Orders entrantes en texto libre, desde 3 canales, sin normalizar.",
+        "canales": [
+          { "label": "EMAIL PDF",       "desc": "Texto libre · formato variable · adjunto" },
+          { "label": "HELIONLINK CSV",  "desc": "≥5 campos pipe-separados · heurística"    },
+          { "label": "PORTAL WEB",      "desc": "Mención explícita en texto de la PO"      }
+        ],
+        "terminologia": "Terminología auténtica · AOG · CoC · EASA Form 1 · AS9100 · PO · PN · FAL"
+      }
+    },
+    {
+      "type": "payload_examples",
+      "kicker": "VERBEX · PROBLEMA OPERATIVO",
+      "h1": "El PO que llega",
+      "fondo": "crema",
+      "content": {
+        "payloads": [
+          {
+            "tag": "PO ESTÁNDAR · email_pdf", "color": "inputs",
+            "lineas": ["PURCHASE ORDER", "PO-2026-VBX-1001 · AEROFAB MADRID", "Item: VBX-CF-4412-A · Qty: 50", "Delivery: 30 days · CoC required"]
+          },
+          {
+            "tag": "AOG ALERT · email_pdf", "color": "excepciones",
+            "lineas": ["AOG – AIRCRAFT ON GROUND", "PO-2026-VBX-1003 · IBERTECHNIK", "URGENT: VBX-GFRP-7701 · Qty: 4", "Delivery: 48 h · EASA Form 1 req"]
+          },
+          {
+            "tag": "CSV · helionlink_csv", "color": "reglas",
+            "lineas": ["PO-2026-VBX-1002|COMPOSIT|", "VBX-C-2201-B|20|CALIDAD|", "2026-05-25|CoC|", "Std delivery ok"]
+          }
+        ],
+        "pregunta": "¿Qué necesita un operario para procesar esto manualmente?"
+      }
+    },
+    {
+      "type": "schema_abstracto",
+      "kicker": "VERBEX · SALIDA DEL PIPELINE",
+      "h1": "Lo que el agente produce",
+      "fondo": "crema",
+      "content": {
+        "campos": [
+          { "key": "numero_pedido",          "cat": "I", "desc": "ID canónico normalizado"                       },
+          { "key": "prioridad_calculada",    "cat": "O", "desc": "URGENTE · ALTA · NORMAL (determinista)"        },
+          { "key": "estado_normalizacion",   "cat": "O", "desc": "COMPLETO · PARCIAL · ERROR"                    },
+          { "key": "doc_requerida",          "cat": "R", "desc": "CoC · EASA Form 1 · Ninguno"                   },
+          { "key": "alertas[ ]",             "cat": "E", "desc": "Array de anomalías detectadas por R01–R09"      },
+          { "key": "confianza_extraccion",   "cat": "O", "desc": "0.0–1.0 · umbral 0.7 (R03)"                   }
+        ],
+        "tagline": "JSON determinista · auditable · enrutable — esto es un producto de software"
+      }
+    },
+    {
+      "type": "nodos_secuenciales",
+      "kicker": "ARQUITECTURA · PRDA MAPEADO A 6 SESIONES",
+      "h1": "El arco acumulativo",
+      "subtitulo": "Cada sesión añade una capa que entra en la siguiente.",
+      "fondo": "azul",
+      "content": {
+        "nodos": [
+          { "id": "II1", "prda": "PERCIBIR", "title": "Ingesta\nMulticanal",     "color": "inputs"  },
+          { "id": "II2", "prda": "RAZONAR",  "title": "Reglas\nDeterministas",   "color": "reglas"  },
+          { "id": "II3", "prda": "RAZONAR",  "title": "LLM\nSemántico",          "color": "outputs" },
+          { "id": "II4", "prda": "ACTUAR",   "title": "Routing &\nNotificación", "color": "narLum"  },
+          { "id": "II5", "prda": "SISTEMA",  "title": "Resiliencia &\nAlternativas", "color": "slate" },
+          { "id": "II6", "prda": "MVP",      "title": "Sistema\nCompleto",       "color": "narLum"  }
+        ],
+        "footer_banner": "II1 → II2 → II3 → II4 → II5 → II6 · Al llegar a II6 tenéis el sistema completo operando end-to-end"
+      }
+    },
+    {
+      "type": "impacto",
+      "kicker": "PRINCIPIO ARQUITECTÓNICO · INVARIANTE",
+      "h1": "La regla que no podéis romper",
+      "fondo": "crema",
+      "content": {
+        "enunciado": [
+          { "texto": "El LLM ",      "enfasis": false },
+          { "texto": "extrae",       "enfasis": true  },
+          { "texto": ".  Las reglas ", "enfasis": false },
+          { "texto": "calculan",     "enfasis": true  },
+          { "texto": ".",            "enfasis": false }
+        ],
+        "columna_negativa": {
+          "titulo": "❌  ANTIPATRÓN",
+          "items":  [
+            "LLM decide prioridad",
+            "LLM valida catálogo de PNs",
+            "LLM calcula fechas límite",
+            "Resultado: alucina, varía con el modelo, no es auditable"
+          ]
+        },
+        "columna_positiva": {
+          "titulo": "✅  PATRÓN E5",
+          "items":  [
+            "LLM extrae estructura del texto libre",
+            "R01–R09 en JS determinista deciden",
+            "Parser anti-alucinación valida PNs",
+            "Resultado: auditable, reproducible, drift-safe"
+          ]
+        }
+      }
+    },
+    {
+      "type": "tabla_reglas",
+      "kicker": "CAPA DETERMINISTA · LÓGICA DE NEGOCIO",
+      "h1": "Las 9 reglas R01–R09",
+      "fondo": "crema",
+      "content": {
+        "columnas": ["ID", "CONDICIÓN", "ESTADO RESULTANTE", "NOTA"],
+        "filas": [
+          { "id": "R01", "cond": "Mención AOG en texto",               "result": "URGENTE",             "nota": "override máximo",       "highlight": true  },
+          { "id": "R02", "cond": "Fecha entrega < 5 días hábiles",     "result": "ALTA",                "nota": "prioridad temporal",    "highlight": false },
+          { "id": "R03", "cond": "Confianza extracción < 0.7",         "result": "PARCIAL",             "nota": "alerta revisar",        "highlight": false },
+          { "id": "R04", "cond": "PN no existe en catálogo VBX",       "result": "ERROR",               "nota": "bloquea pipeline",      "highlight": true  },
+          { "id": "R05", "cond": "Línea requiere CoC",                 "result": "doc_requerida: CoC",  "nota": "trazabilidad calidad",  "highlight": false },
+          { "id": "R06", "cond": "Línea requiere EASA Form 1",         "result": "doc_requerida: EASA", "nota": "regulatorio",           "highlight": false },
+          { "id": "R07", "cond": "Cliente no en sistema",              "result": "PARCIAL · alerta",   "nota": "alta a ops",            "highlight": false },
+          { "id": "R08", "cond": "Cantidad ≤ 0 o no numérica",         "result": "ERROR",               "nota": "validación básica",     "highlight": true  },
+          { "id": "R09", "cond": "PO ya existe en Sheets",             "result": "flag duplicado",      "nota": "idempotencia",          "highlight": false }
+        ],
+        "nota_pie": "Orden de aplicación: R04+R08 (validación) → R07 (cliente) → R01+R02 (prioridad) → R05+R06 (cert) → R03 (confianza) → R09 (duplicado)"
+      }
+    },
+    {
+      "type": "flujo_parser",
+      "kicker": "CAPA SEMÁNTICA · CONTROL DE CALIDAD",
+      "h1": "El parser anti-alucinación",
+      "subtitulo": "El LLM puede inventar un número de pieza. El parser lo atrapa antes de que llegue a las reglas.",
+      "fondo": "crema",
+      "content": {
+        "pasos": [
+          { "label": "LLM\nOutput",    "sub": "Texto libre\n→ JSON raw",     "color": "inputs"  },
+          { "label": "¿JSON\nválido?", "sub": "Limpia fences\nvalida schema", "color": "reglas"  },
+          { "label": "¿PN en\ncatálogo?","sub": "Verifica contra\nVBX-COMP", "color": "reglas"  },
+          { "label": "Output\nvalidado","sub": "JSON listo\npara R01–R09",    "color": "outputs" }
+        ],
+        "failure_path": [
+          "PN inventado: forzar null + añadir alerta \"pn_no_catalogado\"",
+          "JSON inválido: estado ERROR + log + Telegram al operador"
+        ],
+        "kpi_banner": {
+          "valor_principal": "~0,012 € / PO",
+          "detalle": "~1900 tokens input + 300 output",
+          "valor_secundario": "~20 € / mes a 1.500 POs"
+        }
+      }
+    },
+    {
+      "type": "mvp_stats",
+      "kicker": "MVP-A · CÓDIGO LISTO · F0–F7 · 14/14 CRITERIOS ✅",
+      "h1": "Agente Normalizador VERBEX",
+      "subtitulo": "Stack: n8n + Anthropic Claude API + Google Sheets + Telegram + SMTP",
+      "fondo": "azul",
+      "content": {
+        "modulos": [
+          { "id": "II1", "label": "Ingesta",     "color": "inputs"  },
+          { "id": "II2", "label": "Reglas",      "color": "reglas"  },
+          { "id": "II3", "label": "LLM",         "color": "outputs" },
+          { "id": "II4", "label": "Routing",     "color": "narLum"  },
+          { "id": "II5", "label": "Resiliencia", "color": "slate"   },
+          { "id": "II6", "label": "MVP",         "color": "narLum"  }
+        ],
+        "kpis": [
+          { "val": "14/14", "label": "criterios validados"  },
+          { "val": "9",     "label": "reglas de negocio JS" },
+          { "val": "~20 €", "label": "coste mes / 1.500 POs"}
+        ],
+        "features": ["Webhook Telegram", "Heurística canal", "Parser anti-alucinación", "Sheets como BD", "Error Trigger", "Streamlit dashboard"]
+      }
+    },
+    {
+      "type": "crew_ncr",
+      "kicker": "MVP-B · MÓDULO EXTRA · 7/8 CRITERIOS ✅",
+      "h1": "Crew NCR — sistemas multi-agente",
+      "subtitulo": "Non-Conformance Reports aeronáuticos · 3 agentes encadenados · CrewAI + Python",
+      "fondo": "crema",
+      "content": {
+        "agentes": [
+          { "nombre": "Clasificador", "rol": "NCR severity · AS9100 clause · contención", "tool": "lookup_tipo_nc",    "color": "inputs"  },
+          { "nombre": "Causas",       "rol": "Análisis 8D · causa raíz por área",          "tool": "lookup_causas_raiz","color": "reglas"  },
+          { "nombre": "Planes",       "rol": "CAPA · responsable · plazo días hábiles",    "tool": "razonamiento puro", "color": "outputs" }
+        ],
+        "razon": "Cada agente razona sobre el output del anterior, no solo enruta datos. El alumno ve la delegación explícita entre roles y el efecto de tools específicas por agente."
+      }
+    },
+    {
+      "type": "comparativa_mvps",
+      "kicker": "DOS MVPs · UNA PROGRESIÓN",
+      "h1": "Columna vertebral y extensión",
+      "fondo": "crema",
+      "content": {
+        "mvp_a": {
+          "header": "MVP-A · CURSO OFICIAL  II1–II6",
+          "titulo": "Agente Normalizador VERBEX",
+          "items": [
+            "Track A: n8n + Claude API (oficial COIIAOC)",
+            "Track B: nanobot Python (alternativa documentada)",
+            "Código completo · importable en n8n",
+            "6 sesiones · arco acumulativo",
+            "Evaluable · criterio de aceptación"
+          ]
+        },
+        "mvp_b": {
+          "header": "MVP-B · MÓDULO EXTRA",
+          "titulo": "Crew NCR",
+          "items": ["Python + CrewAI", "3 agentes · caso NCR", "No evaluable"]
+        },
+        "tagline": "MVP-A es el producto del curso · MVP-B muestra hasta dónde puede llegar la arquitectura multi-agente"
+      }
+    },
+    {
+      "type": "materiales_sesion",
+      "kicker": "CÓMO TRABAJAMOS · CADA SESIÓN",
+      "h1": "Patrón de materiales",
+      "fondo": "crema",
+      "content": {
+        "materiales": [
+          { "code": "M1", "tipo": "PPTX", "desc": "Presentación teórica · ~14–16 slides · conceptos + ejercicio en clase",                           "color": "azul"    },
+          { "code": "M2", "tipo": "DOCX", "desc": "Worksheet · ficha de diseño IO/RE · reutilizable para vuestro propio dominio",                    "color": "reglas"  },
+          { "code": "M3", "tipo": "HTML", "desc": "Guía práctica step-by-step · capturas + JSON de referencia + tabla esperada",                      "color": "outputs" },
+          { "code": "M4", "tipo": "JSON", "desc": "Workflow n8n importable · validado · payloads de prueba incluidos",                               "color": "excepc"  }
+        ],
+        "nota": "50 min teoría · 90 min práctica guiada · código ya validado — vosotros importáis, configuráis, ejecutáis"
+      }
+    },
+    {
+      "type": "requisitos",
+      "kicker": "ANTES DE LA SESIÓN II1",
+      "h1": "Lo que necesitáis preparar",
+      "fondo": "crema",
+      "content": {
+        "items": [
+          { "icono": "✔", "titulo": "n8n operativo",          "detalle": "Ya instalado desde I4 · puerto 5678 en Daytona sandbox",                              "estado": "ok"     },
+          { "icono": "✔", "titulo": "API key Anthropic",      "detalle": "claude-sonnet-4-20250514 · variable ANTHROPIC_API_KEY en .env",                      "estado": "ok"     },
+          { "icono": "⚙", "titulo": "Bot Telegram",           "detalle": "Crear bot con @BotFather · anotar token · configurar TELEGRAM_ALLOWED_CHAT_IDS",      "estado": "pendiente" },
+          { "icono": "⚙", "titulo": "Google Service Account", "detalle": "Google Cloud Console · crear cuenta · compartir Sheet con email del SA (rol Editor)", "estado": "pendiente" }
+        ]
+      }
+    },
+    {
+      "type": "track_a_b",
+      "kicker": "DOS TRACKS · UNA MISMA LÓGICA",
+      "h1": "Track A vs Track B",
+      "fondo": "crema",
+      "content": {
+        "track_a": {
+          "header": "TRACK A · OFICIAL COIIAOC",
+          "titulo": "n8n + Claude API",
+          "items": [
+            "Todos los módulos II1–II6",
+            "Workflows importables listos",
+            "Google Sheets · Telegram · SMTP",
+            "Sin código Python",
+            "Evaluable · criterio de aceptación"
+          ],
+          "color": "azul"
+        },
+        "track_b": {
+          "header": "TRACK B · ALTERNATIVA DOCUMENTADA",
+          "titulo": "Python / nanobot",
+          "items": [
+            "Módulos II5 + II6 como alternativa",
+            "nanobot_verbex.py · validación cruzada 8/8",
+            "Mismo output que workflow n8n",
+            "No requiere cuenta Anthropic API separada",
+            "No evaluable · complementario"
+          ],
+          "color": "slate"
+        }
+      }
+    },
+    {
+      "type": "cierre",
+      "kicker": "CIERRE · PARTE 2 COIIAOC",
+      "h1": "¿Puede un ingeniero industrial construir software agéntico de valor real sin un equipo de desarrollo?",
+      "fondo": "azul",
+      "content": {
+        "respuesta": "La respuesta que demostramos en 6 sesiones:  Sí.",
+        "condiciones": [
+          "Con las herramientas correctas (n8n + Claude API)",
+          "Con la arquitectura correcta (E5 invariante)",
+          "Con la disciplina de no pedirle al LLM lo que no le corresponde"
+        ]
+      },
+      "notas": "Slide de cierre retórico. Pausa aquí antes de pasar al preview de II1."
+    },
+    {
+      "type": "preview_sesion",
+      "kicker": "PRÓXIMA SESIÓN",
+      "h1": "II1 — Ingesta Multicanal",
+      "subtitulo_prda": "Percibir",
+      "fondo": "azul",
+      "content": {
+        "pasos": [
+          { "num": "01", "titulo": "Configurar webhook Telegram", "detalle": "Bot activo · chat_id autorizado · primer mensaje recibido en n8n" },
+          { "num": "02", "titulo": "Montar el detector de canal", "detalle": "Heurística sobre estructura del texto: email_pdf · helionlink_csv · portal_web" },
+          { "num": "03", "titulo": "Primera PO normalizada",      "detalle": "payload_01_po_estandar.txt → canal detectado → JSON de salida → siguiente capa lista" }
+        ],
+        "footer_ref": "workflow_II1.json · 4 nodos · importable directamente en n8n"
+      }
+    }
+  ]
+}

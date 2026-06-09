@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "title": "II1 · Ingesta y Conectividad Multi-Canal — COIIAOC Parte 2",
+    "parte": "Parte 2",
+    "sesion": "II1",
+    "duracion_min": 150,
+    "caso_ancla": "MVP-A VERBEX COMPOSITES",
+    "output_name": "M1_slides_II1"
+  },
+  "slides": [
+    {
+      "type": "portada",
+      "kicker": "COIIAOC · PARTE 2 · SESIÓN II1 DE 6",
+      "h1_blanco": "Ingesta y Conectividad",
+      "h2_naranja": "Multi-Canal",
+      "subtitulo": "Cómo el agente recibe órdenes de compra por Telegram, identifica de qué canal vienen y entrega un JSON normalizado listo para el motor de reglas.",
+      "fondo": "azul",
+      "content": {
+        "chip": "MVP-A VERBEX COMPOSITES · COIIAOC 2026",
+        "badges": ["PRDA · Percibir", "n8n · 4 nodos", "sin LLM", "freeze 907bf31"]
+      },
+      "notas": "Slide de portada. El HTML usa badges en lugar de stats KPI — el renderer actual solo soporta stats. GAP: añadir content.badges[] al schema."
+    },
+    {
+      "type": "portada",
+      "kicker": "IDEA FUERZA DE LA SESIÓN",
+      "h1_blanco": "\"El agente busca datos él solo.\"",
+      "subtitulo": "El agente no espera a que alguien le formatee los datos. Tiene canales monitorizados, sabe distinguirlos y extrae lo que necesita sin intervención humana. Eso es Percibir en el ciclo PRDA.",
+      "fondo": "azul",
+      "content": {
+        "prda_activo": "Percibir",
+        "prda_pasos": ["Percibir", "Razonar", "Decidir", "Actuar"]
+      },
+      "notas": "Portada secundaria — idea fuerza. GAP: el HTML muestra un indicador PRDA horizontal con el paso activo resaltado. No renderizable con portada estándar."
+    },
+    {
+      "type": "flujo",
+      "kicker": "ARQUITECTURA · II1",
+      "h1": "Qué construimos hoy — pipeline de 4 nodos",
+      "fondo": "crema",
+      "content": {
+        "nodos": [
+          { "nombre": "Telegram\nTrigger",  "tipo": "telegramTrigger v1.1", "color": "inputs"  },
+          { "nombre": "Filtro\nchat_id",    "tipo": "filter v2",            "color": "reglas"  },
+          { "nombre": "Detectar canal\ny preprocesar", "tipo": "code v2",   "color": "reglas"  },
+          { "nombre": "Stub salida\n(contrato II2)",   "tipo": "set v3.4",  "color": "outputs" }
+        ],
+        "kpis": [
+          { "val": "4", "label": "nodos en cadena lineal",             "color": "narOsc" },
+          { "val": "0", "label": "llamadas a LLM — todo determinista", "color": "azul"   },
+          { "val": "7", "label": "campos en el contrato de salida",    "color": "outputs"}
+        ],
+        "callout": "Propósito de esta sesión: limpiar el canal de entrada y entregar un contrato de datos consistente. La complejidad crece en II2 (reglas) e II3 (LLM). II1 es deliberadamente mínimo."
+      },
+      "notas": "GAP: tipo 'flujo' está en el schema pero renderGenerico lo muestra como placeholder. Implementar renderFlujo con nodos horizontales + KPIs + callout."
+    },
+    {
+      "type": "contenido_cards",
+      "kicker": "HEURÍSTICA DE CANAL · II1",
+      "h1": "3 canales · detección por estructura del mensaje",
+      "fondo": "crema",
+      "content": {
+        "cols": 3,
+        "cards_2x2": [
+          {
+            "title": "email_pdf",
+            "sub": "PO en texto libre",
+            "body": "Correos, PDF escaneados, WhatsApp. Canal por defecto cuando no se detecta patrón estructural. → payloads 01, 03, 04",
+            "color_borde": "inputs"
+          },
+          {
+            "title": "helionlink_csv",
+            "sub": "CSV pipe-separated",
+            "body": "Contiene 'HELIONLINK' o ≥ 5 campos separados por | en la misma línea. → payload 02",
+            "color_borde": "narOsc"
+          },
+          {
+            "title": "portal_web",
+            "sub": "Portal Kairos Defense",
+            "body": "Menciona 'Kairos Defense' o 'portal web'. Detección por palabras clave. → sin payload de prueba (raro)",
+            "color_borde": "outputs"
+          }
+        ],
+        "callouts": [
+          "Regla de prioridad: se evalúan en orden helionlink_csv → portal_web → email_pdf. El primero que encaja gana. Si ninguno encaja, el canal es email_pdf por defecto.",
+          "Nota pedagógica: esta heurística es simple porque los 3 canales de VERBEX son visualmente muy distintos. La detección semántica de urgencias AOG llega en II3 con el LLM."
+        ]
+      },
+      "notas": "GAP: el renderer actual solo hace 2×2. Necesita cols:3 (1×3). El campo 'color_borde' para el borde superior de cada card tampoco está implementado."
+    },
+    {
+      "type": "contenido_cards",
+      "kicker": "NODOS 1 Y 2 · II1",
+      "h1": "Telegram Trigger · Filtro chat_id autorizado",
+      "fondo": "crema",
+      "content": {
+        "cards_2x2": [
+          {
+            "title": "Nodo 1 — Telegram Trigger",
+            "sub": "telegramTrigger v1.1",
+            "body": "Escucha mensajes entrantes en el bot VERBEX. Requiere: Token de bot (desde @BotFather), Credencial «Telegram Bot · VERBEX» configurada en n8n, Solo evento «message» activado."
+          },
+          {
+            "title": "Nodo 2 — Filtro chat_id autorizado",
+            "sub": "filter v2 · condición AND",
+            "body": "Descarta mensajes antes de ejecutar código. Condición AND: chat_id está en TELEGRAM_ALLOWED_CHAT_IDS (env var CSV) + El mensaje tiene texto no vacío."
+          }
+        ],
+        "code_block": {
+          "lang": "Expression",
+          "code": "// Condición del Filtro\nleft:  {{ ($env.TELEGRAM_ALLOWED_CHAT_IDS || '').split(',').map(s => s.trim()).includes($json.message.chat.id.toString()) }}\nop:    boolean is true\n\nAND\n\nleft:  {{ $json.message.text }}\nop:    string is not empty"
+        },
+        "callout": "Variable de entorno: TELEGRAM_ALLOWED_CHAT_IDS=123456789,234567890,... — separar por comas, sin espacios obligatorios (el código hace trim)."
+      },
+      "notas": "GAP: el campo 'code_block' no está en el schema ni en el renderer. El code block aparece en el HTML entre las cards y el callout."
+    },
+    {
+      "type": "contenido_cards",
+      "kicker": "NODO 3 · II1",
+      "h1": "Detectar canal y preprocesar — el núcleo del módulo",
+      "fondo": "crema",
+      "content": {
+        "cards_2x2": [
+          {
+            "title": "Lookup chat_id → ERP",
+            "sub": "Mirror in-memory clientes.csv",
+            "body": "Si el chat_id no está en el mapa → null (no rompe el flujo)."
+          },
+          {
+            "title": "Limpieza de texto",
+            "sub": "Normalización antes del análisis",
+            "body": "Trim · colapsar espacios múltiples · normalizar \\r\\n → \\n · truncar a 4 000 chars si el mensaje es gigante."
+          }
+        ],
+        "code_block": {
+          "lang": "JavaScript",
+          "code": "// Heurística de canal (en orden de prioridad)\nlet canal = 'email_pdf';   // default\n\nif (texto.includes('HELIONLINK') || (texto.includes('|') && texto.split('|').length >= 5)) {\n  canal = 'helionlink_csv';\n} else if (/kairos[\\s\\-\\.]?defense|portal[\\s\\.\\-]web/i.test(texto)) {\n  canal = 'portal_web';\n}\n\n// El nodo Set (Stub salida) filtra a exactamente 7 campos"
+        }
+      },
+      "notas": "GAP: mismo que slide 5 — code_block no implementado. El code block en este slide es más largo y ocupa la mayor parte del cuerpo."
+    },
+    {
+      "type": "iore",
+      "kicker": "IO · RE · II1",
+      "h1": "Contrato completo del módulo II1",
+      "fondo": "crema",
+      "content": {
+        "inputs": [
+          "Token Telegram bot (TELEGRAM_BOT_TOKEN)",
+          "Lista de chat_id autorizados (TELEGRAM_ALLOWED_CHAT_IDS)",
+          "Mirror in-memory de data/clientes.csv (chat_id → codigo_erp)",
+          "Payloads de prueba (payload_01…04.txt)"
+        ],
+        "outputs": [
+          "texto_limpio — string ≤ 4 000 chars",
+          "chat_id — string",
+          "codigo_erp_detectado — string | null",
+          "canal_detectado — email_pdf | helionlink_csv | portal_web",
+          "from_username — string",
+          "fecha_hoy — YYYY-MM-DD",
+          "timestamp_recepcion — ISO 8601 UTC"
+        ],
+        "reglas": [
+          "Solo chat_id en lista autorizada pasa el filtro",
+          "Texto vacío → descartado (no llega al Code)",
+          "Texto > 4 000 chars → truncado",
+          "\\r\\n, \\r → \\n · espacios múltiples → un espacio",
+          "Prioridad canal: helionlink_csv → portal_web → email_pdf"
+        ],
+        "excepciones": [
+          "chat_id desconocido → codigo_erp_detectado: null — flujo continúa; II2 trata el caso «cliente nuevo»",
+          "Texto vacío → Filter descarta antes de llegar al Code",
+          "chat_id no autorizado → Filter descarta",
+          "Mensaje AOG → email_pdf (semántica en II3)"
+        ]
+      },
+      "notas": "GAP CRÍTICO: tipo 'iore' no existe en el schema ni hay renderer. Es el patrón más importante de COIIAOC — Categoría B (tipo nuevo). Grid 2×2 con 4 bloques semánticos coloreados."
+    },
+    {
+      "type": "tabla",
+      "kicker": "PRUEBA · II1",
+      "h1": "4 payloads de prueba — enviar uno a uno al bot",
+      "fondo": "crema",
+      "content": {
+        "columnas": ["Archivo", "Texto del mensaje", "canal_detectado", "codigo_erp_detectado"],
+        "anchos": [0.18, 0.44, 0.18, 0.20],
+        "filas": [
+          {
+            "cols": ["payload_01 · po_estandar.txt", "Purchase Order PO-2025-STRA-0847. Stratos Systems. Part: ST9-HTP-RIB-047, Qty: 12 EA, Need Date: 15/09/2025. Ref: ST-900 program. CoC required.", "email_pdf", "STRA-001"],
+            "tag_col2": "inputs",
+            "tag_col3": "outputs"
+          },
+          {
+            "cols": ["payload_02 · helionlink_csv.txt", "HELIONLINK|HX7-FUS-PNL-331|24|EA|2025-10-01|HX7|KAIRO-001|Normal", "helionlink_csv", "KAIRO-001"],
+            "tag_col2": "narOsc",
+            "tag_col3": "outputs"
+          },
+          {
+            "cols": ["payload_03 · aog_alert.txt", "URGENT AOG - EC-MKL inmovilizado Aeropuerto Sevilla. Necesitamos HX7-FUS-PNL-332 x2 inmediatamente. Contacto: Juan García 654321098", "email_pdf", "según chat_id"],
+            "tag_col2": "inputs",
+            "tag_col3": "excepciones"
+          },
+          {
+            "cols": ["payload_04 · amendment.txt", "PO-2025-STRA-0847 Rev. B. Amendment: cantidad línea 1 cambia de 12 a 8 EA. Nueva Need Date: 30/09/2025.", "email_pdf", "según chat_id"],
+            "tag_col2": "inputs",
+            "tag_col3": "excepciones"
+          }
+        ],
+        "callouts": [
+          "Cómo verificar: tras enviar cada mensaje, abrir Executions en n8n y revisar el output del nodo «Ingesta · Stub salida». Deben aparecer exactamente los 7 campos del contrato.",
+          "AOG (payload_03): se detecta como email_pdf. II1 solo identifica el canal de origen, no el contenido. La urgencia AOG llegará en II3 con el LLM."
+        ]
+      },
+      "notas": "GAP: tipo 'tabla' está en el schema pero renderGenerico lo muestra como placeholder. Implementar renderTabla con header azul, filas alternadas, tags semánticos en columnas y callout al pie."
+    },
+    {
+      "type": "divider",
+      "kicker": "BLOQUE PRÁCTICO",
+      "h1": "Importa · Configura\nPrueba · Verifica",
+      "subtitulo": "Sigue los pasos de la guía M3 para importar el workflow, asignar la credencial Telegram y probar los 4 payloads. Objetivo: Gate F1 verde.",
+      "fondo": "azul",
+      "notas": "GAP CRÍTICO: tipo 'divider' no existe en el schema ni hay renderer. Es un slide separador full-bleed azul con label pequeño y título grande — Categoría B (tipo nuevo). Simple de implementar."
+    },
+    {
+      "type": "gate",
+      "kicker": "GATE F1 · CIERRE · II1",
+      "h1": "Criterio de cierre · Lo que NO hace II1 · Qué viene en II2",
+      "fondo": "crema",
+      "content": {
+        "gate": {
+          "label": "Gate F1 ✓",
+          "descripcion": "El workflow procesa los 4 payloads y devuelve JSON con los 7 campos del contrato sin invocar al LLM. Si todos los campos están presentes y canal_detectado coincide con la tabla de prueba, la sesión está completa."
+        },
+        "fuera_scope": [
+          "Validar productos contra catalogo.csv → II2",
+          "Aplicar reglas R01–R09 → II2",
+          "Detectar AOG semánticamente → II3",
+          "Mapear PN cliente → proveedor → II3",
+          "Notificar al operador por Telegram → II4",
+          "Registrar en Google Sheets → II4"
+        ],
+        "siguiente": {
+          "titulo": "En II2 construiremos",
+          "items": [
+            "9 reglas deterministas R01–R09",
+            "Validación de catálogo in-memory",
+            "Cálculo de fechas de urgencia",
+            "8 casos de prueba automatizados"
+          ],
+          "idea_fuerza": "Idea fuerza II2: «El agente decide él solo.»"
+        }
+      },
+      "notas": "GAP: tipo 'gate' no existe en el schema. El cierre standard (renderCierre) es fondo azul con pregunta central — diferente. Este slide es fondo crema con: 1 card gate verde + 2 columnas (scope negado / siguiente sesión). Categoría B."
+    }
+  ]
+}

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Producción — Parte 2 · COIIAOC</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#F5F2EC;font-family:'IBM Plex Sans',sans-serif;font-weight:300;color:#1C1C1C;padding:40px 20px 80px}
+.wrap{max-width:960px;margin:0 auto}
+
+/* Header */
+header{margin-bottom:48px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#C2510A;text-transform:uppercase;margin-bottom:12px;display:block}
+h1{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:800;line-height:1.1;color:#1C1C1C;letter-spacing:-.02em;margin-bottom:10px}
+h1 em{color:#C2510A;font-style:normal}
+.sub{font-size:13px;color:#6B6B6B;line-height:1.6;max-width:680px}
+
+/* Section labels */
+.sl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9B9B9B;margin-bottom:16px;margin-top:48px;display:flex;align-items:center;gap:12px}
+.sl::after{content:'';flex:1;height:1px;background:#E0DBCF}
+
+/* Contexto herencia */
+.heritage{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.07);padding:24px;margin-bottom:0}
+.heritage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.hcard{background:#FAFAF7;border:1px solid #E8E3D8;border-radius:8px;padding:14px}
+.hcard-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B;margin-bottom:6px}
+.hcard-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#1C1C1C;margin-bottom:4px}
+.hcard-detail{font-size:11px;color:#6B6B6B;line-height:1.5}
+.hcard.key{border-left:3px solid #C2510A}
+.hcard .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;margin-top:4px}
+
+/* Principios */
+.principles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0}
+.pr{background:#fff;border-radius:8px;padding:14px 16px;border-left:3px solid #1E3A5F;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.pr-code{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C2510A;margin-bottom:4px}
+.pr-text{font-size:12px;color:#1C1C1C;line-height:1.5;font-weight:400}
+.pr.warn{border-left-color:#B91C1C}
+.pr.ok{border-left-color:#0D7C5A}
+.pr.amber{border-left-color:#B45309}
+
+/* Sesiones */
+.session-block{background:#fff;border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,.07);overflow:hidden;margin-bottom:16px}
+.session-header{background:#1E3A5F;padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.session-id{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#FF8C3B;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.session-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;line-height:1.2}
+.session-sub{font-size:11px;color:#9AB0C8;margin-top:2px}
+.session-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;background:rgba(255,140,59,.2);color:#FF8C3B;border:1px solid rgba(255,140,59,.4);padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.session-body{padding:20px}
+.session-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Idea fuerza */
+.idea-fuerza{background:#FFF7ED;border-left:3px solid #C2510A;border-radius:0 6px 6px 0;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#4A3000;line-height:1.5}
+.idea-fuerza strong{color:#C2510A;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px}
+
+/* Materiales */
+.mat-list{display:flex;flex-direction:column;gap:6px}
+.mat{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:6px;border:1px solid #E8E3D8;background:#FAFAF7}
+.mat-code{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;flex-shrink:0;margin-top:1px}
+.mat-desc{font-size:12px;color:#1C1C1C;line-height:1.4}
+.mat-note{font-size:10px;color:#6B6B6B;margin-top:2px}
+
+/* Contenido */
+.content-block{}
+.block-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B;margin-bottom:8px}
+.content-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.content-list li{font-size:12px;color:#1C1C1C;line-height:1.4;padding-left:14px;position:relative}
+.content-list li::before{content:'→';position:absolute;left:0;color:#C2510A;font-family:'IBM Plex Mono',monospace;font-size:10px;top:1px}
+.content-list li.ok::before{content:'→';color:#0D7C5A}
+.content-list li.warn::before{content:'→';color:#B45309}
+.content-list li.exc::before{content:'→';color:#B91C1C}
+
+/* IO/RE mini */
+.iore{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.iore-cell{border-radius:4px;padding:8px 10px;font-size:11px}
+.iore-cell .ilabel{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;font-weight:500}
+.iore-cell.i{background:rgba(46,107,158,.08);border:1px solid rgba(46,107,158,.2)}
+.iore-cell.i .ilabel{color:#2E6B9E}
+.iore-cell.o{background:rgba(13,124,90,.08);border:1px solid rgba(13,124,90,.2)}
+.iore-cell.o .ilabel{color:#0D7C5A}
+.iore-cell.r{background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.2)}
+.iore-cell.r .ilabel{color:#B45309}
+.iore-cell.e{background:rgba(185,28,28,.08);border:1px solid rgba(185,28,28,.2)}
+.iore-cell.e .ilabel{color:#B91C1C}
+
+/* Arco narrativo */
+.arc{background:#1E3A5F;border-radius:10px;padding:20px 24px;margin-bottom:0}
+.arc-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#FF8C3B;margin-bottom:14px;letter-spacing:.02em}
+.arc-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.arc-step{position:relative;text-align:center}
+.arc-step:not(:last-child)::after{content:'→';position:absolute;right:-6px;top:14px;color:#FF8C3B;font-size:12px;font-family:'IBM Plex Mono',monospace}
+.arc-num{width:28px;height:28px;border-radius:50%;background:#FF8C3B;color:#1E3A5F;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.arc-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#9AB0C8;line-height:1.4}
+.arc-sublabel{font-size:10px;color:#fff;margin-top:3px;line-height:1.3}
+
+/* Crewai */
+.extra-block{border:2px dashed #E8E3D8;border-radius:10px;padding:20px;background:#FAFAF7}
+.extra-kicker{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#B45309;margin-bottom:8px}
+
+/* Timeline */
+.timeline{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden}
+.tl-header{background:#1E3A5F;padding:14px 20px}
+.tl-header h3{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#FF8C3B}
+.tl-body{padding:0}
+.tl-row{display:grid;grid-template-columns:90px 1fr 1fr 140px;gap:0;border-bottom:1px solid #F0EBE0}
+.tl-row:last-child{border-bottom:none}
+.tl-row.head{background:#FAFAF7}
+.tl-row.head .tc{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B;padding:8px 14px}
+.tc{padding:12px 14px;font-size:12px;color:#1C1C1C;border-right:1px solid #F0EBE0;line-height:1.4;vertical-align:middle;display:flex;align-items:center}
+.tc:last-child{border-right:none}
+.tc.session-n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C2510A;font-weight:500}
+.status{display:inline-flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.status.pending{background:rgba(180,83,9,.1);color:#B45309}
+.status.ready{background:rgba(13,124,90,.1);color:#0D7C5A}
+.status.ref{background:rgba(30,58,95,.1);color:#1E3A5F}
+.status.code{background:rgba(13,124,90,.1);color:#0D7C5A}
+.status.notyet{background:rgba(155,155,155,.15);color:#6B6B6B}
+
+/* Footer */
+.footer-note{font-size:11px;color:#9B9B9B;text-align:center;margin-top:32px;font-style:italic}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="badge">Automatización de Procesos · COIIAOC · Parte 2 — Plan de Producción</span>
+  <h1>Plan de Producción<br><em>Parte 2</em> — Agente IA Aeronáutico</h1>
+  <p class="sub">Arquitectura y Desarrollo de un Agente IA para gestión documental aeronáutica · 6 sesiones × 2,5h · 15h totales. Documento de referencia para la producción secuencial de materiales sobre el código MVP-A VERBEX COMPOSITES ya desarrollado y validado en <code>CONTENT/MVP-A_Normalizador_Aeronautico/</code>.</p>
+</header>
+
+<!-- MARCO HEREDADO + CASO ANCLA -->
+<div class="sl">Marco metodológico heredado + caso ancla Parte 2</div>
+<div class="heritage">
+  <div style="font-size:13px;color:#1C1C1C;margin-bottom:4px;">Los alumnos llegan a Parte 2 con marcos mentales ya instalados desde Parte 1. En Parte 2 los aplicamos a un nuevo caso ancla aeronáutico — el agente normalizador de pedidos VERBEX — usando el código completo desarrollado en F0–F7 como columna vertebral.</div>
+  <div class="heritage-grid">
+    <div class="hcard key">
+      <div class="hcard-label">Marco metodológico</div>
+      <div class="hcard-title">IO/RE + Diagrama previo</div>
+      <div class="hcard-detail">Plantilla ya entregada en I2. "Primero el diagrama, luego la herramienta" es contrato adquirido. Se refuerza sin re-explicar.</div>
+      <span class="tag" style="background:rgba(30,58,95,.08);color:#1E3A5F;">reutilizar en II1–II6</span>
+    </div>
+    <div class="hcard key">
+      <div class="hcard-label">Caso ancla Parte 2</div>
+      <div class="hcard-title">VERBEX COMPOSITES S.L.</div>
+      <div class="hcard-detail">Tier 2 composites Sevilla (ficticio) que normaliza Purchase Orders entrantes desde 3 canales (email PDF · HelionLink CSV · portal web). Terminología auténtica: AOG, CoC, EASA Form 1, AS9100, PO, PN, FAL.</div>
+      <span class="tag" style="background:rgba(194,81,10,.08);color:#C2510A;">hilo conductor II1–II6</span>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Herramienta dominante</div>
+      <div class="hcard-title">n8n como núcleo</div>
+      <div class="hcard-detail">Instalado y usado desde I4. Parte 2 es íntegramente n8n + Anthropic Claude API. Capa gratuita: Sheets + SMTP + Telegram. Python aparece como alternativa documentada en II5/II6, no como vía obligatoria.</div>
+      <span class="tag" style="background:rgba(13,124,90,.08);color:#0D7C5A;">Track A oficial COIIAOC</span>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Antipatrón instalado</div>
+      <div class="hcard-title">E5 — LLM no calcula ni decide</div>
+      <div class="hcard-detail">Introducido en I5. En Parte 2 el LLM extrae estructura del texto libre; las reglas R01–R09 son JS determinista en Code nodes. Un parser anti-alucinación bloquea PNs inventados. Esto es arquitectura, no consejo.</div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Ciclo agéntico</div>
+      <div class="hcard-title">PRDA operativo</div>
+      <div class="hcard-detail">Percibir (II1) → Razonar determinista (II2) + Razonar cognitivo (II3) → Actuar (II4) → Lectura externa del sistema (II5) → Cierre MVP (II6). Mapear explícitamente en portadas.</div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-label">Materiales tipo</div>
+      <div class="hcard-title">Patrón M1–M5 establecido</div>
+      <div class="hcard-detail">PPTX + DOCX guía/worksheet + HTML guía práctica + JSON workflow exportable + (cuando aplica) HTML interactivo/simulador. Parte 2 mantiene ese patrón ajustando según complejidad.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRINCIPIOS DE PRODUCCIÓN PARTE 2 -->
+<div class="sl">Principios de producción específicos — Parte 2</div>
+<div class="principles">
+  <div class="pr warn">
+    <div class="pr-code">P1 · stack y restricciones</div>
+    <div class="pr-text">Pipeline en <strong>n8n + Anthropic Claude API</strong>. Capa gratuita: Sheets + SMTP + Telegram. Coste estimado <strong>~20 €/mes a 1500 POs</strong>. Python aparece como alternativa documentada (Nanobot/script standalone en II5; Streamlit dashboard en II6), nunca obligatoria para el alumno.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">P2 · arco acumulativo</div>
+    <div class="pr-text">Cada sesión añade una capa que entra en la siguiente. <strong>II1</strong> ingesta + canal → <strong>II2</strong> reglas R01–R09 deterministas → <strong>II3</strong> LLM semántico (Claude) → <strong>II4</strong> routing y notificación → <strong>II5</strong> resiliencia + alternativa Python → <strong>II6</strong> MVP completo + dashboard.</div>
+  </div>
+  <div class="pr amber">
+    <div class="pr-code">P3 · LLM = extractor estructurado</div>
+    <div class="pr-text">El patrón E5 es <strong>arquitectura obligatoria</strong>: el LLM extrae entidades del texto libre, nunca decide prioridad ni valida catálogo. Las reglas R01–R09 son JS determinista en Code nodes. El <strong>parser anti-alucinación</strong> verifica <code>part_number_proveedor</code> contra catálogo VBX-COMP y fuerza a <code>null</code> si el LLM lo inventó.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">P4 · regla R09 anti-duplicado</div>
+    <div class="pr-text">El agente nunca registra dos veces la misma <code>numero_pedido</code>. Lookup contra Sheets <code>Pedidos</code> en cada PO. Esta regla se introduce como stub en II2 (cache hardcoded) y se sustituye por lookup real en II4.</div>
+  </div>
+  <div class="pr">
+    <div class="pr-code">P5 · schema VERBEX estricto</div>
+    <div class="pr-text">El JSON canónico está definido en <strong>spec § 4.4</strong>. Toda salida del pipeline debe parsear contra ese schema. Los 5 ejemplos few-shot del SKILL son el contrato visible. Output siempre JSON, nunca markdown ni prosa libre.</div>
+  </div>
+  <div class="pr">
+    <div class="pr-code">P6 · planteamiento previo siempre</div>
+    <div class="pr-text">El flujo de trabajo es invariable: <em>planteamiento → aprobación → producción secuencial</em>. Para cada sesión de Parte 2 se presenta el planteamiento antes de generar ningún material didáctico. El código MVP-A ya validado es la fuente de verdad técnica.</div>
+  </div>
+</div>
+
+<!-- ARCO NARRATIVO -->
+<div class="sl">Arco del MVP — de la PO entrante al agente operable</div>
+<div class="arc">
+  <div class="arc-title">VERBEX COMPOSITES como caso ancla a lo largo de las 6 sesiones</div>
+  <div class="arc-steps">
+    <div class="arc-step">
+      <div class="arc-num">II1</div>
+      <div class="arc-label">Ingesta</div>
+      <div class="arc-sublabel">Telegram + 3 canales detectados por heurística</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">II2</div>
+      <div class="arc-label">Reglas</div>
+      <div class="arc-sublabel">R01–R09 determinista (sin LLM)</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">II3</div>
+      <div class="arc-label">LLM</div>
+      <div class="arc-sublabel">Claude API + parser anti-alucinación</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">II4</div>
+      <div class="arc-label">Routing</div>
+      <div class="arc-sublabel">Sheets + Telegram producción/calidad + Email</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">II5</div>
+      <div class="arc-label">Resiliencia</div>
+      <div class="arc-sublabel">Master + 4 subs + Error Trigger + Nanobot</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">II6</div>
+      <div class="arc-label">MVP</div>
+      <div class="arc-sublabel">Dashboard Streamlit + deploy Windows</div>
+    </div>
+  </div>
+</div>
+
+<!-- SESIONES -->
+<div class="sl">Sesiones — contenido y materiales por producir</div>
+
+<!-- II1 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II1 · Módulo II1</div>
+      <div class="session-title">Ingesta y Conectividad Multi-Canal</div>
+      <div class="session-sub">El agente busca datos él solo · PRDA: Percibir</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      Telegram es el punto de entrada único, pero hay 3 canales detrás: email PDF, HelionLink CSV y portal web. El agente filtra el remitente por <code>chat_id</code> antes de cualquier procesamiento, identifica el canal por heurística sobre la estructura del texto, y devuelve un contrato de datos de 7 campos. Sin LLM, sin Sheets, sin reglas — solo limpia y prepara.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Contenido teórico (50 min)</div>
+        <ul class="content-list">
+          <li>Bot Telegram como entry point unificado · @BotFather + token + <code>chat_id</code> allowlist</li>
+          <li>Filter v2 con CSV-includes para autorizar remitentes (<code>TELEGRAM_ALLOWED_CHAT_IDS</code>)</li>
+          <li class="warn">Heurística de canal: <code>HELIONLINK</code> o ≥5 campos pipe-separados → <code>helionlink_csv</code> · "portal web" → <code>portal_web</code> · resto → <code>email_pdf</code></li>
+          <li>Code node v2: lookup <code>chat_id → codigo_erp</code> + preprocesado (trim 4 000 chars, normalización saltos)</li>
+          <li class="ok">Contrato de salida: 7 campos (<code>texto_limpio · chat_id · codigo_erp_detectado · canal_detectado · from_username · fecha_hoy · timestamp_recepcion</code>)</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div>Token Telegram bot · <code>clientes.csv</code> (mirror in-memory) · 4 payloads de prueba</div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>JSON 7 campos (contrato para II2/II3)</div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div><code>chat_id</code> en allowlist · texto no vacío · trim 4000 chars · normalización saltos línea</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div><code>chat_id</code> desconocido → <code>codigo_erp_detectado: null</code> (no rompe) · texto vacío → Filter descarta</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~14 slides · portada II1 + arquitectura multi-canal + diagrama de filtrado <code>chat_id</code> + heurística de canal + contrato de datos + separador práctico</div><div class="mat-note">Paleta v1.1 · Syne + IBM Plex · naranja luminoso en portada azul</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX worksheet · ficha de contrato de datos · tabla 7 campos + tipo + ejemplo + validación · rellenable en clase</div><div class="mat-note">Mismo patrón IO/RE de I3–I6</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M3</span>
+            <div><div class="mat-desc">HTML guía práctica · paso a paso del workflow_II1.json (4 nodos) + importación a n8n + 4 payloads de prueba (PO estándar · HelionLink · AOG · Amendment)</div><div class="mat-note">Capturas conceptuales + JSON ejemplo + tabla de canal esperado</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+            <div><div class="mat-desc">JSON workflow ya disponible · <code>II1-Ingesta_Canal/workflow_II1.json</code> (4 nodos) + 4 payloads <code>.txt</code></div><div class="mat-note">Entregable técnico ya validado · base del arco acumulativo</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II2 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II2 · Módulo II2</div>
+      <div class="session-title">Lógica Determinista R01–R09</div>
+      <div class="session-sub">Razonamiento sin alucinaciones · PRDA: Razonar (capa determinista)</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      El núcleo del principio E5: las reglas de negocio no las decide el LLM. Son JavaScript determinista en Code nodes de n8n. R01 (AOG override), R02 (fecha urgente), R03 (confianza baja), R04 (PN desconocido), R05/R06 (CoC/EASA), R07 (cliente nuevo), R08 (cantidad inválida), R09 (duplicado). El LLM extraerá texto en II3; aquí construimos la capa que nunca alucina.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Contenido teórico (50 min)</div>
+        <ul class="content-list">
+          <li>Las 7 reglas R01–R09 (spec § 4.5): condición · acción · trade-off de mover al LLM</li>
+          <li class="warn">Orden de aplicación: R04+R08 (validación) → R07 (cliente) → R01+R02 (prioridad) → R05+R06 (cert) → R03 (confianza) → R09 (duplicado)</li>
+          <li>Mirrors in-memory de <code>equivalencias_pn</code> y <code>clientes</code> como anti-patrón didáctico (workflow autónomo y portable)</li>
+          <li class="ok">8 casos de prueba (<code>po_test_set.json</code>): 01_estandar · 02_aog · 03_amendment · 04_pn_desconocido · 05_cliente_nuevo · 06_fecha_urgente · 07_cantidad_invalida · 08_po_duplicada</li>
+          <li>Validación cruzada en Python: 8/8 casos producen el output esperado</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div>PO simulada con schema VERBEX · <code>catalogo.csv</code>, <code>equivalencias_pn.csv</code>, <code>clientes.csv</code> (mirrors)</div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>JSON enriquecido: <code>prioridad_calculada · doc_requerida · cliente_no_registrado · duplicado · estado_normalizacion · alertas[]</code></div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div>R01–R09 explícitas en JS · ninguna llamada LLM · cálculos deterministas y auditables</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div>PN desconocido → ERROR · cantidad inválida → ERROR · cliente nuevo → PARCIAL no rechaza · confianza baja → PARCIAL · duplicada → flag</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~14 slides · principio E5 como slide central · tabla 7 reglas · diagrama de orden de aplicación · ejercicio "qué regla aplica a este caso"</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX worksheet · ficha de reglas · columnas: ID · condición · acción · estado resultante · trade-off de moverla al LLM</div><div class="mat-note">Reutilizable para el proyecto del alumno (otro dominio)</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M3</span>
+            <div><div class="mat-desc">HTML guía práctica · construir el workflow_II2 paso a paso (8 nodos) · cambiar de caso de prueba editando el Set node · 8 casos de test esperados</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+            <div><div class="mat-desc">JSON workflow ya disponible · <code>II2-Logica_Determinista/workflow_II2.json</code> (8 nodos) + <code>po_test_set.json</code> (8 casos)</div><div class="mat-note">Validado: 8/8 casos producen output esperado</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II3 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II3 · Módulo II3</div>
+      <div class="session-title">Capa Semántica · Claude API</div>
+      <div class="session-sub">El LLM extrae estructura, no calcula · PRDA: Razonar (capa cognitiva)</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      El LLM recibe texto libre y devuelve un JSON contra schema VERBEX. Pero el modelo es falible: puede inventar <code>part_number_proveedor</code>, devolver markdown o saltarse el schema. Un parser anti-alucinación valida cada respuesta y bloquea inventos antes de pasar a las reglas R01–R09. Esta sesión es diseño de prompt industrial, no magia.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Contenido teórico (50 min)</div>
+        <ul class="content-list">
+          <li>HTTP Request a Anthropic API · modelo <code>claude-sonnet-4-20250514</code> · <code>temperature: 0.1</code> · <code>max_tokens: 1500</code></li>
+          <li class="warn">System prompt en template literal JS: SOUL (identidad VERBEX + 7 reglas absolutas) + SKILL (tablas autoritativas: 5 clientes · 7 equivalencias PN · catálogo 16 refs · banda confianza)</li>
+          <li>5 ejemplos few-shot embebidos: E1 PO estándar · E2 HelionLink CSV · E3 AOG · E4 Amendment · E5 PN desconocido</li>
+          <li class="ok">Parser anti-alucinación (Code node): extrae JSON · limpia <code>```json</code> fences · valida schema mínimo · verifica PN proveedor contra catálogo · fuerza <code>null</code> + alerta si inventado</li>
+          <li>Coste estimado <strong>~0,012 €/PO</strong> (input ~1900 + output ~300 tokens) · ~20 €/mes a 1500 POs</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div>Texto PO libre · <code>ANTHROPIC_API_KEY</code> en HTTP Header Auth (<code>x-api-key</code>) · catálogo + equivalencias en mirror del prompt</div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>JSON validado contra schema VERBEX (spec § 4.4) · enriquecido por R01–R09</div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div>El LLM no calcula precios ni totales · output siempre JSON · cita obligatoria de PN existente en catálogo</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div>Texto fuera de JSON → parser rechaza · timeout API → <code>onError: continueErrorOutput</code> · <code>error: no_pedido</code> → log + estado ERROR</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~16 slides · anatomía system prompt (SOUL + SKILL) · few-shot examples como contrato · arquitectura del parser anti-alucinación · ejercicio de diseño de prompt en clase</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX worksheet · diseño de prompt para tu propio dominio · secciones: rol · hechos · instrucción · schema · ejemplos · criterios de validación</div><div class="mat-note">Extensión natural del IO/RE aplicado al prompt</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M3</span>
+            <div><div class="mat-desc">HTML guía práctica · construir workflow_II3 (11 nodos) · configurar credencial Anthropic · probar 5 ejemplos del SKILL · validar output JSON</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+            <div><div class="mat-desc">JSON + Markdown ya disponibles · <code>II3-LLM_Semantico/workflow_II3.json</code> (11 nodos) + <code>SOUL_verbex.md</code> + <code>SKILL_verbex.md</code> (fuente didáctica completa)</div><div class="mat-note">5/5 OUTPUTs few-shot validados como JSON contra schema spec § 4.4</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.12);color:#0D7C5A;">M5</span>
+            <div><div class="mat-desc">HTML interactivo · prompt lab industrial · editor de SOUL/SKILL + llamada Anthropic API real + validación JSON tiempo real + comparativa con/sin ejemplos few-shot</div><div class="mat-note">Patrón M5 de I5 aplicado al contexto VERBEX</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II4 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II4 · Módulo II4</div>
+      <div class="session-title">Routing y Notificación · Pipeline End-to-End</div>
+      <div class="session-sub">Del análisis al producto entregable · PRDA: Actuar</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      Primer pipeline end-to-end del proyecto: una PO en texto libre entra, sale notificada en Telegram, registrada en Sheets y confirmada por email al cliente. Sin intervención humana. R09 deja de ser stub: lookup real contra Sheets <code>Pedidos</code>. Fan-out paralelo a 4 ramas tras el filtro de duplicado.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Contenido teórico (45 min)</div>
+        <ul class="content-list">
+          <li>R09 con lookup real Sheets · sustituye stub de II3 · ~500 ms latencia · trade-off vs cache</li>
+          <li class="ok">Fan-out tras IF "¿es duplicado?": 4 ramas paralelas (Sheets append + Switch prioridad + Filter cert + Render email)</li>
+          <li>Sheets schema: Pedidos (15 cols) · Lineas (14 cols, Split Out + 1 fila por línea) · Errores (II5) · Clientes (sync manual del CSV)</li>
+          <li class="warn">Switch v3.2 Routing por prioridad: <code>AOG</code> → Telegram producción urgente · <code>PRIORITARIO</code> → Telegram normal · <code>NORMAL</code> sin notify push</li>
+          <li>Filter cert paralelo: <code>requiere_coc || requiere_easa_form1</code> → Telegram canal calidad · email branded VERBEX al cliente vía SMTP</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div>Output validado de II3 · 4 credenciales (Anthropic + Sheets Service Account + Telegram Bot + SMTP) · 4 hojas Sheets pre-creadas</div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>1 fila Pedidos + N filas Lineas + 0–2 mensajes Telegram + 1 email cliente</div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div>AOG → Telegram producción &lt;5 s · CoC/Form1 → Telegram calidad · R09 evita duplicados · log siempre</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div>Sheets API rate limit → retry · email rebota → error en n8n UI · LLM timeout → <code>continueErrorOutput</code> (Error Trigger se añade en II5)</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~14 slides · anatomía 26 nodos por capas · diagrama fan-out · sheets schema · email template + ejercicio de diseño de canal de notificación</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX plantilla · sheets-schema completo (4 hojas + cabeceras + permisos Service Account) + plantilla email confirmación HTML branded VERBEX</div><div class="mat-note">Plantilla que el agente envía automáticamente al cliente</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M3</span>
+            <div><div class="mat-desc">HTML guía práctica · paso a paso · preparar Google Sheet · configurar 4 credenciales · variables de entorno · probar 3 casos (estándar · AOG · duplicado)</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+            <div><div class="mat-desc">JSON + asset ya disponibles · <code>II4-Routing_Notificacion/workflow_II4.json</code> (26 nodos · 20 conexiones · 6 terminales) + <code>sheets-schema.md</code> + <code>templates/email_confirmacion.html</code></div><div class="mat-note">Primer workflow end-to-end funcional · 4 placeholders de credenciales</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II5 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II5 · Módulo II5</div>
+      <div class="session-title">Resiliencia y Arquitecturas Alternativas</div>
+      <div class="session-sub">Workflow que funciona ≠ sistema operable · lectura externa del sistema</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      Tres bloques pedagógicos: refactor del monolito II4 a master + 4 sub-workflows + Error Trigger global; alternativa Nanobot/Python que reproduce el MVP en arquitectura distinta; checklist de gobernanza para producción real (AS9100, retention 7 años, costes tokens, credenciales). El alumno se lleva el patrón, no las 26 líneas concretas.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Contenido teórico (60 min)</div>
+        <ul class="content-list">
+          <li>Refactor a sub-workflows: <strong>Master</strong> + SUB-Ingesta + SUB-Cognitivo + SUB-Lógica + SUB-Routing · patrón <code>Execute Workflow</code> node · setting <code>errorWorkflow</code></li>
+          <li class="warn">Error Trigger Workflow centralizado: <code>errorTrigger</code> → Code formatear evento → Sheets Append <code>Errores</code> → Telegram operador</li>
+          <li>Alternativa Nanobot/Python · dos formas: (A) Nanobot agent con Telegram nativo · (B) script standalone <code>nanobot_verbex.py</code> · validación cruzada 8/8 casos vs workflow_II2</li>
+          <li class="ok">Comparativa n8n (Track A) vs Python (Track B documentado) · cuándo elegir cada arquitectura para el caso del alumno</li>
+          <li>Gobernanza · 9 secciones · 48 ítems: credenciales · costes tokens · logging · retention 7 años AS9100 · trazabilidad · continuidad · acceso · validación periódica · post-MVP</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div><code>workflow_II4.json</code> monolítico · entorno n8n con credenciales · Python 3.10+ con <code>requirements_nanobot.txt</code></div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>Master + 4 subs + Error Trigger en n8n · <code>nanobot_verbex.py</code> runnable · checklist gobernanza diligenciable</div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div>Cada capa = sub-workflow independiente · credenciales en variables de entorno · costes tokens monitorizados</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div>Error en cualquier capa → Error Trigger global → log Sheets Errores + Telegram operador · sin propagación silenciosa</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~16 slides · diagrama master/subs · comparativa monolítico vs modular · arquitectura Nanobot · decisión "n8n vs Python" para tu caso</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX guía · checklist de gobernanza completo (48 ítems · 9 secciones) · seguridad credenciales + control costes + AS9100 retention 7 años + observabilidad mínima viable</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M3</span>
+            <div><div class="mat-desc">HTML simulador · arquitectura de capas · visualización animada del flujo Master → 4 SUBs con panel de estado por capa + simulación de Error Trigger</div><div class="mat-note">Patrón M6 de I4 aplicado a la arquitectura del MVP</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+            <div><div class="mat-desc">JSON + Python ya disponibles · <code>II5-Resiliencia_Alternativas/workflow_II5_master.json</code> + <code>workflow_II5_error_trigger.json</code> + <code>nanobot/</code> (config + workspace + <code>nanobot_verbex.py</code> 275 líneas) + <code>gobernanza-checklist.md</code></div><div class="mat-note">Validación cruzada: 8/8 casos po_test_set producen mismo output que workflow_II2 (criterio 13 spec § 8)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- II6 -->
+<div class="session-block">
+  <div class="session-header">
+    <div>
+      <div class="session-id">Sesión II6 · Módulo II6</div>
+      <div class="session-title">MVP Completo · Dashboard y Deploy</div>
+      <div class="session-sub">Sistema completo + criterios de producción · validación + entrega del agente</div>
+    </div>
+    <div class="session-badge">2,5 h</div>
+  </div>
+  <div class="session-body">
+    <div class="idea-fuerza">
+      <strong>Idea fuerza</strong>
+      No existe MVP hasta que el sistema detecta + sintetiza + distribuye sin humano y sigue corriendo cuando cierras la sesión. Esta sesión cierra el arco: workflow MVP runnable + dashboard Streamlit read-only + deploy Windows con Task Scheduler + brief del proyecto del alumno. El alumno se va con el sistema corriendo en su PC.
+    </div>
+    <div class="session-grid">
+      <div>
+        <div class="block-label">Estructura de la sesión</div>
+        <ul class="content-list">
+          <li>Demo del MVP completo · instructor lanza PO Stratos + AOG en Telegram · ciclo end-to-end visible (30 min)</li>
+          <li class="ok">Importar y configurar workflow MVP en n8n del alumno + Error Trigger primero (30 min)</li>
+          <li>Streamlit dashboard read-only · 5 KPIs (POs total/hoy · AOGs · tasa éxito · errores 7d) + 3 tabs + 5 filtros + cache 60 s (30 min)</li>
+          <li class="warn">Deploy Windows · <code>start_verbex.bat</code> (3 procesos en ventanas separadas) + Task Scheduler "At log on, delay 30s" (30 min)</li>
+          <li>Brief proyecto alumno: 4 dominios sugeridos (mantenimiento programado · NCR · stock crítico · propio) · 7 entregables · ~4–6 h estimadas (20 min)</li>
+          <li>Cierre del arco: del proceso manual al sistema autónomo · viabilidad comercial (~3-5× margen vs servicios similares) · reflexión final (10 min)</li>
+        </ul>
+        <div class="iore" style="margin-top:12px">
+          <div class="iore-cell i"><div class="ilabel">Inputs</div>Todos los workflows II1–II5 · Sheets pobladas con datos test · venv Python con <code>requirements.txt</code> · entorno Windows del alumno</div>
+          <div class="iore-cell o"><div class="ilabel">Outputs</div>MVP corriendo autónomo · dashboard accesible en <code>localhost:8501</code> · arranque automático tras login · brief proyecto entregado</div>
+          <div class="iore-cell r"><div class="ilabel">Reglas</div>El MVP debe detectar + sintetizar + distribuir sin humano para ser válido (14 criterios spec § 8)</div>
+          <div class="iore-cell e"><div class="ilabel">Excepciones</div>MVP parcial → documentar qué funciona y qué pendiente con criterios claros · usar workflow_II5_master si el alumno hizo el refactor</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Materiales a producir</div>
+        <div class="mat-list">
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+            <div><div class="mat-desc">PPTX · ~14 slides · 14 criterios de validación spec § 8 · diagrama del sistema completo · coste mensual MVP (~20 €) · cierre del arco del curso</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M2</span>
+            <div><div class="mat-desc">DOCX plantilla · documentación técnica del agente · descripción · arquitectura · IO/RE del sistema · operación diaria · viabilidad comercial · brief proyecto alumno · checklist evaluación con pesos</div><div class="mat-note">El alumno completa esta plantilla como entregable final del curso</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M3</span>
+            <div><div class="mat-desc">JSON + Python + scripts ya disponibles · <code>II6-MVP_Completo/workflow_II6_mvp.json</code> (27 nodos) + <code>dashboard/app.py</code> (255 líneas) + <code>deploy/start_verbex.bat</code> + <code>task-scheduler.md</code> + <code>README_deploy.md</code></div><div class="mat-note">Entregable de referencia del curso completo · validado 14/14 criterios spec § 8</div></div>
+          </div>
+          <div class="mat">
+            <span class="mat-code" style="background:rgba(13,124,90,.12);color:#0D7C5A;">M4</span>
+            <div><div class="mat-desc">HTML interactivo · dashboard demo en vivo · simula ejecución completa II1→II6 con panel de estado, log en tiempo real e informe generado</div><div class="mat-note">"Sorpréndeme" de cierre — el agente visible por primera vez en su totalidad</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREWAI EXTRA -->
+<div class="sl">Módulo extra — Sistemas Multiagente con CrewAI <span style="margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;background:rgba(13,124,90,.1);color:#0D7C5A;padding:2px 8px;border-radius:3px;text-transform:uppercase;">código listo</span></div>
+<div class="extra-block">
+  <div class="extra-kicker">2 últimas sesiones del curso · Python · Introducción práctica · MVP-B mergeado en master · materiales pendientes</div>
+  <div style="font-size:13px;color:#1C1C1C;margin-bottom:16px;line-height:1.6;">Este módulo extra está en el contrato con el COIIAOC. <strong>No forma parte del MVP-A VERBEX desarrollado en F0–F7</strong>: es un MVP-B independiente con código propio (rama <code>dev/crewai-ncr</code> mergeada en <code>master</code>, código en <code>CONTENT/MVP-B_Crew_NCR/</code>). Los materiales pedagógicos M1–M3 quedan pendientes de producir. Representa el único punto de entrada a código Python obligatorio en la Parte 2: no es una alternativa a n8n (esa es la alternativa Nanobot documentada en II5), sino la puerta a sistemas donde la colaboración entre agentes especializados es necesaria.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div>
+      <div class="block-label">Contenido comprometido</div>
+      <ul class="content-list">
+        <li>Framework open-source: múltiples agentes colaborando hacia un objetivo común</li>
+        <li>Roles y delegación: Crew con agentes especializados (investigador + analista + redactor)</li>
+        <li>Arquitectura técnica en Python: configuración, Tasks, Tools</li>
+        <li>Caso de uso: <strong>Análisis de NCR</strong> (Non-Conformance Report · AS9100) — Crew 3 agentes: Clasificador (severidad AS9100) + Causas (8D D1–D5) + Planes (CAPA). Stack: <code>crewai[anthropic]==1.14.4</code> + <code>claude-sonnet-4-20250514</code>. Validado con 5 NCRs (5/5 sin excepción · 7/8 criterios PASS).</li>
+        <li>Cuándo usar CrewAI vs. n8n: criterio de decisión para el ingeniero industrial</li>
+      </ul>
+    </div>
+    <div>
+      <div class="block-label">Materiales pedagógicos (2 sesiones · sobre MVP-B ya validado)</div>
+      <div class="mat-list">
+        <div class="mat">
+          <span class="mat-code" style="background:rgba(30,58,95,.1);color:#1E3A5F;">M1</span>
+          <div><div class="mat-desc">PPTX · sesión 1 (teoría) · framework + roles + arquitectura + comparativa n8n vs CrewAI</div></div>
+        </div>
+        <div class="mat">
+          <span class="mat-code" style="background:rgba(13,124,90,.1);color:#0D7C5A;">M2</span>
+          <div><div class="mat-desc">HTML guía práctica · instalación CrewAI + script de referencia con 3 agentes</div></div>
+        </div>
+        <div class="mat">
+          <span class="mat-code" style="background:rgba(180,83,9,.1);color:#B45309;">M3</span>
+          <div><div class="mat-desc">PPTX · sesión 2 (práctica) · instrucciones del taller + criterios de validación del Crew</div></div>
+        </div>
+        <div class="mat">
+          <span class="mat-code" style="background:rgba(185,28,28,.1);color:#B91C1C;">M4</span>
+          <div><div class="mat-desc">Python · script de referencia <strong>ya implementado</strong> en <code>MVP-B_Crew_NCR/</code> (rama merged) · listo para ejecutar en Daytona sandbox</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABLA RESUMEN -->
+<div class="sl">Resumen de producción — 25 entregables sesiones + 4 materiales CrewAI · código MVP-A y MVP-B listos</div>
+<div class="timeline">
+  <div class="tl-header">
+    <h3>Secuencia de producción · Parte 2 (sobre código MVP-A ya validado) + Extra CrewAI</h3>
+  </div>
+  <div class="tl-body">
+    <div class="tl-row head">
+      <div class="tc">Sesión</div>
+      <div class="tc">Módulo</div>
+      <div class="tc">Entregables</div>
+      <div class="tc">Estado código</div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II1</div>
+      <div class="tc">Ingesta y Conectividad Multi-Canal</div>
+      <div class="tc">M1 PPTX · M2 DOCX worksheet · M3 HTML guía · M4 JSON workflow_II1 + payloads</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II2</div>
+      <div class="tc">Lógica Determinista R01–R09</div>
+      <div class="tc">M1 PPTX · M2 DOCX worksheet reglas · M3 HTML guía · M4 JSON workflow_II2 + test set</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II3</div>
+      <div class="tc">Capa Semántica · Claude API</div>
+      <div class="tc">M1 PPTX · M2 DOCX prompt · M3 HTML guía · M4 JSON + SOUL/SKILL · M5 HTML lab</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II4</div>
+      <div class="tc">Routing y Notificación · End-to-End</div>
+      <div class="tc">M1 PPTX · M2 DOCX schema + email · M3 HTML guía · M4 JSON workflow_II4 + template</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II5</div>
+      <div class="tc">Resiliencia y Alternativas</div>
+      <div class="tc">M1 PPTX · M2 DOCX gobernanza · M3 HTML simulador · M4 JSON master/error + Nanobot</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n">II6</div>
+      <div class="tc">MVP Completo · Dashboard y Deploy</div>
+      <div class="tc">M1 PPTX · M2 DOCX doc + brief · M3 JSON MVP + dashboard + deploy · M4 HTML interactivo</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tc session-n" style="color:#B45309;">Extra</div>
+      <div class="tc">Sistemas Multiagente con CrewAI</div>
+      <div class="tc">M1 PPTX S1 · M2 HTML guía · M3 PPTX S2 · M4 Python script (caso NCR)</div>
+      <div class="tc"><span class="status code">⬤ Código listo</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- DECISIONES TOMADAS -->
+<div class="sl">Decisiones tomadas durante el desarrollo del MVP-A</div>
+<div class="principles">
+  <div class="pr ok">
+    <div class="pr-code">D1 · Canales de ingesta</div>
+    <div class="pr-text">Telegram como entry point único + 3 canales detectables por heurística sobre la estructura del texto: <code>email_pdf</code> (default · texto libre) · <code>helionlink_csv</code> (≥5 campos pipe-separados) · <code>portal_web</code> (mención explícita). El bot Telegram lo proporciona el alumno con @BotFather; los <code>chat_id</code> autorizados se listan en <code>TELEGRAM_ALLOWED_CHAT_IDS</code> (CSV). Afecta a M3/M4 de II1.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">D2 · Google Sheets como persistencia</div>
+    <div class="pr-text">Cada alumno crea su propio <strong>Sheet <code>VERBEX-Pedidos</code></strong> con 4 hojas (Pedidos · Lineas · Errores · Clientes), genera Service Account JSON desde Google Cloud Console y comparte el Sheet con el email del Service Account (rol Editor). <code>GOOGLE_SHEETS_ID</code> + ruta JSON en <code>.env</code>. Spec § 7 default D2. Sheets-schema completo en M2 de II4.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">D3 · Canales de notificación</div>
+    <div class="pr-text">Telegram primario como canal de operación: <code>TELEGRAM_CHAT_ID_PRODUCCION</code> (AOG/PRIORITARIO) · <code>TELEGRAM_CHAT_ID_CALIDAD</code> (CoC/EASA Form 1) · operador (duplicados + errores). SMTP secundario para confirmación al cliente final con email branded VERBEX. <strong>Sin Slack en MVP-A</strong>.</div>
+  </div>
+  <div class="pr amber">
+    <div class="pr-code">D4 · Observabilidad</div>
+    <div class="pr-text">Langfuse <strong>no integrado</strong> en MVP-A (queda fuera del alcance). Trazabilidad mínima: hoja <code>Errores</code> de Sheets (llenada por Error Trigger en II5) + Telegram al operador. Material Langfuse del proyecto AKADEMOS-O1 disponible como complemento opcional, no evaluable.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">D5 · Alternativa Python</div>
+    <div class="pr-text"><strong>Nanobot/script Python</strong> documentado en II5 como complementario, no evaluable (default D5 spec § 10). El alumno elige Track A (n8n oficial COIIAOC) o Track B (Python documentado). Validación cruzada ya hecha: <code>nanobot_verbex.py</code> reproduce 8/8 casos del <code>po_test_set.json</code> con mismo output que <code>workflow_II2</code>.</div>
+  </div>
+  <div class="pr ok">
+    <div class="pr-code">D6 · C5 vs R04 — Opción A</div>
+    <div class="pr-text"><strong>R04 mantiene <code>ERROR</code></strong> para PN desconocido. "No fatal" en criterio C5 se interpreta como "no excepción de pipeline": el flujo continúa, la PO se registra en Sheets y genera Telegram al operador. La discrepancia LLM→<code>PARCIAL</code> / R04→<code>ERROR</code> es intencionada: ilustra la idea fuerza E5 ("el LLM extrae, R04 decide"). Criterio C5 reformulado en PROGRESS.md. 0 cambios en código.</div>
+  </div>
+</div>
+
+<p class="footer-note">Automatización de Procesos con Agentes Inteligentes · COIIAOC · Plan de Producción Parte 2 · Mayo 2026 · Sincronizado con MVP-A VERBEX (F0–F7 · 14/14 criterios ✅ · D6 resuelta) y MVP-B CrewAI NCR (C0–C5 · 7/8 criterios ✅ · PR #3 mergeado)</p>
+
+</div>
+</body>
+</html>

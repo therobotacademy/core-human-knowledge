@@ -1,0 +1,100 @@
+<svg width="920" height="512" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#78909c"/>
+    </marker>
+    <marker id="arrA" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#f9a825"/>
+    </marker>
+    <marker id="arrP" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#8e24aa"/>
+    </marker>
+    <marker id="arrB" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#8d6e63"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#90a4ae"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00000018"/>
+    </filter>
+  </defs>
+  <rect width="920" height="512" rx="10" fill="#f1f3f4"/>
+  <rect width="920" height="30" rx="10" fill="#263238"/>
+  <rect y="20" width="920" height="10" fill="#263238"/>
+  <text x="460" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="white">Mapa de Procesos del Agente (COMPLETO) — Creación de Contenido COIIAOC LuminaBeta · tareas → skills → procesos</text>
+  <rect x="12" y="48" width="120" height="430" rx="7" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="12" y="48" width="120" height="24" rx="7" fill="#546e7a"/>
+  <rect x="12" y="62" width="120" height="10" fill="#546e7a"/>
+  <text x="72.0" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="white">FUENTES</text>
+  <text x="72.0" y="90" text-anchor="middle" font-size="7.5" fill="#37474f">CONTENT/</text>
+  <text x="72.0" y="118" text-anchor="middle" font-size="7.5" fill="#455a64">Código de sesión</text>
+  <text x="72.0" y="140" text-anchor="middle" font-size="7.5" fill="#455a64">Contexto sesión</text>
+  <text x="72.0" y="162" text-anchor="middle" font-size="7.5" fill="#455a64">Guiones · outlines</text>
+  <text x="72.0" y="184" text-anchor="middle" font-size="7.5" fill="#455a64">Materiales (MD)</text>
+  <text x="72.0" y="253" text-anchor="middle" font-size="20" fill="#455a64">📄</text>
+  <text x="72.0" y="280" text-anchor="middle" font-size="7.5" fill="#90a4ae">inmutable 🔒</text>
+  <text x="72.0" y="420" text-anchor="middle" font-size="7" fill="#b0bec5">base de TODOS</text>
+  <text x="72.0" y="432" text-anchor="middle" font-size="7" fill="#b0bec5">los procesos</text>
+  <rect x="152.0" y="196" width="174.0" height="118" rx="9" fill="#ffffff" stroke="#1565c0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="152.0" y="196" width="174.0" height="24" rx="9" fill="#1565c0"/>
+  <rect x="152.0" y="210" width="174.0" height="10" fill="#1565c0"/>
+  <text x="164.0" y="213" font-size="9" font-weight="700" fill="white">Slides / decks COIIAOC</text>
+  <rect x="287.0" y="201" width="33" height="15" rx="7" fill="#43a047"/>
+  <text x="304" y="212" text-anchor="middle" font-size="7" font-weight="700" fill="white">✓ doc</text>
+  <text x="239.0" y="244" text-anchor="middle" font-size="7.5" fill="#37474f">3 skills</text>
+  <text x="239.0" y="260" text-anchor="middle" font-size="6.5" fill="#607d8b">pptx-slides-builder → html-slides-builder → ma</text>
+  <line x1="174.0" y1="272" x2="304.0" y2="272" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="239.0" y="290" text-anchor="middle" font-size="7.5" font-weight="600" fill="#2e7d32">→ Deck PPTX + HTML (+ PDF)</text>
+  <rect x="338.0" y="196" width="174.0" height="118" rx="9" fill="#ffffff" stroke="#00838f" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="338.0" y="196" width="174.0" height="24" rx="9" fill="#00838f"/>
+  <rect x="338.0" y="210" width="174.0" height="10" fill="#00838f"/>
+  <text x="350.0" y="213" font-size="9" font-weight="700" fill="white">Diagramas SVG</text>
+  <rect x="473.0" y="201" width="33" height="15" rx="7" fill="#43a047"/>
+  <text x="490" y="212" text-anchor="middle" font-size="7" font-weight="700" fill="white">✓ doc</text>
+  <text x="425.0" y="244" text-anchor="middle" font-size="7.5" fill="#37474f">2 skills</text>
+  <text x="425.0" y="260" text-anchor="middle" font-size="6.5" fill="#607d8b">code-diagram-explainer → text-to-diagram</text>
+  <line x1="360.0" y1="272" x2="490.0" y2="272" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="425.0" y="290" text-anchor="middle" font-size="7.5" font-weight="600" fill="#2e7d32">→ SVG explicativo / autónomo</text>
+  <rect x="524.0" y="196" width="174.0" height="118" rx="9" fill="#ffffff" stroke="#8e24aa" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="524.0" y="196" width="174.0" height="24" rx="9" fill="#8e24aa"/>
+  <rect x="524.0" y="210" width="174.0" height="10" fill="#8e24aa"/>
+  <text x="536.0" y="213" font-size="9" font-weight="700" fill="white">Documentos imprimibles</text>
+  <rect x="659.0" y="201" width="33" height="15" rx="7" fill="#43a047"/>
+  <text x="676" y="212" text-anchor="middle" font-size="7" font-weight="700" fill="white">✓ doc</text>
+  <text x="611.0" y="244" text-anchor="middle" font-size="7.5" fill="#37474f">1 skill</text>
+  <text x="611.0" y="260" text-anchor="middle" font-size="6.5" fill="#607d8b">apm-docx-builder</text>
+  <line x1="546.0" y1="272" x2="676.0" y2="272" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="611.0" y="290" text-anchor="middle" font-size="7.5" font-weight="600" fill="#2e7d32">→ DOCX imprimible (+ PDF)</text>
+  <rect x="710.0" y="196" width="174.0" height="118" rx="9" fill="#ffffff" stroke="#5d4037" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="710.0" y="196" width="174.0" height="24" rx="9" fill="#5d4037"/>
+  <rect x="710.0" y="210" width="174.0" height="10" fill="#5d4037"/>
+  <text x="722.0" y="213" font-size="9" font-weight="700" fill="white">Documentación de código</text>
+  <rect x="840.0" y="201" width="38" height="15" rx="7" fill="#fb8c00"/>
+  <text x="859" y="212" text-anchor="middle" font-size="7" font-weight="700" fill="white">🔨 impl</text>
+  <text x="797.0" y="244" text-anchor="middle" font-size="7.5" fill="#37474f">1 skill</text>
+  <text x="797.0" y="260" text-anchor="middle" font-size="6.5" fill="#607d8b">repo-code-explainer</text>
+  <line x1="732.0" y1="272" x2="862.0" y2="272" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="797.0" y="290" text-anchor="middle" font-size="7.5" font-weight="600" fill="#2e7d32">→ DOCX explicativo del repo (SVG embebidos</text>
+  <line x1="132" y1="111.0" x2="152" y2="111.0" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="142.0" y="107.0" text-anchor="middle" font-size="6" fill="#90a4ae">ingesta</text>
+  <line x1="132" y1="255.0" x2="152" y2="255.0" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="512.0" y1="255.0" x2="152.0" y2="255.0" stroke="#8e24aa" stroke-width="2" marker-end="url(#arrP)"/>
+  <text x="332.0" y="249.0" text-anchor="middle" font-size="6" font-weight="600" fill="#6a1b9a">flujo inverso</text>
+  <line x1="512.0" y1="255.0" x2="524.0" y2="255.0" stroke="#8e24aa" stroke-width="2" marker-end="url(#arrP)"/>
+  <text x="518.0" y="249.0" text-anchor="middle" font-size="6" font-weight="600" fill="#6a1b9a">flujo inverso</text>
+  <rect x="152" y="458" width="732" height="40" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="164" y="472" text-anchor="start" font-size="7.5" font-weight="700" fill="#37474f">Estado</text>
+  <rect x="164" y="478" width="13" height="11" rx="3" fill="#43a047"/>
+  <text x="182" y="487" text-anchor="start" font-size="7.5" fill="#455a64">✓ doc</text>
+  <rect x="224" y="478" width="13" height="11" rx="3" fill="#8d6e63"/>
+  <text x="242" y="487" text-anchor="start" font-size="7.5" fill="#455a64">⚙ colateral</text>
+  <rect x="320" y="478" width="13" height="11" rx="3" fill="#b0bec5"/>
+  <text x="338" y="487" text-anchor="start" font-size="7.5" fill="#455a64">◌ futuro</text>
+  <text x="634" y="472" text-anchor="start" font-size="7.5" font-weight="700" fill="#37474f">Aristas</text>
+  <line x1="634" y1="484" x2="654" y2="484" stroke="#78909c" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="658" y="487" text-anchor="start" font-size="7" fill="#455a64">fuente / cadena</text>
+  <line x1="754" y1="484" x2="774" y2="484" stroke="#f9a825" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrA)"/>
+  <text x="778" y="487" text-anchor="start" font-size="7" fill="#455a64">informa</text>
+  <text x="634" y="496" text-anchor="start" font-size="6.5" fill="#90a4ae">4 procesos · 7 skills · 0 huérfanos</text>
+</svg>

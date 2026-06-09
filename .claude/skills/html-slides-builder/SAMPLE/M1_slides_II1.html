@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>II1 · Ingesta y Conectividad Multi-Canal — COIIAOC Parte 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Deck container ─────────────────────────────────────── */
+body {
+  background: #F5F2EC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+}
+
+.deck {
+  position: relative;
+  width: min(960px, 100vw);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.18);
+}
+
+/* ── Slide base ─────────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.slide.active { display: flex; }
+
+/* ── Counter ────────────────────────────────────────────── */
+.counter {
+  position: fixed;
+  bottom: 14px;
+  right: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #9B9B9B;
+  letter-spacing: .06em;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ── Nav hint ───────────────────────────────────────────── */
+.nav-hint {
+  position: fixed;
+  bottom: 14px;
+  left: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #9B9B9B;
+  letter-spacing: .06em;
+  z-index: 100;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PATTERN A — Cover slide
+═══════════════════════════════════════════════════════ */
+.slide-cover {
+  background: #1E3A5F;
+  position: relative;
+  padding: 0 56px;
+  justify-content: center;
+  gap: 0;
+}
+.slide-cover::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  background: #FF8C3B;
+}
+.cover-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #FF8C3B;
+  margin-bottom: 16px;
+}
+.cover-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 14px;
+}
+.cover-title em { color: #FF8C3B; font-style: normal; }
+.cover-sub {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 300;
+  font-size: clamp(11px, 1.4vw, 14px);
+  color: #9AB0C8;
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+.cover-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cover-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #FF8C3B;
+  border: 1px solid rgba(255,140,59,.4);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+.cover-footer {
+  position: absolute;
+  bottom: 20px;
+  right: 56px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #4A6480;
+  letter-spacing: .06em;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PATTERN B — Content slide
+═══════════════════════════════════════════════════════ */
+.slide-content {
+  background: #FAFAF7;
+  flex-direction: column;
+}
+.content-header {
+  background: #1E3A5F;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #FF8C3B;
+  border: 1px solid rgba(255,140,59,.4);
+  border-radius: 2px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+.content-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.8vw, 17px);
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+.content-body {
+  flex: 1;
+  padding: 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  gap: 10px;
+}
+.cards-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.cards-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.cards-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E8E3D8;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.card-val {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(18px, 2.8vw, 26px);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.card-lbl {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(8px, .9vw, 10px);
+  color: #6B6B6B;
+  line-height: 1.4;
+}
+.card-body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(9px, 1.1vw, 12px);
+  color: #1C1C1C;
+  line-height: 1.5;
+}
+
+/* Callout bar */
+.callout {
+  background: #FFF7ED;
+  border-left: 3px solid #C2510A;
+  border-radius: 0 5px 5px 0;
+  padding: 8px 14px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(9px, 1.1vw, 11px);
+  color: #4A3000;
+  line-height: 1.5;
+}
+.callout strong { color: #C2510A; }
+
+/* Body text */
+.body-text {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(10px, 1.3vw, 13px);
+  color: #1C1C1C;
+  line-height: 1.6;
+}
+
+/* List */
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bullet-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(10px, 1.2vw, 12px);
+  color: #1C1C1C;
+  line-height: 1.5;
+}
+.bullet-list li::before {
+  content: '→';
+  color: #C2510A;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(8px, 1vw, 11px);
+}
+.data-table th {
+  background: #1E3A5F;
+  color: #FFFFFF;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, .85vw, 9px);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  text-align: left;
+}
+.data-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #E8E3D8;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #1C1C1C;
+  line-height: 1.4;
+  vertical-align: top;
+}
+.data-table tr:nth-child(even) td { background: #F5F2EC; }
+.data-table code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .9em;
+  background: #EEF0F4;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* Functional tags */
+.tag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tag-input  { background: rgba(46,107,158,.1);  border: 1px solid #2E6B9E; color: #2E6B9E; }
+.tag-output { background: rgba(13,124,90,.1);   border: 1px solid #0D7C5A; color: #0D7C5A; }
+.tag-rule   { background: rgba(180,83,9,.1);    border: 1px solid #B45309; color: #B45309; }
+.tag-exc    { background: rgba(185,28,28,.1);   border: 1px solid #B91C1C; color: #B91C1C; }
+.tag-ok     { background: rgba(13,124,90,.1);   border: 1px solid #0D7C5A; color: #0D7C5A; }
+
+/* ═══════════════════════════════════════════════════════
+   PATTERN C — IO/RE frame
+═══════════════════════════════════════════════════════ */
+.iore-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  flex: 1;
+}
+.iore-block {
+  background: #FFFFFF;
+  border: 1px solid #E8E3D8;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+.iore-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.iore-block ul li {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(8px, 1vw, 10px);
+  color: #1C1C1C;
+  line-height: 1.4;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.iore-block ul li::before { content: '·'; color: #9B9B9B; }
+.iore-block code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .85em;
+  background: #F5F2EC;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PATTERN D — Section divider
+═══════════════════════════════════════════════════════ */
+.slide-section {
+  background: #1E3A5F;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 56px;
+  position: relative;
+  gap: 0;
+}
+.slide-section::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  background: #FF8C3B;
+}
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #9AB0C8;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 3.5vw, 34px);
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 12px;
+}
+.section-title em { color: #FF8C3B; font-style: normal; }
+.section-sub {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 300;
+  font-size: clamp(10px, 1.2vw, 13px);
+  color: #9AB0C8;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PATTERN E — Code / monospace block
+═══════════════════════════════════════════════════════ */
+.code-block {
+  background: #1C1C1C;
+  border-radius: 5px;
+  padding: 12px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(8px, 1vw, 10.5px);
+  color: #E8E3D8;
+  line-height: 1.65;
+  position: relative;
+  overflow: auto;
+}
+.code-block .lang-chip {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 7px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #FF8C3B;
+  border: 1px solid rgba(255,140,59,.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.code-comment { color: #4A6480; }
+.code-key     { color: #9AB0C8; }
+.code-val     { color: #FF8C3B; }
+.code-str     { color: #0D7C5A; }
+
+/* ═══════════════════════════════════════════════════════
+   Pipeline diagram
+═══════════════════════════════════════════════════════ */
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+}
+.node-box {
+  background: #FFFFFF;
+  border: 1.5px solid #1E3A5F;
+  border-radius: 4px;
+  padding: 8px 10px;
+  text-align: center;
+  flex: 1;
+}
+.node-box .node-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(8px, 1vw, 10px);
+  color: #1E3A5F;
+  line-height: 1.2;
+}
+.node-box .node-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, .75vw, 8px);
+  color: #9B9B9B;
+  margin-top: 3px;
+}
+.arrow {
+  color: #FF8C3B;
+  font-size: 18px;
+  font-weight: 900;
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRDA badge
+═══════════════════════════════════════════════════════ */
+.prda-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.prda-step {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 3px 8px;
+  border: 1px solid;
+}
+.prda-step.active {
+  background: #FF8C3B;
+  border-color: #FF8C3B;
+  color: #1E3A5F;
+  font-weight: 500;
+}
+.prda-step.inactive {
+  background: transparent;
+  border-color: rgba(255,140,59,.25);
+  color: rgba(255,140,59,.4);
+}
+.prda-arrow-small {
+  color: rgba(255,140,59,.3);
+  font-size: 12px;
+}
+
+/* ── Print ──────────────────────────────────────────────── */
+@media print {
+  body { background: #fff; min-height: auto; }
+  .deck { box-shadow: none; width: 100%; }
+  .slide { display: none !important; }
+  .slide.active, .slide { display: flex !important; page-break-after: always; position: relative; }
+  .counter, .nav-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ─── SLIDE 1: Cover ─────────────────────────────── -->
+  <div class="slide slide-cover active">
+    <div class="cover-kicker">COIIAOC · Parte 2 · Sesión II1 de 6</div>
+    <div class="cover-title">Ingesta y Conectividad<br><em>Multi-Canal</em></div>
+    <div class="cover-sub">Cómo el agente recibe órdenes de compra por Telegram, identifica de qué canal vienen y entrega un JSON normalizado listo para el motor de reglas.</div>
+    <div class="cover-badges">
+      <span class="cover-badge">PRDA · Percibir</span>
+      <span class="cover-badge">n8n · 4 nodos</span>
+      <span class="cover-badge">sin LLM</span>
+      <span class="cover-badge">freeze 907bf31</span>
+    </div>
+    <div class="cover-footer">MVP-A VERBEX COMPOSITES · COIIAOC 2026</div>
+  </div>
+
+  <!-- ─── SLIDE 2: Idea fuerza ───────────────────────── -->
+  <div class="slide slide-cover">
+    <div class="cover-kicker">Idea fuerza de la sesión</div>
+    <div class="cover-title" style="font-size: clamp(28px,4.5vw,44px);">"El agente busca<br>datos <em>él solo.</em>"</div>
+    <div class="cover-sub" style="margin-top:10px;">El agente no espera a que alguien le formatee los datos. Tiene canales monitorizados, sabe distinguirlos y extrae lo que necesita sin intervención humana. Eso es <strong style="color:#fff;">Percibir</strong> en el ciclo PRDA.</div>
+    <div class="cover-badges" style="margin-top:20px;">
+      <span class="prda-step active">Percibir</span>
+      <span class="prda-arrow-small">→</span>
+      <span class="prda-step inactive">Razonar</span>
+      <span class="prda-arrow-small">→</span>
+      <span class="prda-step inactive">Decidir</span>
+      <span class="prda-arrow-small">→</span>
+      <span class="prda-step inactive">Actuar</span>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 3: Qué construimos ──────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Arquitectura</span>
+      <div class="content-title">Qué construimos hoy — pipeline de 4 nodos</div>
+    </div>
+    <div class="content-body">
+      <div class="pipeline">
+        <div class="node-box">
+          <div class="node-name">Telegram<br>Trigger</div>
+          <div class="node-type">telegramTrigger v1.1</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node-box">
+          <div class="node-name">Filtro<br>chat_id</div>
+          <div class="node-type">filter v2</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node-box">
+          <div class="node-name">Detectar canal<br>y preprocesar</div>
+          <div class="node-type">code v2</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node-box" style="border-color:#0D7C5A;">
+          <div class="node-name" style="color:#0D7C5A;">Stub salida<br>(contrato II2)</div>
+          <div class="node-type">set v3.4</div>
+        </div>
+      </div>
+      <div class="cards-grid cols-3">
+        <div class="card">
+          <div class="card-val" style="color:#C2510A; font-size: clamp(20px,3vw,28px);">4</div>
+          <div class="card-lbl">nodos en cadena lineal</div>
+        </div>
+        <div class="card">
+          <div class="card-val" style="color:#1E3A5F; font-size: clamp(20px,3vw,28px);">0</div>
+          <div class="card-lbl">llamadas a LLM — todo determinista</div>
+        </div>
+        <div class="card">
+          <div class="card-val" style="color:#0D7C5A; font-size: clamp(20px,3vw,28px);">7</div>
+          <div class="card-lbl">campos en el contrato de salida para II2</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Propósito de esta sesión:</strong> limpiar el canal de entrada y entregar un contrato de datos consistente. La complejidad crece en II2 (reglas) e II3 (LLM). II1 es deliberadamente mínimo.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 4: Los 3 canales ────────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Heurística de canal</span>
+      <div class="content-title">3 canales · detección por estructura del mensaje</div>
+    </div>
+    <div class="content-body">
+      <div class="cards-grid cols-3">
+        <div class="card" style="border-top: 3px solid #2E6B9E;">
+          <div style="margin-bottom:8px;"><span class="tag tag-input">email_pdf</span></div>
+          <div class="card-body"><strong>PO en texto libre</strong><br>Correos, PDF escaneados, WhatsApp. El canal por defecto cuando no se detecta ningún patrón estructural.</div>
+          <div style="margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:8px; color:#9B9B9B;">→ Caso payload 01, 03, 04</div>
+        </div>
+        <div class="card" style="border-top: 3px solid #C2510A;">
+          <div style="margin-bottom:8px;"><span class="tag" style="background:rgba(194,81,10,.1);border-color:#C2510A;color:#C2510A;">helionlink_csv</span></div>
+          <div class="card-body"><strong>CSV pipe-separated</strong><br>Contiene la palabra <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">HELIONLINK</code> <em>o</em> ≥ 5 campos separados por <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">|</code> en la misma línea.</div>
+          <div style="margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:8px; color:#9B9B9B;">→ Caso payload 02</div>
+        </div>
+        <div class="card" style="border-top: 3px solid #0D7C5A;">
+          <div style="margin-bottom:8px;"><span class="tag tag-output">portal_web</span></div>
+          <div class="card-body"><strong>Portal Kairos Defense</strong><br>Menciona <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">Kairos Defense</code> o <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">portal web</code>. Detección por palabras clave.</div>
+          <div style="margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:8px; color:#9B9B9B;">→ No hay payload de prueba (raro)</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Regla de prioridad:</strong> se evalúan en orden helionlink_csv → portal_web → email_pdf. El primero que encaja gana. Si ninguno encaja, el canal es <code style="font-family:'IBM Plex Mono',monospace;font-size:.9em;">email_pdf</code> por defecto.
+      </div>
+      <div class="callout" style="background:#EEF4FB; border-color:#2E6B9E;">
+        <strong style="color:#2E6B9E;">Nota pedagógica:</strong> esta heurística es simple porque los 3 canales de VERBEX son visualmente muy distintos. La detección <em>semántica</em> de urgencias AOG llega en II3 con el LLM.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 5: Nodo 1+2 ─────────────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Nodos 1 y 2</span>
+      <div class="content-title">Telegram Trigger · Filtro chat_id autorizado</div>
+    </div>
+    <div class="content-body">
+      <div class="cards-grid cols-2">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="tag tag-input">Nodo 1</span>
+            <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#1E3A5F;">Telegram Trigger</span>
+          </div>
+          <div class="card-body">Escucha mensajes entrantes en el bot VERBEX. Requiere:</div>
+          <ul class="bullet-list" style="margin-top:6px;">
+            <li>Token de bot (desde @BotFather)</li>
+            <li>Credencial <em>Telegram Bot · VERBEX</em> configurada en n8n</li>
+            <li>Solo evento <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">message</code> activado</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="tag tag-rule">Nodo 2</span>
+            <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#1E3A5F;">Filtro chat_id autorizado</span>
+          </div>
+          <div class="card-body">Descarta mensajes antes de ejecutar código. Condición AND:</div>
+          <ul class="bullet-list" style="margin-top:6px;">
+            <li><code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">chat_id</code> está en <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">TELEGRAM_ALLOWED_CHAT_IDS</code> (env var CSV)</li>
+            <li>El mensaje tiene texto no vacío</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+        <span class="lang-chip">Expression</span>
+<span class="code-comment">// Condición del Filtro — se evalúa en n8n Expression</span>
+<span class="code-key">left:</span>  <span class="code-str">{{ ($env.TELEGRAM_ALLOWED_CHAT_IDS || '').split(',').map(s => s.trim()).includes($json.message.chat.id.toString()) }}</span>
+<span class="code-key">op:</span>    <span class="code-val">boolean is true</span>
+
+<span class="code-key">AND</span>
+
+<span class="code-key">left:</span>  <span class="code-str">{{ $json.message.text }}</span>
+<span class="code-key">op:</span>    <span class="code-val">string is not empty</span></div>
+      <div class="callout">
+        Variable de entorno: <code style="font-family:'IBM Plex Mono',monospace;font-size:.9em;">TELEGRAM_ALLOWED_CHAT_IDS=123456789,234567890,...</code> — separar por comas, sin espacios obligatorios (el código hace trim).
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 6: Nodo 3 (Code) ────────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Nodo 3</span>
+      <div class="content-title">Detectar canal y preprocesar — el núcleo del módulo</div>
+    </div>
+    <div class="content-body">
+      <div class="cards-grid cols-2" style="flex:none;">
+        <div class="card" style="border-left:3px solid #C2510A;">
+          <div class="card-lbl" style="margin-bottom:4px;font-weight:500;color:#1C1C1C;">Lookup chat_id → ERP</div>
+          <div class="card-body">Mirror in-memory de <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">data/clientes.csv</code>. Si el <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">chat_id</code> no está en el mapa → <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">null</code> (no rompe el flujo).</div>
+        </div>
+        <div class="card" style="border-left:3px solid #1E3A5F;">
+          <div class="card-lbl" style="margin-bottom:4px;font-weight:500;color:#1C1C1C;">Limpieza de texto</div>
+          <div class="card-body">Trim · colapsar espacios múltiples · normalizar <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">\r\n → \n</code> · truncar a <strong>4 000 chars</strong> si el mensaje es gigante.</div>
+        </div>
+      </div>
+      <div class="code-block" style="flex:1; font-size:clamp(7px,.85vw,9.5px);">
+        <span class="lang-chip">JavaScript</span>
+<span class="code-comment">// Heurística de canal (en orden de prioridad)</span>
+<span class="code-key">let</span> canal = <span class="code-str">'email_pdf'</span>;   <span class="code-comment">// default</span>
+
+<span class="code-key">if</span> (texto.includes(<span class="code-str">'HELIONLINK'</span>) || (texto.includes(<span class="code-str">'|'</span>) &amp;&amp; texto.split(<span class="code-str">'|'</span>).length >= <span class="code-val">5</span>)) {
+  canal = <span class="code-str">'helionlink_csv'</span>;
+} <span class="code-key">else if</span> (<span class="code-val">/kairos[\s\-\.]?defense|portal[\s\.\-]web/i</span>.test(texto)) {
+  canal = <span class="code-str">'portal_web'</span>;
+}
+
+<span class="code-comment">// El nodo Set (Stub salida) filtra a exactamente 7 campos</span></div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 7: IO/RE ────────────────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">IO · RE</span>
+      <div class="content-title">Contrato completo del módulo II1</div>
+    </div>
+    <div class="content-body" style="padding:14px 32px;">
+      <div class="iore-grid">
+        <div class="iore-block">
+          <span class="tag tag-input">Inputs</span>
+          <ul>
+            <li>Token Telegram bot (<code>TELEGRAM_BOT_TOKEN</code>)</li>
+            <li>Lista de <code>chat_id</code> autorizados (<code>TELEGRAM_ALLOWED_CHAT_IDS</code>)</li>
+            <li>Mirror in-memory de <code>data/clientes.csv</code> (chat_id → codigo_erp)</li>
+            <li>Payloads de prueba (<code>payload_01…04.txt</code>)</li>
+          </ul>
+        </div>
+        <div class="iore-block">
+          <span class="tag tag-output">Outputs — 7 campos</span>
+          <ul>
+            <li><code>texto_limpio</code> — string ≤ 4 000 chars</li>
+            <li><code>chat_id</code> — string</li>
+            <li><code>codigo_erp_detectado</code> — string | <strong>null</strong></li>
+            <li><code>canal_detectado</code> — email_pdf | helionlink_csv | portal_web</li>
+            <li><code>from_username</code> — string</li>
+            <li><code>fecha_hoy</code> — YYYY-MM-DD</li>
+            <li><code>timestamp_recepcion</code> — ISO 8601 UTC</li>
+          </ul>
+        </div>
+        <div class="iore-block">
+          <span class="tag tag-rule">Reglas</span>
+          <ul>
+            <li>Solo <code>chat_id</code> en lista autorizada pasa el filtro</li>
+            <li>Texto vacío → descartado (no llega al Code)</li>
+            <li>Texto &gt; 4 000 chars → truncado</li>
+            <li><code>\r\n</code>, <code>\r</code> → <code>\n</code> · espacios múltiples → un espacio</li>
+            <li>Prioridad canal: helionlink_csv → portal_web → email_pdf</li>
+          </ul>
+        </div>
+        <div class="iore-block">
+          <span class="tag tag-exc">Excepciones</span>
+          <ul>
+            <li><code>chat_id</code> desconocido → <code>codigo_erp_detectado: null</code> — flujo continúa; II2 trata el caso "cliente nuevo"</li>
+            <li>Texto vacío → Filter descarta antes de llegar al Code</li>
+            <li><code>chat_id</code> no autorizado → Filter descarta</li>
+            <li>Mensaje AOG → <code>email_pdf</code> (semántica en II3)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 8: Los 4 payloads ───────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Prueba</span>
+      <div class="content-title">4 payloads de prueba — enviar uno a uno al bot</div>
+    </div>
+    <div class="content-body">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:18%">Archivo</th>
+            <th style="width:44%">Texto del mensaje</th>
+            <th style="width:18%">canal_detectado</th>
+            <th style="width:20%">codigo_erp_detectado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>payload_01<br>po_estandar.txt</code></td>
+            <td style="font-size:8.5px; font-family:'IBM Plex Mono',monospace;">Purchase Order PO-2025-STRA-0847. Stratos Systems. Part: ST9-HTP-RIB-047, Qty: 12 EA, Need Date: 15/09/2025. Ref: ST-900 program. CoC required.</td>
+            <td><span class="tag tag-input">email_pdf</span></td>
+            <td><span class="tag tag-ok">STRA-001</span></td>
+          </tr>
+          <tr>
+            <td><code>payload_02<br>helionlink_csv.txt</code></td>
+            <td style="font-size:8.5px; font-family:'IBM Plex Mono',monospace;">HELIONLINK|HX7-FUS-PNL-331|24|EA|2025-10-01|HX7|KAIRO-001|Normal</td>
+            <td><span class="tag" style="background:rgba(194,81,10,.1);border-color:#C2510A;color:#C2510A;">helionlink_csv</span></td>
+            <td><span class="tag tag-ok">KAIRO-001</span></td>
+          </tr>
+          <tr>
+            <td><code>payload_03<br>aog_alert.txt</code></td>
+            <td style="font-size:8.5px; font-family:'IBM Plex Mono',monospace;">URGENT AOG - EC-MKL inmovilizado Aeropuerto Sevilla. Necesitamos HX7-FUS-PNL-332 x2 inmediatamente. Contacto: Juan García 654321098</td>
+            <td><span class="tag tag-input">email_pdf</span></td>
+            <td><span class="tag tag-exc">según chat_id</span></td>
+          </tr>
+          <tr>
+            <td><code>payload_04<br>amendment.txt</code></td>
+            <td style="font-size:8.5px; font-family:'IBM Plex Mono',monospace;">PO-2025-STRA-0847 Rev. B. Amendment: cantidad línea 1 cambia de 12 a 8 EA. Nueva Need Date: 30/09/2025.</td>
+            <td><span class="tag tag-input">email_pdf</span></td>
+            <td><span class="tag tag-exc">según chat_id</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout" style="background:#EEF4FB; border-color:#2E6B9E;">
+        <strong style="color:#2E6B9E;">Cómo verificar:</strong> tras enviar cada mensaje, abrir <em>Executions</em> en n8n y revisar el output del nodo <strong>Ingesta · Stub salida</strong>. Deben aparecer exactamente los 7 campos del contrato.
+      </div>
+      <div class="callout">
+        <strong>AOG (payload_03):</strong> se detecta como <code style="font-family:'IBM Plex Mono',monospace;font-size:.9em;">email_pdf</code>. II1 solo identifica el canal de origen, no el contenido. La urgencia AOG llegará en <strong>II3</strong> con el LLM.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SLIDE 9: Section divider — Práctica ───────── -->
+  <div class="slide slide-section">
+    <div class="section-label">Bloque práctico</div>
+    <div class="section-title">Importa · Configura<br><em>Prueba · Verifica</em></div>
+    <div class="section-sub">Sigue los pasos de la guía M3 para importar el workflow, asignar la credencial Telegram y probar los 4 payloads. Objetivo: Gate F1 verde.</div>
+  </div>
+
+  <!-- ─── SLIDE 10: Gate F1 + cierre ────────────────── -->
+  <div class="slide slide-content">
+    <div class="content-header">
+      <span class="chip">Gate F1 · Cierre</span>
+      <div class="content-title">Criterio de cierre · Lo que NO hace II1 · Qué viene en II2</div>
+    </div>
+    <div class="content-body">
+      <div class="card" style="border-left:3px solid #0D7C5A; flex:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span class="tag tag-ok">Gate F1 ✓</span>
+        </div>
+        <div class="card-body">El workflow procesa los 4 payloads y devuelve JSON con los 7 campos del contrato <strong>sin invocar al LLM</strong>. Si todos los campos están presentes y <code style="font-family:'IBM Plex Mono',monospace;font-size:.85em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">canal_detectado</code> coincide con la tabla de prueba, la sesión está completa.</div>
+      </div>
+      <div class="cards-grid cols-2" style="flex:1;">
+        <div class="card">
+          <div class="card-lbl" style="margin-bottom:6px;font-weight:600;color:#B91C1C;">❌ Fuera de scope de II1</div>
+          <ul class="bullet-list">
+            <li>Validar productos contra <code style="font-family:'IBM Plex Mono',monospace;font-size:.8em;background:#F5F2EC;padding:1px 3px;border-radius:2px;">catalogo.csv</code> → II2</li>
+            <li>Aplicar reglas R01–R09 → II2</li>
+            <li>Detectar AOG semánticamente → II3</li>
+            <li>Mapear PN cliente → proveedor → II3</li>
+            <li>Notificar al operador por Telegram → II4</li>
+            <li>Registrar en Google Sheets → II4</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:3px solid #1E3A5F;">
+          <div class="card-lbl" style="margin-bottom:6px;font-weight:600;color:#1E3A5F;">→ En II2 construiremos</div>
+          <ul class="bullet-list">
+            <li>9 reglas deterministas R01–R09</li>
+            <li>Validación de catálogo in-memory</li>
+            <li>Cálculo de fechas de urgencia</li>
+            <li>8 casos de prueba automatizados</li>
+          </ul>
+          <div style="margin-top:10px;">
+            <span class="tag" style="background:rgba(30,58,95,.1);border-color:#1E3A5F;color:#1E3A5F;">Idea fuerza II2: "El agente decide él solo."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div class="counter" id="counter">1 / 10</div>
+<div class="nav-hint">← → para navegar</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const total = slides.length;
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') show(current + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   show(current - 1);
+  });
+
+  const deck = document.getElementById('deck');
+  deck.addEventListener('click', function(e) {
+    const x = e.clientX - deck.getBoundingClientRect().left;
+    if (x > deck.offsetWidth / 2) show(current + 1);
+    else show(current - 1);
+  });
+})();
+</script>
+</body>
+</html>

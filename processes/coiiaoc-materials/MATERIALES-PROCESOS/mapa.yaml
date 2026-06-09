@@ -1,0 +1,36 @@
+# mapa.yaml — Configuración del agente para el generador del mapa de procesos.
+#
+# Lo lee `mapa-procesos-agente/engine/gen_mapa.py`. Aísla los valores
+# ESPECÍFICOS DEL AGENTE (identidad, capa de fuentes, meta-skills) del código
+# del generador, que es genérico. Si este fichero falta o un campo no está, el
+# engine cae a valores genéricos.
+#
+# El CATÁLOGO de procesos NO vive aquí: se descubre del frontmatter de cada
+# docs/proceso-*/PROCESO.md. Los futuros, en el frontmatter de AGENTE-PROCESOS/PROCESO.md.
+
+# Identidad del agente — se incrusta en los títulos de los dos SVG.
+agente:
+  titulo: "Creación de Contenido COIIAOC LuminaBeta"
+
+# Capa de fuentes inmutable — alimenta la caja FUENTES de los diagramas.
+fuentes:
+  raiz: "CONTENT/"                      # subtítulo de la caja FUENTES en diag-01
+  capas:                               # lista de capas de origen en diag-01 (caja ~120px)
+    - "Código de sesión"
+    - "Contexto sesión"
+    - "Guiones · outlines"
+    - "Materiales (MD)"
+  compacta:                            # caja FUENTES (más estrecha) en diag-02
+    - "Código + contexto"
+    - "Guiones · MD"
+
+# Meta-skills de infraestructura: documentan/construyen procesos, no son parte
+# de ninguno. Se EXCLUYEN del chequeo "sin skills huérfanos".
+meta_skills:
+  - build-single-process
+  - mapa-procesos-agente
+  - process-oriented-agent-init
+  # Excluido por ARCHIVADO (no es meta, pero está instalado y sin proceso vivo):
+  # scripts rotos en Windows; el README lo de-lista. Quitar de aquí si se borra
+  # la carpeta .claude/skills/html2pptx/.
+  - html2pptx

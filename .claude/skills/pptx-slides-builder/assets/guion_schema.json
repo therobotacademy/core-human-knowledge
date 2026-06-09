@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Guión PPTX COIIAOC Overview",
+  "description": "Estructura del guión que el skill acepta para generar una presentación COIIAOC.",
+  "type": "object",
+  "required": ["meta", "slides"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Metadatos de la presentación",
+      "required": ["title", "parte", "sesion", "duracion_min", "caso_ancla"],
+      "properties": {
+        "title":        { "type": "string", "description": "Título de la presentación para pres.title" },
+        "parte":        { "type": "string", "description": "Ej: 'Parte 2'" },
+        "sesion":       { "type": "string", "description": "Ej: 'II1' o 'Overview'" },
+        "duracion_min": { "type": "integer", "description": "Duración en minutos (ej: 30)" },
+        "caso_ancla":   { "type": "string", "description": "Nombre del caso ancla (ej: 'VERBEX COMPOSITES')" },
+        "output_name":  { "type": "string", "description": "Nombre del archivo sin extensión (ej: 'parte2_overview')" }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "description": "Lista ordenada de slides",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "portada",          "portada_secundaria",
+              "contenido",        "contenido_cards",
+              "flujo",
+              "tabla",
+              "iore",
+              "divider",
+              "gate",
+              "impacto",
+              "cierre",
+              "preview_sesion",
+              "nodos",
+              "mvp",              "dos_columnas"
+            ],
+            "description": "Tipo de plantilla. Ver references/slide-types.md. portada_secundaria y contenido_cards son alias de portada/contenido con contenido diferente."
+          },
+          "kicker":    { "type": "string", "description": "Texto del badge superior (mayúsculas, con ·)" },
+          "h1":        { "type": "string", "description": "Título principal de la slide" },
+          "subtitulo": { "type": "string", "description": "Frase de apoyo o contexto" },
+          "fondo":     { "type": "string", "enum": ["azul", "crema"], "default": "crema" },
+          "content":   {
+            "type": "object",
+            "description": "Contenido específico del tipo de slide. Estructura varía por tipo.",
+            "additionalProperties": true
+          },
+          "notas":     { "type": "string", "description": "Notas del orador para el speaker notes" }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "meta": {
+        "title": "Parte 2 — Arquitectura y Desarrollo de un Agente IA Industrial",
+        "parte": "Parte 2",
+        "sesion": "Overview",
+        "duracion_min": 30,
+        "caso_ancla": "VERBEX COMPOSITES S.L.",
+        "output_name": "parte2_overview"
+      },
+      "slides": [
+        {
+          "type": "portada",
+          "kicker": "AUTOMATIZACIÓN · COIIAOC · PARTE 2",
+          "h1": "Arquitectura y Desarrollo\nde un Agente IA Industrial",
+          "subtitulo": "Presentación overview · 30 minutos",
+          "fondo": "azul",
+          "content": {
+            "chip": "VERBEX COMPOSITES · Caso ancla Parte 2",
+            "stats": [
+              { "val": "6",   "label": "sesiones"  },
+              { "val": "15h", "label": "lectivas"  },
+              { "val": "2",   "label": "MVPs"      }
+            ]
+          }
+        },
+        {
+          "type": "contenido",
+          "kicker": "PUENTE PARTE 1 → PARTE 2",
+          "h1": "Lo que ya sabéis",
+          "subtitulo": "Cuatro contratos ya firmados. En Parte 2 no los re-explicamos — los desplegamos.",
+          "fondo": "crema",
+          "content": {
+            "cards": [
+              { "title": "IO/RE",  "sub": "Inputs · Outputs · Reglas · Excepciones", "body": "Plantilla entregada en I2." },
+              { "title": "PRDA",   "sub": "Percibir → Razonar → Decidir → Actuar",   "body": "Ciclo agéntico de Parte 2." },
+              { "title": "E5",     "sub": "El LLM no calcula ni decide",              "body": "Es arquitectura obligatoria, no consejo." },
+              { "title": "n8n",    "sub": "Herramienta dominante desde I4",           "body": "n8n + Claude API. Python como alternativa." }
+            ]
+          }
+        },
+        {
+          "type": "impacto",
+          "kicker": "PRINCIPIO ARQUITECTÓNICO · INVARIANTE",
+          "h1": "La regla que no podéis romper",
+          "fondo": "crema",
+          "content": {
+            "enunciado_a": "El LLM ",
+            "enfasis_a":   "extrae",
+            "enunciado_b": ".  Las reglas ",
+            "enfasis_b":   "calculan",
+            "columna_negativa": {
+              "titulo": "❌  ANTIPATRÓN",
+              "items":  ["LLM decide prioridad", "LLM valida catálogo", "LLM calcula fechas"]
+            },
+            "columna_positiva": {
+              "titulo": "✅  PATRÓN E5",
+              "items":  ["LLM extrae del texto libre", "R01–R09 JS determinista deciden", "Parser anti-alucinación valida"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
