@@ -6,6 +6,11 @@ convención de las guías de `core-human-knowledge`, así que funciona sin tener
 delante.
 
 > Atajo: si solo quieres el `.md` y no el diagrama, borra el bloque **B (SVG)**.
+>
+> Fuente canónica de la paleta (solo si trabajas **dentro del repo**, donde el fichero
+> existe): [`paleta_curso_V2.html`](paleta_curso_V2.html) — swatches, roles y HEX exactos
+> (está junto a esta plantilla en `assets/`). Fuera del repo, los tokens ya van embebidos
+> en el bloque B, así que no hace falta.
 
 ---
 
