@@ -20,6 +20,7 @@ Skills are reusable Claude Code behaviors stored in `.claude/skills/`. Each skil
 |---|---|---|
 | **Slides / decks** | `pptx-slides-builder` · `html-slides-builder` · `marco-teorico-pbl` · ~~`html2pptx`~~ | PPTX · HTML · PDF |
 | **Diagramas** | `code-diagram-explainer` · `text-to-diagram` | SVG |
+| **Guías / docs** | `md-guide-builder` | `.md` + `.svg` (par de guía) |
 | **Documentos** | `apm-docx-builder` · (globales: `pdf-export`, `word-template-gen`) | DOCX · PDF |
 | **Documentación de código** | `repo-code-explainer` (compone Diagramas + Documentos) → [`proceso-codigo`](../../docs/proceso-codigo/PROCESO.md) | DOCX (SVG embebidos) |
 
@@ -93,6 +94,24 @@ Convierte descripciones de metodologías, marcos conceptuales y flujos en SVG au
 | **Invoke** | `/text-to-diagram` · "convierte en diagrama", "diagrama de este marco/flujo/metodología" |
 | **Input** | texto estructurado (metodología, marco, lista de pasos, relaciones) |
 | **Output** | SVG autónomo inline |
+
+---
+
+## Guías / docs
+
+### `md-guide-builder` — tema/notas → guía `.md` + `.svg` (estilo casa)
+
+Produce una **guía práctica** en el estilo de la categoría `guides/`: documento
+`NN-TIPO-tema.md` (idea rectora + secciones + tabla resumen + chuleta de comandos) con
+su **SVG autoexplicativo** (paleta COIIAOC · tipografía V2). Funciona dentro del repo
+(numera y coloca en `guides/`) o en cualquier otra carpeta donde se trabaje.
+
+|  |  |
+| --- | --- |
+| **Invoke** | `/md-guide-builder` · "haz una guía", "genera un cheatsheet/tutorial/procedimiento", "documenta esto como guía", "dame la plantilla portátil" |
+| **Input** | un tema o notas crudas + el TIPO (CHEATSHEET · TUTORIAL · PROCEDIMIENTO · REFERENCIA) |
+| **Output** | `NN-TIPO-tema.md` (+ `.svg` mismo basename) en `guides/` (in-repo) o en el dir actual (anywhere) |
+| **Extra** | emite un **prompt portátil** (`assets/PROMPT-TEMPLATE.md`) para copiar y pegar el estilo en cualquier sesión, sin el repo |
 
 ---
 
