@@ -40,6 +40,7 @@ Cada guía es un `.md` acompañado de un **diagrama SVG autoexplicativo** (legib
 | -- | --------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | 01 | [Cheatsheet · Git nativo (merge) vs. Pull Requests (`gh`)](guides/01-CHEATSHEET-git-PR-vs-merge.md) | [SVG](guides/01-CHEATSHEET-git-PR-vs-merge.svg) |
 | 02 | [Tutorial · `git worktree`](guides/02-TUTORIAL-git-worktree.md)                                     | [SVG](guides/02-TUTORIAL-git-worktree.svg)      |
+| 03 | [Tutorial · `git push --force-with-lease`](guides/03-TUTORIAL-git-force-with-lease.md)              | [SVG](guides/03-TUTORIAL-git-force-with-lease.svg) |
 
 ### `processes/` — procesos de generación de materiales
 

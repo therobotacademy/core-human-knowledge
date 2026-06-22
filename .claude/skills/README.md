@@ -8,9 +8,9 @@ Skills are reusable Claude Code behaviors stored in `.claude/skills/`. Each skil
 - **Explicit invocation:** Type `/skill-name` to force-activate a skill regardless of context.
 - Skills are stateless — they load fresh from `SKILL.md` on each invocation.
 
-> **Mapa visual de toda la casuística:** [`_content-creation-map/`](_content-creation-map/) — 5 SVG (overview · slides · documentos · diagramas · lecciones/editorial) que muestran entrada → skill → salida. Esta tabla es el texto; los SVG son el mapa.
+> **Mapa visual de toda la casuística:** [`processes/coiiaoc-materials/MATERIALES-PROCESOS/svg/`](../../processes/coiiaoc-materials/MATERIALES-PROCESOS/svg/) — `diag-01-mapa-top.svg` (visión general) · `diag-02-skills.svg` (skill-level). Los SVG por proceso viven en `svg/` de cada `proceso-*/`.
 >
-> **Vista estructural (procesos):** la lista de skills por **proceso**, sus relaciones y la invariante «sin huérfanos» viven en [`docs/AGENTE-PROCESOS/`](../../docs/AGENTE-PROCESOS/PROCESO.md), regenerada por `mapa-procesos-agente`. Esta README/`USE-CASES.md` son la vista **operativa** (entrada→skill→salida); el mapa de procesos es la vista **estructural**.
+> **Vista estructural (procesos):** la lista de skills por **proceso**, sus relaciones y la invariante «sin huérfanos» viven en [`processes/coiiaoc-materials/MATERIALES-PROCESOS/`](../../processes/coiiaoc-materials/MATERIALES-PROCESOS/PROCESO.md), regenerada por `mapa-procesos-agente`. Esta README/`USE-CASES.md` son la vista **operativa** (entrada→skill→salida); el mapa de procesos es la vista **estructural**.
 
 ---
 
@@ -22,7 +22,7 @@ Skills are reusable Claude Code behaviors stored in `.claude/skills/`. Each skil
 | **Diagramas**                 | `code-diagram-explainer` · `text-to-diagram`                                                                   | SVG                               |
 | **Guías / docs**             | `md-guide-builder`                                                                                                | `.md` + `.svg` (par de guía) |
 | **Documentos**                | `apm-docx-builder` · (globales: `pdf-export`, `word-template-gen`)                                           | DOCX · PDF                       |
-| **Documentación de código** | `repo-code-explainer` (compone Diagramas + Documentos) → [`proceso-codigo`](../../docs/proceso-codigo/PROCESO.md) | DOCX (SVG embebidos)              |
+| **Documentación de código** | `repo-code-explainer` (compone Diagramas + Documentos) → [`proceso-codigo`](../../processes/coiiaoc-materials/proceso-codigo/PROCESO.md) | DOCX (SVG embebidos)              |
 
 Skills de edición editorial y lecciones (`lesson-from-source`, `authorship-validator`, `voice-refiner`, `atlas-slop-ai`) son **de usuario** (`~/.claude/skills/`), no viven en este repo; aparecen en la hoja 03 del mapa por completitud.
 
@@ -181,7 +181,7 @@ Distinto de `code-diagram-explainer` (un fragmento, render inline) y de `apm-doc
 ¿DOCUMENTACIÓN DE CÓDIGO?      → repo-code-explainer → SVG/PNG + DOCX integrado
 ```
 
-Detalle completo de cada flujo en [`_content-creation-map/`](_content-creation-map/) y casuística por metodología en [`USE-CASES.md`](USE-CASES.md).
+Detalle completo de cada flujo en [`processes/coiiaoc-materials/`](../../processes/coiiaoc-materials/) y casuística por metodología en [`USE-CASES.md`](USE-CASES.md).
 
 ---
 
@@ -192,5 +192,5 @@ El código es la fuente de verdad. Una sesión del curso no produce materiales (
 ## Adding a new skill
 
 1. Create `.claude/skills/<slug>/SKILL.md` — define triggers, inputs, outputs, pipeline, constraints.
-2. Add an entry to this README (en su familia) y, si aplica, al mapa `_content-creation-map/`.
+2. Add an entry to this README (en su familia) y, si aplica, actualiza el `PROCESO.md` del proceso correspondiente en `processes/coiiaoc-materials/`.
 3. Register trigger phrases in `.claude/settings.json` if automatic activation is needed.

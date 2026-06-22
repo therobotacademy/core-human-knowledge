@@ -30,7 +30,4 @@ meta_skills:
   - build-single-process
   - mapa-procesos-agente
   - process-oriented-agent-init
-  # Excluido por ARCHIVADO (no es meta, pero está instalado y sin proceso vivo):
-  # scripts rotos en Windows; el README lo de-lista. Quitar de aquí si se borra
-  # la carpeta .claude/skills/html2pptx/.
-  - html2pptx
+  # html2pptx ARCHIVADO y carpeta eliminada — excluido del lint.

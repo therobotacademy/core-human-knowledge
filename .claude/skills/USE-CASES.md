@@ -1,8 +1,8 @@
 # Skills — Casuística de creación de contenidos
 
-Cómo se crean los contenidos del repositorio con los skills: **qué entra, qué skill lo procesa, qué sale**. Este documento es la versión narrativa de los diagramas en [`_content-creation-map/`](_content-creation-map/) (overview · slides · documentos · diagramas · lecciones/editorial).
+Cómo se crean los contenidos del repositorio con los skills: **qué entra, qué skill lo procesa, qué sale**. Este documento es la versión narrativa de los mapas en [`processes/coiiaoc-materials/MATERIALES-PROCESOS/svg/`](../../processes/coiiaoc-materials/MATERIALES-PROCESOS/svg/) (visión general · skill-level). Los SVG por proceso viven en `svg/` de cada `proceso-*/`.
 
-> **Capas.** Esta es la **vista operativa** (entrada→skill→salida, metodologías A/B, mapa de decisión). La **vista estructural** —procesos, relaciones tipadas, invariante «sin huérfanos»— vive en [`docs/AGENTE-PROCESOS/`](../../docs/AGENTE-PROCESOS/PROCESO.md), regenerada por `mapa-procesos-agente`. La familia editorial (D) y el eje metodológico A/B solo se modelan **aquí**; los 4 procesos locales de generación, **allí**.
+> **Capas.** Esta es la **vista operativa** (entrada→skill→salida, metodologías A/B, mapa de decisión). La **vista estructural** —procesos, relaciones tipadas, invariante «sin huérfanos»— vive en [`processes/coiiaoc-materials/MATERIALES-PROCESOS/`](../../processes/coiiaoc-materials/MATERIALES-PROCESOS/PROCESO.md), regenerada por `mapa-procesos-agente`. La familia editorial (D) y el eje metodológico A/B solo se modelan **aquí**; los 4 procesos locales de generación, **allí**.
 
 ---
 
@@ -53,8 +53,7 @@ repositorio (código) ─▶ repo-code-explainer  ─▶ DOCX con un diagrama po
 | `text-to-diagram` | texto/conceptos estructurados (metodología, marco, flujo) | SVG autónomo que sustituye al texto |
 | `repo-code-explainer` | un repositorio de código | DOCX que explica el repo (un SVG por unidad) — `proceso-codigo` |
 
-Familia de **activos visuales de curso**. Detalle estructural en `docs/proceso-diagramas/` y
-`docs/proceso-codigo/`; vista visual en `_content-creation-map/04-diagramas.svg`.
+Familia de **activos visuales de curso**. Detalle estructural en [`processes/coiiaoc-materials/proceso-diagramas/`](../../processes/coiiaoc-materials/proceso-diagramas/PROCESO.md) y [`proceso-codigo/`](../../processes/coiiaoc-materials/proceso-codigo/PROCESO.md).
 
 ---
 

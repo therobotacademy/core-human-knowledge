@@ -100,6 +100,5 @@ material recorre: MD → script de generación → `node` → DOCX validado → 
 
 ---
 
-*Diagramas en `svg/`. Definición de "proceso" y gramática en el kit Process-Oriented Agent
-(`process-oriented-agent-kit/`). Mapa global en `docs/AGENTE-PROCESOS/`. Procesos análogos:
-`docs/proceso-slides/`, `docs/proceso-diagramas/`.*
+*Diagramas en `svg/`. Mapa global en [`../MATERIALES-PROCESOS/`](../MATERIALES-PROCESOS/PROCESO.md). Procesos análogos:
+[`../proceso-slides/`](../proceso-slides/PROCESO.md), [`../proceso-diagramas/`](../proceso-diagramas/PROCESO.md).*

@@ -99,7 +99,7 @@ operativa · visual) no diverjan:
 2. `python .claude/skills/mapa-procesos-agente/engine/gen_mapa.py` → regenera los SVG + corre el lint
    («sin huérfanos»). **Lint en verde** es condición para dar el cambio por bueno.
 3. Conciliar las **vistas operativas** a mano: tablas de `.claude/skills/README.md` y `USE-CASES.md`
-   (+ la hoja de `_content-creation-map/` que aplique). Candidato a automatizar con `repo-reconciler`.
+   (+ el `PROCESO.md` del proceso correspondiente en `processes/coiiaoc-materials/`). Automatizable con `repo-reconciler` (skill operativo en `~/.claude/skills/`).
 
 El **frontmatter** es la fuente de verdad estructural; los SVG y las tablas son **derivados**.
 

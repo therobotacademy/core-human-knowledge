@@ -104,14 +104,14 @@ y el motor DOCX en `proceso-documentos`.
 
 | Aspecto | Decisión | Razón |
 |---|---|---|
-| Inventario | **hard-codeado** para `MVP-Crew_NCR` en el prototipo | la auto-detección de unidades de un repo arbitrario es Phase-2 (criterio/LLM) |
-| Embebido DOCX | solo **PNG** (`python-docx`) en el prototipo | la calidad vectorial (par PNG+SVG, como II3) requiere la infra Node `docx` — Phase-2 |
-| `docx-apm-utils.js` | acoplado al curso APM | generalizar a un módulo curso-neutro (decisión §8.4 de la PROPUESTA) |
-| Gramática SVG | duplicada en Python (`gen_repo_diagrams.py`) | unificar con un modo-fichero en `code-diagram-explainer` (decisión §8.1) |
+| Inventario | AST genérico (`inventory.py`) + cross-check con `inventario.json` — auto-stub de unidades core sin curar | ✅ Phase-2 completada |
+| Embebido DOCX | par **PNG+SVG** (`python-docx` + OOXML `attach_svg`) — 16 media / 8 `svgBlip` / `Content_Types svg` verificados | ✅ Phase-2 completada |
+| `docx-apm-utils.js` | alias de `_shared/docx-core.js` (motor curso-neutro) — compatibilidad mantenida | ✅ Phase-2 completada |
+| Gramática SVG | modo-fichero unificado: `code-diagram-explainer/svg_grammar.py` importado por `gen_repo_diagrams.py` — salida byte-idéntica verificada | ✅ Phase-2 completada |
 | Relaciones `informa` | a `diagramas` y `documentos` | comparte gramática/infra; el engine no las dibuja (solo informa desde `fundacional`), pero quedan en el catálogo |
 
 ---
 
 *Diagramas en `svg/`. Diseño y casuística en [`PROPUESTA.md`](PROPUESTA.md). Salida del prototipo:
 `CONTENT/PARTE2-coiiaoc-Materiales/II-CrewIA/M_codigo-crew_NCR/`. Mapa global en
-`docs/AGENTE-PROCESOS/`. Procesos análogos/compuestos: `docs/proceso-diagramas/`, `docs/proceso-documentos/`.*
+[`../MATERIALES-PROCESOS/`](../MATERIALES-PROCESOS/PROCESO.md). Procesos análogos/compuestos: [`../proceso-diagramas/`](../proceso-diagramas/PROCESO.md), [`../proceso-documentos/`](../proceso-documentos/PROCESO.md).*

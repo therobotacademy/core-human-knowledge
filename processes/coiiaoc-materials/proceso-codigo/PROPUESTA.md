@@ -1,7 +1,8 @@
 # Propuesta de proceso — Documentación de código (repo → diagramas + DOCX)
 
-**Estado:** PROPUESTA (no es un proceso construido) · **Fecha:** 2026-06-08 · **Rama:** `skills/procesos`
-**Slug futuro:** `proceso-codigo` · **Skill nuevo propuesto:** `repo-code-explainer`
+**Estado:** IMPLEMENTADO (prototipo validado, 2026-06-08) · **Slug:** `proceso-codigo` · **Skill:** `repo-code-explainer`
+
+> Este documento es el registro histórico de la propuesta original. El skill está implementado y el proceso documentado en `PROCESO.md`.
 
 > Este documento es una **propuesta**, no un `PROCESO.md` activo. Se llama `PROPUESTA.md` a propósito:
 > `mapa-procesos-agente` solo descubre `docs/proceso-*/PROCESO.md`, así que esta carpeta **no entra
