@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-svg_grammar.py — Gramática visual de code-diagram-explainer (paleta COIIAOC v1.1), en Python.
+svg_grammar.py — Gramática visual de code-diagram-explainer (paleta COIIAOC v2), en Python.
 
 FUENTE ÚNICA del renderer de diagramas de código por bloques apilados (+ rama lateral ✓/✗).
 Vive aquí (en el skill dueño de la gramática); otros skills la IMPORTAN en vez de duplicarla
@@ -31,19 +31,22 @@ import json
 import sys
 from pathlib import Path
 
-FONT = "system-ui,-apple-system,'Segoe UI',sans-serif"
-MONO = "'IBM Plex Mono','Consolas',monospace"
+# Tipografía COIIAOC v2: solo fuentes de sistema (prohibido Syne / IBM Plex).
+FONT = "'Segoe UI',Arial,sans-serif"
+MONO = "Consolas,'Courier New',monospace"
 
-# Paleta COIIAOC v1.1 (clase → (fill, stroke))
+# Paleta COIIAOC v2 (clase → (fill, stroke)). Mapea a los roles IO/RE:
+#   blue=inputs · teal=outputs · amber=reglas · red=excepciones ·
+#   purple→naranja-oscuro (decisión/condición, solo sobre claro) · gray=neutro.
 CLS = {
-    "blue":   ("#EBF4FF", "#2E6B9E"),
-    "purple": ("#EEEDFE", "#534AB7"),
-    "teal":   ("#E6F7F2", "#0D7C5A"),
-    "amber":  ("#FFF7ED", "#B45309"),
-    "red":    ("#FFF5F5", "#B91C1C"),
-    "gray":   ("#FAFAF7", "#9B9B9B"),
+    "blue":   ("#EAF1F7", "#2E6B9E"),   # inputs
+    "purple": ("#FBEEE6", "#C2510A"),   # decisión/condición (naranja-oscuro v2)
+    "teal":   ("#E6F4EE", "#0D7C5A"),   # outputs
+    "amber":  ("#FBF1E0", "#B45309"),   # reglas / advertencias
+    "red":    ("#FBEAEA", "#B91C1C"),   # excepciones
+    "gray":   ("#FAFAF7", "#9B9B9B"),   # neutro / upstream-downstream
 }
-NODE_FILL, NODE_TEXT = "#1E3A5F", "#FF8C3B"
+NODE_FILL, NODE_TEXT = "#1E3A5F", "#FF8C3B"   # azul institución + naranja luminoso
 
 W = 720
 XM, WM = 60, 410          # columna principal

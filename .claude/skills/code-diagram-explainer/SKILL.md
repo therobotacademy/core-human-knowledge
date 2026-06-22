@@ -4,7 +4,7 @@ description: >
   Genera diagramas SVG inline que explican visualmente fragmentos de código:
   nodos n8n, funciones, pipelines, clases, workflows. El diagrama incluye
   pseudo-código real extraído del fuente, flujo de control con ramas ✓/✗,
-  anotaciones didácticas y paleta COIIAOC v1.1.
+  anotaciones didácticas y paleta COIIAOC v2.
 
   Activa este skill SIEMPRE que Bernardo pida "explica este nodo", "idem para
   el nodo X", "diagrama del nodo", "esquema visual del código", "explica
@@ -99,31 +99,34 @@ mediante un bloque `<style>` al inicio del elemento raíz:
 
 ```svg
 <style>
-  .th { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
-        fill: #1C1C1C; }
-  .ts { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px;
+  .th { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+        font-weight: 700; fill: #1C1C1C; }
+  .ts { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
         fill: #6B6B6B; }
 </style>
 ```
 
-> **Nota**: `visualize:show_widget` renderiza en un entorno donde las fuentes
-> Google (Syne, IBM Plex) pueden no estar disponibles. El fallback es
-> `sans-serif` / `monospace`. El resultado visual es aceptable; no añadir
-> `@import` de Google Fonts dentro del SVG.
+> **Nota (v2)**: solo **fuentes de sistema** — texto `'Segoe UI', Arial,
+> sans-serif`; código/mono `Consolas, 'Courier New', monospace`. **Prohibido**
+> Syne, IBM Plex y cualquier Google Font. No añadir `@import` dentro del SVG.
 
-### Paleta COIIAOC v1.1 — tokens para diagramas
+### Paleta COIIAOC v2 — tokens para diagramas
 
-Los nodos del diagrama usan clases de color semánticas definidas como grupos
-`<g class="node c-X">`. Implementarlas via atributos directos en `<rect>`:
+Los nodos del diagrama usan clases de color semánticas (roles **IO/RE** de v2)
+definidas como grupos `<g class="node c-X">`. Implementarlas via atributos
+directos en `<rect>`:
 
-| Clase | fill rect | stroke rect | Uso |
+| Clase | fill rect | stroke rect | Rol IO/RE · uso |
 |-------|-----------|-------------|-----|
-| `c-blue` | `#EBF4FF` | `#2E6B9E` | Contenedores, bucles, secciones principales |
-| `c-purple` | `#EEEDFE` | `#534AB7` | Checks de validación, condiciones |
-| `c-teal` | `#E6F7F2` | `#0D7C5A` | Outputs positivos, pasos de escritura |
-| `c-amber` | `#FFF7ED` | `#B45309` | Advertencias, degradaciones suaves, stubs |
-| `c-red` | `#FFF5F5` | `#B91C1C` | Errores, throws, excepciones |
-| `c-gray` | `#FAFAF7` | `#9B9B9B` | Nodos upstream/downstream, inicialización |
+| `c-blue` | `#EAF1F7` | `#2E6B9E` | **inputs** · contenedores, bucles, secciones principales |
+| `c-purple` | `#FBEEE6` | `#C2510A` | **decisión/condición** (naranja-oscuro, solo sobre claro) |
+| `c-teal` | `#E6F4EE` | `#0D7C5A` | **outputs** positivos, pasos de escritura |
+| `c-amber` | `#FBF1E0` | `#B45309` | **reglas** · advertencias, degradaciones, stubs |
+| `c-red` | `#FBEAEA` | `#B91C1C` | **excepciones** · errores, throws |
+| `c-gray` | `#FAFAF7` | `#9B9B9B` | neutro · nodos upstream/downstream, init |
+
+> Borde institucional de leyenda/contenedores: `#E8E3D8`. **Nunca** usar
+> naranja-oscuro `#C2510A` sobre azul; el naranja sobre azul es `#FF8C3B`.
 
 **Nodos upstream/downstream** (fuera del contenedor principal): usar `c-gray`
 con `fill="#1E3A5F"` (azul institución) y texto `fill="#FF8C3B"` cuando sean
@@ -346,7 +349,7 @@ de abstracción superior al SVG.
 - [ ] ¿He leído el código fuente completo antes de dibujar?
 - [ ] ¿El pseudo-código en el SVG es literal (no parafraseado)?
 - [ ] ¿Las condiciones de bifurcación usan los operadores reales del código?
-- [ ] ¿Los colores siguen la paleta COIIAOC v1.1?
+- [ ] ¿Los colores siguen la paleta COIIAOC v2?
 - [ ] ¿El `viewBox` tiene alto suficiente para todo el contenido?
 - [ ] ¿El nodo upstream y el downstream están identificados?
 - [ ] ¿Cada bloque con `onclick` tiene una pregunta didáctica de "por qué"?
