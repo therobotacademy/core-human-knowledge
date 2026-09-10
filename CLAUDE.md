@@ -27,6 +27,8 @@ Bernardo deja caer un `.md` que es una **guía práctica** (cheatsheet, tutorial
    - `02-TUTORIAL-git-worktree.md`
 3. **Coloca en `guides/`** la versión numerada. Conserva el original sin tocar en `raw/`.
 4. **Genera el SVG** `NN-…svg`, junto al `.md`, siguiendo la gramática visual de abajo.
+5. **Actualiza el índice** de `README.md`.
+6. **Regenera la app (`guides/index.html`)** ejecutando `python scripts/build_guide_browser.py`.
 
 ### Gramática visual del SVG (paleta COIIAOC · tipografía V2)
 Referencia viva: `guides/01-CHEATSHEET-git-PR-vs-merge.svg` y `guides/02-TUTORIAL-git-worktree.svg`. Replica su estructura, no la inventes de cero.

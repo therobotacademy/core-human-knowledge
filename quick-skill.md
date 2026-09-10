@@ -9,6 +9,7 @@
 | Entregable deseado | Pide al agente | Entrada necesaria | Salida generada |
 |---|---|---|---|
 | **Guía práctica numerada** | `"Procesa esta guía como [TIPO]"` | Fichero MD o notas en `raw/` | `guides/NN-TIPO-tema.md` + `.svg` |
+| **Regenerar guía existente** | `"Regenera la guía NN"` / `"Actualiza el SVG de la guía NN"` | Cambios en `guides/NN-*.md` | `.svg` actualizado + `guides/index.html` recompilado |
 | **Explorador de guías offline** | `"Recompila el explorador de guías"` | Ficheros en `guides/` | `guides/index.html` (buscador + lector MD+SVG) |
 | **Diagrama conceptual/flujo** | `"Convierte esto en diagrama"` | Texto estructurado / pasos | SVG autónomo (paleta COIIAOC v2) |
 | **Diagrama de código/nodo** | `"Explica visualmente este código/nodo"` | Fragmento de código / nodo | SVG (pseudocódigo + ramas ✓/✗) |
@@ -23,17 +24,20 @@
 ## 2. Instrucciones por entregable
 
 ### A. Guías prácticas (`guides/`)
-- **Disparador:** Deja caer el material crudo en `raw/`.
-- **Prompt:** `"Procesa raw/<archivo>.md como [CHEATSHEET | TUTORIAL | PROCEDIMIENTO | REFERENCIA]"`.
-- **Comportamiento autónomo del agente:**
-  1. Busca el siguiente número `NN` en `guides/` (ej. si existen 01, 02, 03 → asigna `04`).
+- **Disparador alta:** Deja caer el material crudo en `raw/`.
+- **Prompt alta:** `"Procesa raw/<archivo>.md como [CHEATSHEET | TUTORIAL | PROCEDIMIENTO | REFERENCIA]"`.
+- **Disparador regeneración:** Cambios de contenido o estructura en una guía existente `guides/NN-*.md`.
+- **Prompt regeneración:** `"Regenera la guía NN"` o `"Actualiza el diagrama de la guía NN"`.
+- **Comportamiento autónomo del agente (alta o regeneración):**
+  1. En altas, calcula el siguiente `NN` consecutivo en `guides/` (ej. 01..06 → `07`). En regeneraciones, mantiene el `NN` asignado.
   2. Nombra canónicamente `NN-TIPO-tema-en-kebab.md`.
-  3. Genera en paralelo el diagrama complementario `NN-TIPO-tema-en-kebab.svg` (paleta COIIAOC v2, 1200 px, autocontenido).
+  3. Genera o sincroniza el diagrama complementario `NN-TIPO-tema-en-kebab.svg` (paleta COIIAOC v2, 1200 px, autocontenido).
   4. Actualiza la tabla de categorías en `README.md`.
-  5. Conserva intacto el archivo original en `raw/`.
+  5. **Regenera la app (Explorador de Guías):** Ejecuta `python scripts/build_guide_browser.py` para actualizar `guides/index.html`.
+  6. Conserva intacto el archivo original en `raw/`.
 - **Explorador offline (`guides/index.html`):**
   - Abre directamente en Edge/Chrome/Firefox sin servidor web.
-  - Recompila tras añadir nuevas guías: `python scripts/build_guide_browser.py` (o `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`).
+  - Recompilación manual: `python scripts/build_guide_browser.py` (o `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`).
 
 ### B. Diagramas SVG (`text-to-diagram` & `code-diagram-explainer`)
 - **Texto/Procesos:** Pide `"Diagrama de este marco/metodología"`. Pasa listas numeradas o jerarquías. Produce un SVG que sustituye al texto explicativo.

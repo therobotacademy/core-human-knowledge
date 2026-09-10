@@ -45,6 +45,7 @@ Bernardo deja caer en `raw/` (o en la raíz del repositorio) un fichero `.md` qu
 3. **Coloca en `guides/`:** Guarda la versión formateada y numerada en `guides/`. Conserva intacto el original en `raw/`.
 4. **Genera el SVG complementario:** Crea `NN-TIPO-tema-en-kebab.svg` en `guides/`, junto al `.md`, siguiendo estrictamente la gramática visual descrita a continuación.
 5. **Actualiza el índice:** Registra la nueva guía y su diagrama en la tabla de categorías de [README.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/README.md).
+6. **Regenera la app (Explorador de Guías):** Recompila el explorador web interactivo ejecutando `python scripts/build_guide_browser.py` para que el nuevo contenido y su diagrama queden automáticamente indexados y disponibles para lectura offline en [`guides/index.html`](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/guides/index.html).
 
 ### Gramática visual del SVG (Paleta COIIAOC · Tipografía V2)
 **Referencias vivas en el repositorio:**
@@ -120,3 +121,4 @@ Para considerar completado un encargo sobre el repositorio:
 2. Si es una guía, el diagrama SVG complementario existe, es autocontenido y cumple al 100% la paleta COIIAOC y tipografía V2.
 3. El fichero original en `raw/` permanece intacto.
 4. Si se añade una nueva guía o categoría, el índice de [README.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/README.md) queda actualizado y sincronizado.
+5. Si se añade o modifica una guía, la app offline [`guides/index.html`](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/guides/index.html) queda regenerada ejecutando `python scripts/build_guide_browser.py`.
