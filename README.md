@@ -1,5 +1,9 @@
 # Core Human Knowledge
 
+PENDIENTES:
+
+- See tag `paleta_curso_V2' en 53-APM. Esto aplica a nivel top, no modifica los skills!!
+
 > Este repositorio contiene aquel conocimiento práctico que delego habitualmente en Claude, y que no debo olvidar.
 
 Es una **base de conocimiento personal** pensada para trabajarse *con* Claude Code: el material crudo entra, Claude lo procesa a un formato canónico, y el resultado queda versionado para no perderse. Las reglas operativas que Claude sigue al procesar viven en [`CLAUDE.md`](CLAUDE.md).
@@ -36,10 +40,10 @@ core-human-knowledge/
 
 Cada guía es un `.md` acompañado de un **diagrama SVG autoexplicativo** (legible sin abrir el `.md`), con la paleta y la tipografía COIIAOC. El nombre sigue el patrón `NN-TIPO-tema.md` (`CHEATSHEET`, `TUTORIAL`, …). La gramática visual del SVG está especificada en [`CLAUDE.md`](CLAUDE.md#categoría--guides).
 
-| #  | Guía                                                                                               | Diagrama                                     |
-| -- | --------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| 01 | [Cheatsheet · Git nativo (merge) vs. Pull Requests (`gh`)](guides/01-CHEATSHEET-git-PR-vs-merge.md) | [SVG](guides/01-CHEATSHEET-git-PR-vs-merge.svg) |
-| 02 | [Tutorial · `git worktree`](guides/02-TUTORIAL-git-worktree.md)                                     | [SVG](guides/02-TUTORIAL-git-worktree.svg)      |
+| #  | Guía                                                                                               | Diagrama                                        |
+| -- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| 01 | [Cheatsheet · Git nativo (merge) vs. Pull Requests (`gh`)](guides/01-CHEATSHEET-git-PR-vs-merge.md) | [SVG](guides/01-CHEATSHEET-git-PR-vs-merge.svg)    |
+| 02 | [Tutorial · `git worktree`](guides/02-TUTORIAL-git-worktree.md)                                     | [SVG](guides/02-TUTORIAL-git-worktree.svg)         |
 | 03 | [Tutorial · `git push --force-with-lease`](guides/03-TUTORIAL-git-force-with-lease.md)              | [SVG](guides/03-TUTORIAL-git-force-with-lease.svg) |
 
 ### `processes/` — procesos de generación de materiales
