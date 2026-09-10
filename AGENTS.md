@@ -13,7 +13,7 @@ Base de conocimiento práctico que Bernardo delega en agentes de IA (Antigravity
   - No ejecutes comandos interactivos `cd`; utiliza rutas absolutas o relativas al directorio raíz del workspace.
   - Enlaces a ficheros en Markdown: formato clickable con esquema `file:///` y barras inclinadas `/` (ej. `[README.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/README.md)` o rutas relativas).
 - **Codificación:** Todos los ficheros generados (`.md`, `.svg`) deben escribirse en **UTF-8** sin BOM.
-- **Enrutamiento de skills locales:** Las skills del repositorio residen en `.claude/skills/`. El agente debe consultar, invocar y ejecutar las skills directamente desde `.claude/skills/` (no busques ni repliques ficheros en `.agents/`).
+- **Enrutamiento de skills locales:** Las skills de autoría y materiales residen en `.claude/skills/` y las skills de SpecKit residen en `.agents/skills/`. El agente consulta directamente ambas ubicaciones sin duplicar ficheros innecesariamente.
 
 ---
 
