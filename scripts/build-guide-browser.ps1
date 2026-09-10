@@ -24,7 +24,7 @@ foreach ($file in $mdFiles) {
         $type = $Matches[2]
         $slug = $Matches[3]
 
-        $content = Get-Content -Path $file.FullName -Raw -Encoding UTF8
+        $content = [System.IO.File]::ReadAllText($file.FullName, [System.Text.Encoding]::UTF8)
 
         # Extract title from first H1 (# Title)
         $title = "$($type): $slug"
@@ -44,28 +44,29 @@ foreach ($file in $mdFiles) {
         $hasSvg = Test-Path $svgPath
         $svgContent = ""
         if ($hasSvg) {
-            $svgContent = Get-Content -Path $svgPath -Raw -Encoding UTF8
+            $svgContent = [System.IO.File]::ReadAllText($svgPath, [System.Text.Encoding]::UTF8)
         }
 
         # Build search tags
-        $tags = @($type.ToLower(), $slug.Split('-'))
-        if ($title -match "git") { $tags += "git" }
-        if ($title -match "latex|overleaf") { $tags += "latex", "overleaf" }
-        if ($title -match "spec|speckit") { $tags += "spec-kit", "sdd" }
-        if ($title -match "superpowers") { $tags += "superpowers", "tdd" }
+        $rawTags = @($type.ToLower()) + ($slug -split '-')
+        if ($title -match "git") { $rawTags += "git" }
+        if ($title -match "latex|overleaf") { $rawTags += @("latex", "overleaf") }
+        if ($title -match "spec|speckit") { $rawTags += @("spec-kit", "sdd") }
+        if ($title -match "superpowers") { $rawTags += @("superpowers", "tdd") }
+        $tags = @($rawTags | ForEach-Object { [string]$_ } | Where-Object { $_ -and $_.Length -gt 1 } | Select-Object -Unique)
 
         $guideObj = [PSCustomObject]@{
-            id = $id
-            type = $type
-            slug = $slug
-            title = $title
-            summary = $summary
-            mdFilename = $file.Name
-            svgFilename = $svgName
-            hasSvg = $hasSvg
-            tags = ($tags | Select-Object -Unique)
-            contentMarkdown = $content
-            contentSvg = $svgContent
+            id = [string]$id
+            type = [string]$type
+            slug = [string]$slug
+            title = [string]$title
+            summary = [string]$summary
+            mdFilename = [string]$file.Name
+            svgFilename = [string]$svgName
+            hasSvg = [bool]$hasSvg
+            tags = $tags
+            contentMarkdown = [string]$content
+            contentSvg = [string]$svgContent
         }
 
         $guides += $guideObj
@@ -416,14 +417,13 @@ $htmlTemplate = @'
     }
     .svg-wrapper {
       width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
     }
     .svg-wrapper svg {
       width: 100%;
       height: auto;
-      max-width: 1200px;
+      max-width: 100%;
       border-radius: 6px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
@@ -587,8 +587,11 @@ $htmlTemplate = @'
         const q = currentSearch.toLowerCase();
         const matchesSearch = !q || 
           g.title.toLowerCase().includes(q) || 
-          g.summary.toLowerCase().includes(q) || 
-          g.tags.some(t => t.toLowerCase().includes(q));
+          (g.summary && g.summary.toLowerCase().includes(q)) || 
+          (Array.isArray(g.tags) && g.tags.some(t => {
+            const str = typeof t === 'string' ? t : (t?.value || '');
+            return str.toLowerCase().includes(q);
+          }));
         return matchesFilter && matchesSearch;
       });
 
@@ -626,11 +629,21 @@ $htmlTemplate = @'
       document.getElementById('reader-view').style.display = 'flex';
 
       document.getElementById('reader-title').textContent = '#' + guide.id + ' \u00B7 ' + guide.title;
-      document.getElementById('md-content').innerHTML = renderSimpleMarkdown(guide.contentMarkdown);
+      
+      let mdText = guide.contentMarkdown;
+      if (typeof mdText !== 'string' && mdText && mdText.value) {
+        mdText = mdText.value;
+      }
+      document.getElementById('md-content').innerHTML = renderSimpleMarkdown(mdText);
 
       const svgContainer = document.getElementById('svg-content');
-      if (guide.hasSvg && guide.contentSvg) {
-        svgContainer.innerHTML = guide.contentSvg;
+      let svgText = guide.contentSvg;
+      if (typeof svgText !== 'string' && svgText && svgText.value) {
+        svgText = svgText.value;
+      }
+
+      if (guide.hasSvg && svgText) {
+        svgContainer.innerHTML = svgText;
       } else {
         svgContainer.innerHTML = '<div style="color:var(--c-text-muted); padding:40px; text-align:center;">Diagrama SVG pendiente para esta gu\u00EDa.</div>';
       }
@@ -649,12 +662,16 @@ $htmlTemplate = @'
     // Simple Markdown Renderer (Zero dependencies)
     function renderSimpleMarkdown(md) {
       if (!md) return '';
-      let html = md;
+      if (typeof md !== 'string' && md.value) md = md.value;
+      if (typeof md !== 'string') return '';
+
+      // Normalize CRLF to LF
+      let html = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
       // Extract and preserve code blocks
       const codeBlocks = [];
       html = html.replace(/```([a-z0-9_-]*)\n([\s\S]*?)```/gi, (match, lang, code) => {
-        const id = 'CODE_BLOCK_' + codeBlocks.length;
+        const id = '___CODE_BLOCK_' + codeBlocks.length + '___';
         codeBlocks.push({ id, lang, code: escapeHtml(code.trim()) });
         return id;
       });
@@ -663,6 +680,9 @@ $htmlTemplate = @'
       html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
       html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
       html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+      // Horizontal rules
+      html = html.replace(/^---$/gim, '<hr style="border:none; border-top:1px solid var(--c-border); margin:20px 0;">');
 
       // Blockquotes
       html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
@@ -675,7 +695,7 @@ $htmlTemplate = @'
       html = html.replace(/`([^`]+)`/gim, '<code style="background:var(--c-panel); padding:2px 5px; border-radius:4px; font-family:var(--font-mono); font-size:12px; color:var(--c-navy);">$1</code>');
 
       // Tables
-      html = html.replace(/((?:\|[^\n]+\|\r?\n)+)/g, (match) => {
+      html = html.replace(/((?:\|[^\n]+\|\n)+)/g, (match) => {
         const lines = match.trim().split('\n').filter(l => !l.includes('---'));
         if (lines.length === 0) return '';
         let tableHtml = '<table>';
@@ -691,15 +711,15 @@ $htmlTemplate = @'
         return tableHtml;
       });
 
-      // Paragraphs
+      // Paragraphs & lists
       html = html.split('\n\n').map(block => {
         block = block.trim();
         if (!block) return '';
-        if (block.startsWith('<h') || block.startsWith('<blockquote') || block.startsWith('<table') || block.startsWith('CODE_BLOCK_')) {
+        if (block.startsWith('<h') || block.startsWith('<blockquote') || block.startsWith('<table') || block.startsWith('<hr') || block.startsWith('___CODE_BLOCK_')) {
           return block;
         }
-        if (block.startsWith('- ')) {
-          const items = block.split('\n').map(li => '<li>' + li.replace(/^- /, '') + '</li>').join('');
+        if (block.startsWith('- ') || block.startsWith('* ')) {
+          const items = block.split('\n').map(li => '<li>' + li.replace(/^[-*]\s+/, '') + '</li>').join('');
           return '<ul>' + items + '</ul>';
         }
         return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
