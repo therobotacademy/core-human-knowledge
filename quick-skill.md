@@ -9,6 +9,7 @@
 | Entregable deseado | Pide al agente | Entrada necesaria | Salida generada |
 |---|---|---|---|
 | **Guía práctica numerada** | `"Procesa esta guía como [TIPO]"` | Fichero MD o notas en `raw/` | `guides/NN-TIPO-tema.md` + `.svg` |
+| **Explorador de guías offline** | `"Recompila el explorador de guías"` | Ficheros en `guides/` | `guides/index.html` (buscador + lector MD+SVG) |
 | **Diagrama conceptual/flujo** | `"Convierte esto en diagrama"` | Texto estructurado / pasos | SVG autónomo (paleta COIIAOC v2) |
 | **Diagrama de código/nodo** | `"Explica visualmente este código/nodo"` | Fragmento de código / nodo | SVG (pseudocódigo + ramas ✓/✗) |
 | **Deck completo (PPTX + HTML)** | `"Genera presentación desde guión"` | `guion_*.json` estructurado | `.pptx` (editable) + `.html` (16:9) |
@@ -30,6 +31,9 @@
   3. Genera en paralelo el diagrama complementario `NN-TIPO-tema-en-kebab.svg` (paleta COIIAOC v2, 1200 px, autocontenido).
   4. Actualiza la tabla de categorías en `README.md`.
   5. Conserva intacto el archivo original en `raw/`.
+- **Explorador offline (`guides/index.html`):**
+  - Abre directamente en Edge/Chrome/Firefox sin servidor web.
+  - Recompila tras añadir nuevas guías: `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`.
 
 ### B. Diagramas SVG (`text-to-diagram` & `code-diagram-explainer`)
 - **Texto/Procesos:** Pide `"Diagrama de este marco/metodología"`. Pasa listas numeradas o jerarquías. Produce un SVG que sustituye al texto explicativo.

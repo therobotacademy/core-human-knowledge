@@ -16,8 +16,8 @@
 
 **Purpose**: Project layout and asset preparation
 
-- [ ] T001 Create `scripts/build-guide-browser.ps1` script skeleton for scanning and building the guide catalog.
-- [ ] T002 [P] Establish base HTML structure and COIIAOC v2 design tokens (CSS variables) in `guides/index.html`.
+- [x] T001 Create `scripts/build-guide-browser.ps1` script skeleton for scanning and building the guide catalog.
+- [x] T002 [P] Establish base HTML structure and COIIAOC v2 design tokens (CSS variables) in `guides/index.html`.
 
 ---
 
@@ -25,8 +25,8 @@
 
 **Purpose**: Core data ingestion and client-side state infrastructure (blocks all user stories)
 
-- [ ] T003 Implement guide scanner and metadata parser in `scripts/build-guide-browser.ps1` to parse `guides/*.md`, verify companion `*.svg`, and output structured JSON matching `contracts/catalog-schema.json`.
-- [ ] T004 Implement client-side store, embedded catalog dataset, and `ReaderState` controller in `guides/index.html`.
+- [x] T003 Implement guide scanner and metadata parser in `scripts/build-guide-browser.ps1` to parse `guides/*.md`, verify companion `*.svg`, and output structured JSON matching `contracts/catalog-schema.json`.
+- [x] T004 Implement client-side store, embedded catalog dataset, and `ReaderState` controller in `guides/index.html`.
 
 **Checkpoint**: Foundation ready — catalog data can be loaded and rendered into views.
 
@@ -37,9 +37,9 @@
 **Goal**: Deliver a clean, responsive catalog displaying all guides with metadata and type badges.
 **Independent Test**: Open `guides/index.html` and verify that guides `01` to `06` appear as cards with numbers, titles, and category tags.
 
-- [ ] T005 [US1] Build responsive catalog grid layout with guide cards in `guides/index.html`.
-- [ ] T006 [US1] Render guide metadata badges (numeric ID, type badge with COIIAOC colors, and summary) on each card.
-- [ ] T007 [US1] Implement top navigation header with navy branding (`#1E3A5F`), accent bar (`#FF8C3B`), and total guide counter.
+- [x] T005 [US1] Build responsive catalog grid layout with guide cards in `guides/index.html`.
+- [x] T006 [US1] Render guide metadata badges (numeric ID, type badge with COIIAOC colors, and summary) on each card.
+- [x] T007 [US1] Implement top navigation header with navy branding (`#1E3A5F`), accent bar (`#FF8C3B`), and total guide counter.
 
 **Checkpoint**: MVP Complete — Users can open `guides/index.html` and visually browse the full collection of guides.
 
@@ -50,11 +50,11 @@
 **Goal**: Full reader view displaying formatted Markdown text alongside the companion SVG diagram.
 **Independent Test**: Click card `02-TUTORIAL-git-worktree`; verify rendered text, code blocks, tables, and the companion SVG side-by-side.
 
-- [ ] T008 [US2] Implement reader view container and transition logic (Card click ➔ Reader view; Back button ➔ Catalog view).
-- [ ] T009 [US2] Integrate lightweight client-side Markdown parser in `guides/index.html` to render headings, lists, tables, and blockquotes.
-- [ ] T010 [US2] Implement companion SVG rendering container with responsive scaling and error fallback if SVG is missing.
-- [ ] T011 [US2] Implement layout mode selector in reader view: `Split (50/50)` | `Texto` | `Diagrama`.
-- [ ] T012 [US2] Add one-click copy button to all pre/code blocks with visual confirmation ("¡Copiado! ✓").
+- [x] T008 [US2] Implement reader view container and transition logic (Card click ➔ Reader view; Back button ➔ Catalog view).
+- [x] T009 [US2] Integrate lightweight client-side Markdown parser in `guides/index.html` to render headings, lists, tables, and blockquotes.
+- [x] T010 [US2] Implement companion SVG rendering container with responsive scaling and error fallback if SVG is missing.
+- [x] T011 [US2] Implement layout mode selector in reader view: `Split (50/50)` | `Texto` | `Diagrama`.
+- [x] T012 [US2] Add one-click copy button to all pre/code blocks with visual confirmation ("¡Copiado! ✓").
 
 **Checkpoint**: Core Reader Complete — Dual deliverable (MD + SVG) is fully readable and interactive.
 
@@ -65,9 +65,9 @@
 **Goal**: Real-time filtering by category type and keyword search across title, tags, and summary.
 **Independent Test**: Search `git` (shows 01, 02, 03); click `CHEATSHEET` tag (shows only cheatsheets).
 
-- [ ] T013 [US3] Implement category filter chips (`ALL`, `CHEATSHEET`, `TUTORIAL`, `PROCEDIMIENTO`, `REFERENCIA`) with active toggles.
-- [ ] T014 [US3] Implement real-time search input filtering catalog cards by query in < 10ms.
-- [ ] T015 [US3] Add keyboard shortcuts: `/` to focus search bar in catalog, `Esc` to close reader or clear search.
+- [x] T013 [US3] Implement category filter chips (`ALL`, `CHEATSHEET`, `TUTORIAL`, `PROCEDIMIENTO`, `REFERENCIA`) with active toggles.
+- [x] T014 [US3] Implement real-time search input filtering catalog cards by query in < 10ms.
+- [x] T015 [US3] Add keyboard shortcuts: `/` to focus search bar in catalog, `Esc` to close reader or clear search.
 
 ---
 
@@ -75,9 +75,9 @@
 
 **Purpose**: End-to-end integration and catalog build execution
 
-- [ ] T016 Execute `scripts/build-guide-browser.ps1` to scan all 6 repository guides (`01` through `06`) and compile `guides/index.html`.
-- [ ] T017 Execute validation scenarios from `specs/001-guide-browser/quickstart.md` in browser.
-- [ ] T018 Update [README.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/README.md) and [quick-skill.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/quick-skill.md) with instructions to access the guide browser.
+- [x] T016 Execute `scripts/build-guide-browser.ps1` to scan all 6 repository guides (`01` through `06`) and compile `guides/index.html`.
+- [x] T017 Execute validation scenarios from `specs/001-guide-browser/quickstart.md` in browser.
+- [x] T018 Update [README.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/README.md) and [quick-skill.md](file:///C:/Users/brjap/Documents/__CODE_gpu/(core-human-knowledge/quick-skill.md) with instructions to access the guide browser.
 
 ---
 
