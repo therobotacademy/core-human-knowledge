@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>latex-overleaf-basico.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="latex-y-overleaf--guía-mínima-de-ficheros">LaTeX y Overleaf — guía mínima de ficheros</h1>
+<blockquote>
+<p>Para alguien nuevo en LaTeX/Overleaf. Qué es cada fichero del paper, cuáles se editan, cuáles se generan solos, y qué versionar en git.</p>
+</blockquote>
+<h2 id="en-una-frase">En una frase</h2>
+<p><strong>LaTeX</strong> es un lenguaje para componer documentos: escribes texto + comandos en un fichero <code>.tex</code> y un &quot;compilador&quot; (<code>pdflatex</code>) lo convierte en un <code>.pdf</code>. <strong>Overleaf</strong> es un editor LaTeX en el navegador que compila por ti automáticamente (no tienes que instalar nada ni ejecutar comandos).</p>
+<h2 id="los-ficheros-que-sí-importan-fuente--resultado">Los ficheros que SÍ importan (fuente + resultado)</h2>
+<table>
+<thead>
+<tr>
+<th>Fichero</th>
+<th>Qué es</th>
+<th>¿Editar?</th>
+<th>¿Versionar en git?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>main-v2.4.tex</code></td>
+<td><strong>El paper.</strong> Texto + comandos LaTeX. La fuente real.</td>
+<td>Sí (o, en nuestro flujo, se genera desde <code>main-v2.4.md</code>)</td>
+<td>✅ Sí</td>
+</tr>
+<tr>
+<td><code>references.bib</code></td>
+<td><strong>La bibliografía</strong>, en formato BibTeX (una entrada por cita).</td>
+<td>Sí (al añadir una cita)</td>
+<td>✅ Sí</td>
+</tr>
+<tr>
+<td><code>template-v2.tex</code></td>
+<td>Plantilla con el &quot;preámbulo&quot; (paquetes, formato).</td>
+<td>Rara vez</td>
+<td>✅ Sí</td>
+</tr>
+<tr>
+<td><code>main-v2.4.pdf</code></td>
+<td><strong>El resultado</strong> que se lee/comparte.</td>
+<td>No (se genera)</td>
+<td>⚠️ Opcional (es regenerable; útil tenerlo para compartir)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>En nuestro proyecto el <code>.tex</code> se <strong>genera</strong> desde el Markdown (<code>main-v2.4.md</code>) con el pipeline <code>latex-md-roundtrip</code>. Aun así, el <code>.tex</code> es lo que sube a Overleaf.</p>
+</blockquote>
+<h2 id="los-ficheros-intermedios-los-genera-el-compilador--no-tocar">Los ficheros intermedios (los genera el compilador — no tocar)</h2>
+<p>Cuando compilas, LaTeX crea ficheros auxiliares de trabajo. <strong>No se editan a mano y normalmente NO se versionan</strong> (son basura regenerable, como los <code>.pyc</code> de Python o un <code>build/</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Extensión</th>
+<th>Qué guarda</th>
+<th>Por qué existe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.aux</code></td>
+<td><strong>Auxiliar</strong>: referencias cruzadas, etiquetas (<code>\label</code>), números de tabla/figura, claves de cita.</td>
+<td>Es la &quot;memoria&quot; entre pasadas: en la 1ª pasada LaTeX no sabe aún que la &quot;Tabla 5&quot; es la 5; lo apunta aquí y lo resuelve en la 2ª. <em>(Es justo el fichero que miramos para verificar que <code>tab:tab5</code> → 5.)</em></td>
+</tr>
+<tr>
+<td><code>.log</code></td>
+<td><strong>Registro</strong> completo de la compilación: avisos y errores.</td>
+<td>Donde se mira si algo falla (&quot;undefined reference&quot;, &quot;missing citation&quot;, error de sintaxis).</td>
+</tr>
+<tr>
+<td><code>.out</code></td>
+<td>Destinos de los hipervínculos (lo crea el paquete <code>hyperref</code>).</td>
+<td>Para que los enlaces internos del PDF (índice, citas) salten al sitio correcto.</td>
+</tr>
+<tr>
+<td><code>.bbl</code></td>
+<td>La <strong>bibliografía ya formateada</strong> que produce BibTeX a partir del <code>.bib</code>.</td>
+<td>LaTeX la inserta en el PDF; es el &quot;puente&quot; entre <code>references.bib</code> y el documento.</td>
+</tr>
+<tr>
+<td><code>.blg</code></td>
+<td>El <strong>log de BibTeX</strong> (avisos al procesar las citas).</td>
+<td>Para diagnosticar problemas de bibliografía.</td>
+</tr>
+<tr>
+<td>(otros) <code>.toc</code>, <code>.lot</code>, <code>.lof</code>, <code>.synctex.gz</code></td>
+<td>Índice, lista de tablas/figuras, sincronización editor↔PDF.</td>
+<td>Generados según el documento.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="por-qué-se-compila-3-veces--bibtex">Por qué se compila 3 veces (+ bibtex)</h2>
+<p>El flujo típico es: <code>pdflatex → bibtex → pdflatex → pdflatex</code>.</p>
+<ol>
+<li><strong><code>pdflatex</code> (1ª):</strong> escribe el <code>.aux</code> con etiquetas y citas, pero las referencias aún salen como <code>??</code>.</li>
+<li><strong><code>bibtex</code>:</strong> lee el <code>.aux</code> + <code>references.bib</code> y genera el <code>.bbl</code> (bibliografía formateada).</li>
+<li><strong><code>pdflatex</code> (2ª):</strong> inserta la bibliografía y resuelve la mayoría de referencias.</li>
+<li><strong><code>pdflatex</code> (3ª):</strong> cuadra los últimos números (referencias que cambiaron de página al crecer el texto).</li>
+</ol>
+<blockquote>
+<p><strong>En Overleaf no haces nada de esto:</strong> pulsas <em>Recompile</em> y Overleaf ejecuta las pasadas necesarias. Los intermedios existen igual, pero quedan ocultos y los gestiona él.</p>
+</blockquote>
+<h2 id="qué-subir-a-overleaf">Qué subir a Overleaf</h2>
+<p>Solo la <strong>fuente</strong>: <code>main-v2.4.tex</code> + <code>references.bib</code> (+ figuras si las hubiera, p. ej. una carpeta <code>figures/</code>). Overleaf genera el PDF y todos los intermedios por su cuenta.</p>
+<h2 id="qué-versionar-en-git">Qué versionar en git</h2>
+<p><strong>Versiona la fuente, ignora los intermedios.</strong> Bloque recomendado para un <code>.gitignore</code> en la carpeta del paper:</p>
+<pre class="hljs"><code><div># Intermedios de LaTeX (regenerables — no versionar)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.toc
+*.lot
+*.lof
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+</div></code></pre>
+<p>Lo que <strong>sí</strong> se versiona: <code>*.tex</code>, <code>*.bib</code>, plantillas, figuras y (opcionalmente) el <code>*.pdf</code> final si quieres conservar el entregable.</p>
+<h2 id="glosario-exprés">Glosario exprés</h2>
+<ul>
+<li><strong>Preámbulo:</strong> la parte del <code>.tex</code> antes de <code>\begin{document}</code>; carga paquetes y fija el formato.</li>
+<li><strong><code>\label{}</code> / <code>\ref{}</code>:</strong> etiquetas y referencias cruzadas (numeración automática de tablas, figuras, secciones). Se resuelven vía el <code>.aux</code>.</li>
+<li><strong><code>\cite{}</code> / <code>\citep{}</code>:</strong> citas a entradas de <code>references.bib</code>.</li>
+<li><strong>BibTeX:</strong> la herramienta que convierte <code>references.bib</code> + <code>.aux</code> en la bibliografía (<code>.bbl</code>).</li>
+</ul>
+
+</body>
+</html>

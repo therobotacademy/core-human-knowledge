@@ -45,6 +45,9 @@ Cada guía es un `.md` acompañado de un **diagrama SVG autoexplicativo** (legib
 | 01 | [Cheatsheet · Git nativo (merge) vs. Pull Requests (`gh`)](guides/01-CHEATSHEET-git-PR-vs-merge.md) | [SVG](guides/01-CHEATSHEET-git-PR-vs-merge.svg)    |
 | 02 | [Tutorial · `git worktree`](guides/02-TUTORIAL-git-worktree.md)                                     | [SVG](guides/02-TUTORIAL-git-worktree.svg)         |
 | 03 | [Tutorial · `git push --force-with-lease`](guides/03-TUTORIAL-git-force-with-lease.md)              | [SVG](guides/03-TUTORIAL-git-force-with-lease.svg) |
+| 04 | [Cheatsheet · LaTeX y Overleaf: mapa de ficheros y compilación](guides/04-CHEATSHEET-latex-overleaf-ficheros.md) | [SVG](guides/04-CHEATSHEET-latex-overleaf-ficheros.svg) |
+| 05 | [Cheatsheet · Spec-Kit (GitHub): Spec-Driven Development](guides/05-CHEATSHEET-spec-kit.md)        | [SVG](guides/05-CHEATSHEET-spec-kit.svg)           |
+| 06 | [Tutorial · Superpowers en Google Antigravity y sinergia Spec-Kit](guides/06-TUTORIAL-superpowers-antigravity.md) | [SVG](guides/06-TUTORIAL-superpowers-antigravity.svg) |
 
 ### `processes/` — procesos de generación de materiales
 

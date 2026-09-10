@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <marker id="aSlate" markerWidth="10" markerHeight="8" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#6B6B6B"/></marker>
+    <marker id="aOrange" markerWidth="11" markerHeight="9" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#C2510A"/></marker>
+    <marker id="aGreen" markerWidth="10" markerHeight="8" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#0D7C5A"/></marker>
+    <filter id="sh" x="-6%" y="-6%" width="112%" height="118%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.08)"/></filter>
+    <style>
+      text{font-family:'Segoe UI', Arial, sans-serif}
+      .mono{font-family:Consolas,'Courier New',monospace}
+      .role{font-size:10px;letter-spacing:.1em;font-weight:700}
+      .bt{font-size:12.5px;font-weight:700;fill:#1E3A5F}
+      .sub{font-size:9.5px;fill:#6B6B6B}
+      .cmd{font-size:11.5px;font-weight:700;fill:#1E3A5F}
+      .lbl{font-size:10.5px;fill:#6B6B6B}
+    </style>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1200" height="630" fill="#F5F2EC"/>
+
+  <!-- HEADER -->
+  <rect x="0" y="0" width="1200" height="58" fill="#1E3A5F"/>
+  <rect x="0" y="0" width="6" height="58" fill="#FF8C3B"/>
+  <text x="600" y="25" text-anchor="middle" font-size="16" font-weight="800" fill="#FFFFFF">Superpowers en Google Antigravity — instalación, activación y sinergia</text>
+  <text x="600" y="45" text-anchor="middle" font-size="10.5" letter-spacing=".04em" fill="#9AB0C8">añade rigor de ingeniería al agente · <tspan fill="#FF8C3B">TDD estricto</tspan> · causa raíz · <tspan fill="#0D7C5A">sinergia con Spec-Kit</tspan></text>
+
+  <!-- PANEL 1: 3 MÉTODOS DE DESPLIEGUE -->
+  <rect x="25" y="74" width="370" height="270" rx="8" fill="#FFFFFF" stroke="#2E6B9E" stroke-width="1.5" filter="url(#sh)"/>
+  <rect x="25" y="74" width="370" height="26" rx="8" fill="#2E6B9E"/>
+  <text x="40" y="91" class="role" fill="#FFFFFF">3 MÉTODOS DE INSTALACIÓN</text>
+
+  <!-- Método 1 -->
+  <rect x="40" y="110" width="340" height="66" rx="6" fill="#F5F2EC" stroke="#0D7C5A" stroke-width="1.3"/>
+  <text x="50" y="128" font-size="11" font-weight="700" fill="#0A5C43">1. Plugin Nativo Global (Recomendado)</text>
+  <text x="50" y="144" class="mono" font-size="9" fill="#1E3A5F">git clone ... ~/.gemini/config/plugins/superpowers</text>
+  <text x="50" y="160" class="sub">Autocargado en Antigravity 2.0 y sesión desde el primer turno.</text>
+
+  <!-- Método 2 -->
+  <rect x="40" y="184" width="340" height="66" rx="6" fill="#F5F2EC" stroke="#C2510A" stroke-width="1.3"/>
+  <text x="50" y="202" font-size="11" font-weight="700" fill="#7C2D12">2. CLI Global (npx / uvx)</text>
+  <text x="50" y="218" class="mono" font-size="9" fill="#1E3A5F">npx skills add obra/superpowers -A "claude, agy"</text>
+  <text x="50" y="234" class="sub">Instala en perfil global; mover a antigravity-cli/skills si es CLI.</text>
+
+  <!-- Método 3 -->
+  <rect x="40" y="258" width="340" height="66" rx="6" fill="#F5F2EC" stroke="#E8E3D8" stroke-width="1.3"/>
+  <text x="50" y="276" font-size="11" font-weight="700" fill="#1E3A5F">3. Workspace Local (Ámbito Proyecto)</text>
+  <text x="50" y="292" class="mono" font-size="9" fill="#2E6B9E">.agents/skills/*  o  .claude/skills/*</text>
+  <text x="50" y="308" class="sub">Aislamiento total por proyecto sin tocar configuración global.</text>
+
+  <!-- PANEL 2: SINERGIA SPEC-KIT + SUPERPOWERS -->
+  <rect x="415" y="74" width="760" height="270" rx="8" fill="#FFFFFF" stroke="#0D7C5A" stroke-width="1.5" filter="url(#sh)"/>
+  <rect x="415" y="74" width="760" height="26" rx="8" fill="#0D7C5A"/>
+  <text x="430" y="91" class="role" fill="#FFFFFF">LA ALIANZA PERFECTA: SPEC-KIT (ESPECIFICACIÓN) + SUPERPOWERS (EJECUCIÓN)</text>
+
+  <!-- SpecKit chain -->
+  <rect x="430" y="112" width="165" height="70" rx="6" fill="#F5F2EC" stroke="#2E6B9E"/>
+  <text x="512" y="132" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F">Spec-Kit (Fases 1–5)</text>
+  <text x="512" y="148" text-anchor="middle" class="mono" font-size="9.5">constitution → spec</text>
+  <text x="512" y="162" text-anchor="middle" class="mono" font-size="9.5">plan.md → tasks.md</text>
+  <text x="512" y="174" text-anchor="middle" class="mono" font-size="8.5" fill="#0D7C5A">/speckit-analyze ✓</text>
+
+  <line x1="595" y1="147" x2="630" y2="147" stroke="#C2510A" stroke-width="2.2" marker-end="url(#aOrange)"/>
+
+  <!-- Decision Junction -->
+  <rect x="635" y="122" width="130" height="50" rx="6" fill="#FFF7ED" stroke="#B91C1C" stroke-width="1.6"/>
+  <text x="700" y="141" text-anchor="middle" font-size="10.5" font-weight="700" fill="#B91C1C">OMITIR</text>
+  <text x="700" y="157" text-anchor="middle" class="mono" font-size="10" fill="#7C2D12">/speckit-implement</text>
+
+  <line x1="765" y1="147" x2="800" y2="147" stroke="#0D7C5A" stroke-width="2.4" marker-end="url(#aGreen)"/>
+
+  <!-- Superpowers chain -->
+  <rect x="805" y="112" width="350" height="70" rx="6" fill="#E7F1EC" stroke="#0D7C5A" stroke-width="1.8"/>
+  <text x="980" y="132" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0A5C43">Superpowers toma el control de codificación</text>
+  <text x="980" y="150" text-anchor="middle" class="sub" fill="#0A5C43">Ejecuta las tareas de <tspan class="mono" font-weight="700">tasks.md</tspan> con TDD estricto y subagentes</text>
+  <text x="980" y="166" text-anchor="middle" class="mono" font-size="9.5" fill="#0D7C5A">using-git-worktrees ➔ subagent-dev ➔ TDD ➔ code-review</text>
+
+  <!-- Explanation under pipeline -->
+  <rect x="430" y="196" width="725" height="134" rx="6" fill="#FAFAF7" stroke="#E8E3D8"/>
+  <text x="445" y="218" font-size="11.5" font-weight="700" fill="#1E3A5F">¿Por qué combinarlos?</text>
+  <text x="445" y="238" class="sub">1. <tspan font-weight="700" fill="#1E3A5F">Spec-Kit</tspan> destaca en el diseño determinista de producto: requisitos funcionales agnósticos, modelos de datos y análisis de consistencia.</text>
+  <text x="445" y="258" class="sub">2. <tspan font-weight="700" fill="#0D7C5A">Superpowers</tspan> destaca en la disciplina de código: prohíbe escribir lógica sin un test que falle (Red ➔ Green ➔ Refactor).</text>
+  <text x="445" y="278" class="sub">3. <tspan font-weight="700" fill="#C2510A">Resultado:</tspan> Cero código especulativo, trazabilidad del 100% y cero regresiones en producción.</text>
+  <text x="445" y="302" class="mono" font-size="10" fill="#7C2D12">Prompt de relevo: "Tareas aprobadas en tasks.md. Implementa la tarea 01 usando TDD y subagentes de Superpowers."</text>
+
+  <!-- PANEL 3: CATÁLOGO DE HABILIDADES SUPERPOWERS -->
+  <rect x="25" y="360" width="760" height="150" rx="8" fill="#FFFFFF" stroke="#E8E3D8" filter="url(#sh)"/>
+  <text x="40" y="380" class="bt">Habilidades clave de Superpowers en Antigravity</text>
+
+  <rect x="40" y="394" width="135" height="66" rx="6" fill="#F5F2EC" stroke="#2E6B9E"/>
+  <text x="107" y="412" text-anchor="middle" class="mono cmd" font-size="10.5">brainstorming</text>
+  <text x="107" y="428" text-anchor="middle" class="sub">Antes de diseñar</text>
+  <text x="107" y="442" text-anchor="middle" class="sub">Evalúa alternativas</text>
+
+  <rect x="185" y="394" width="135" height="66" rx="6" fill="#E7F1EC" stroke="#0D7C5A" stroke-width="1.5"/>
+  <text x="252" y="412" text-anchor="middle" class="mono cmd" font-size="10.5" fill="#0A5C43">test-driven-dev</text>
+  <text x="252" y="428" text-anchor="middle" class="sub" fill="#0A5C43">Test primero</text>
+  <text x="252" y="442" text-anchor="middle" class="sub" fill="#0A5C43">Red ➔ Green ➔ Refactor</text>
+
+  <rect x="330" y="394" width="135" height="66" rx="6" fill="#F5F2EC" stroke="#C2510A"/>
+  <text x="397" y="412" text-anchor="middle" class="mono cmd" font-size="10.5" fill="#7C2D12">systematic-debug</text>
+  <text x="397" y="428" text-anchor="middle" class="sub">Ante fallos/bugs</text>
+  <text x="397" y="442" text-anchor="middle" class="sub">Aísla causa raíz</text>
+
+  <rect x="475" y="394" width="135" height="66" rx="6" fill="#F5F2EC" stroke="#2E6B9E"/>
+  <text x="542" y="412" text-anchor="middle" class="mono cmd" font-size="10.5">code-review</text>
+  <text x="542" y="428" text-anchor="middle" class="sub">Antes de mergear</text>
+  <text x="542" y="442" text-anchor="middle" class="sub">Revisión en 2 pasadas</text>
+
+  <rect x="620" y="394" width="150" height="66" rx="6" fill="#F5F2EC" stroke="#1E3A5F"/>
+  <text x="695" y="412" text-anchor="middle" class="mono cmd" font-size="10.5">using-git-worktrees</text>
+  <text x="695" y="428" text-anchor="middle" class="sub">Aislamiento total</text>
+  <text x="695" y="442" text-anchor="middle" class="sub">Espacios de trabajo limpios</text>
+
+  <text x="40" y="485" class="sub" font-size="9.5" fill="#6B6B6B">El agente activa estas habilidades proactivamente según el flujo de trabajo o cuando las invocas en el chat.</text>
+
+  <!-- PANEL 4: CHIPS DE REGLAS ①②③ -->
+  <rect x="805" y="360" width="370" height="150" rx="8" fill="#FAFAF7" stroke="#E8E3D8" filter="url(#sh)"/>
+  <rect x="805" y="360" width="370" height="24" rx="8" fill="#1E3A5F"/>
+  <text x="820" y="376" class="role" fill="#FFFFFF">REGLAS DE ORO DE INGENIERÍA</text>
+
+  <rect x="818" y="392" width="345" height="32" rx="5" fill="#FFFFFF" stroke="#0D7C5A" stroke-width="1.2"/>
+  <text x="828" y="408" font-size="10" font-weight="700" fill="#0A5C43">① TDD sin excepciones</text>
+  <text x="828" y="419" class="sub">Ninguna línea entra en producción sin su test unitario fallido previo.</text>
+
+  <rect x="818" y="428" width="345" height="32" rx="5" fill="#FFFFFF" stroke="#C2510A" stroke-width="1.2"/>
+  <text x="828" y="444" font-size="10" font-weight="700" fill="#7C2D12">② Causa raíz antes de editar</text>
+  <text x="828" y="455" class="sub">Si un test falla, formula hipótesis verificables antes de modificar código.</text>
+
+  <rect x="818" y="464" width="345" height="32" rx="5" fill="#FFFFFF" stroke="#2E6B9E" stroke-width="1.2"/>
+  <text x="828" y="480" font-size="10" font-weight="700" fill="#1E3A5F">③ Despliegue en capas</text>
+  <text x="828" y="491" class="sub">Usa el plugin global ~/.gemini para sesión diaria; local para overrides.</text>
+
+  <!-- LEYENDA Y FOOTER -->
+  <rect x="25" y="530" width="14" height="14" rx="3" fill="#2E6B9E"/>
+  <text x="45" y="541" class="lbl" font-weight="700">Instalación &amp; Setup</text>
+
+  <rect x="220" y="530" width="14" height="14" rx="3" fill="#1E3A5F"/>
+  <text x="240" y="541" class="lbl" font-weight="700">Spec-Kit (Especificación)</text>
+
+  <rect x="440" y="530" width="14" height="14" rx="3" fill="#B91C1C"/>
+  <text x="460" y="541" class="lbl" font-weight="700">Punto de relevo (Omitir implement)</text>
+
+  <rect x="700" y="530" width="14" height="14" rx="3" fill="#0D7C5A"/>
+  <text x="720" y="541" class="lbl" font-weight="700">Superpowers (TDD &amp; Ejecución)</text>
+
+  <line x1="25" y1="565" x2="1175" y2="565" stroke="#E8E3D8" stroke-width="1"/>
+  <text x="600" y="585" text-anchor="middle" font-size="9.5" font-style="italic" fill="#9B9B9B">Superpowers en Antigravity &amp; Sinergia Spec-Kit · core-human-knowledge · paleta COIIAOC (tipografía V2) · 2026-09-10</text>
+</svg>
