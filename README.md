@@ -31,7 +31,7 @@ core-human-knowledge/
 ├── guides/              ← CATEGORÍA 1 · guías prácticas + SVG + index.html (explorador offline)
 ├── processes/           ← procesos de generación de materiales (COIIAOC)
 ├── sessions/            ← logs de sesión (qué se hizo y por qué)
-├── scripts/             ← utilidades de build y compilación (build-guide-browser.ps1)
+├── scripts/             ← utilidades de compilación (build_guide_browser.py, build-guide-browser.ps1)
 ├── specs/               ← especificaciones Spec-Kit (SDD)
 └── .claude/skills/      ← skills locales del proyecto
 ```
@@ -55,7 +55,12 @@ El repositorio incluye una aplicación web de consulta rápida autónoma (**Sing
   ```powershell
   Start-Process "guides\index.html"
   ```
-- **Recompilar catálogo:** Tras añadir o editar guías en `guides/`, actualiza el explorador ejecutando:
+- **Recompilar catálogo (Python — mecanismo preferido):**
+  ```bash
+  python scripts/build_guide_browser.py
+  ```
+  *(También disponible el alias `python scripts/build-guide-browser.py`)*
+- **Alternativa PowerShell:**
   ```powershell
   powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1
   ```
@@ -69,7 +74,7 @@ El repositorio incluye una aplicación web de consulta rápida autónoma (**Sing
 Cada guía es un `.md` acompañado de un **diagrama SVG autoexplicativo** (legible sin abrir el `.md`), con la paleta y la tipografía COIIAOC. El nombre sigue el patrón `NN-TIPO-tema.md` (`CHEATSHEET`, `TUTORIAL`, …). La gramática visual del SVG está especificada en [`AGENTS.md`](AGENTS.md#3-categoría--guides-guías-prácticas-y-cheatsheets).
 
 > 🌐 **Explorador interactivo offline:** Abre [`guides/index.html`](guides/index.html) en tu navegador para explorar el catálogo, buscar en tiempo real, filtrar por categoría y leer guías con su diagrama SVG sincronizado en pantalla dividida (100% offline, sin dependencias ni servidor web).
-> Recompilar tras añadir guías: `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`.
+> Recompilar tras añadir guías: `python scripts/build_guide_browser.py` (o `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`).
 
 | #  | Guía                                                                                               | Diagrama                                        |
 | -- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------- |

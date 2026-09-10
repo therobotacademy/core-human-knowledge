@@ -33,7 +33,7 @@
   5. Conserva intacto el archivo original en `raw/`.
 - **Explorador offline (`guides/index.html`):**
   - Abre directamente en Edge/Chrome/Firefox sin servidor web.
-  - Recompila tras añadir nuevas guías: `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`.
+  - Recompila tras añadir nuevas guías: `python scripts/build_guide_browser.py` (o `powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1`).
 
 ### B. Diagramas SVG (`text-to-diagram` & `code-diagram-explainer`)
 - **Texto/Procesos:** Pide `"Diagrama de este marco/metodología"`. Pasa listas numeradas o jerarquías. Produce un SVG que sustituye al texto explicativo.
