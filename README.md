@@ -38,6 +38,30 @@ core-human-knowledge/
 
 ---
 
+## 🌐 Explorador Interactivo de Guías (App Offline)
+
+El repositorio incluye una aplicación web de consulta rápida autónoma (**Single Page Application**) en [`guides/index.html`](guides/index.html), diseñada para explorar, filtrar y estudiar el catálogo de conocimiento sin requerir conexión a internet, servidores web locales (`file:///` nativo) ni dependencias externas.
+
+### Capacidades principales
+- **Catálogo visual reactivo:** Vista en tarjetas de todas las guías curadas con insignias de tipología (`CHEATSHEET`, `TUTORIAL`, `PROCEDIMIENTO`, `REFERENCIA`), identificador numérico, resúmenes y estado de su diagrama complementario.
+- **Búsqueda instantánea en cliente (< 10 ms):** Filtrado reactivo en tiempo real por cualquier término (título, comandos, resumen o tags temáticos como `git`, `latex`, `sdd`, `superpowers`). Atajo de teclado: pulsa `/` para enfocar la búsqueda.
+- **Filtros por tipología:** Chips de acceso rápido para conmutar entre `Todas`, `CHEATSHEET`, `TUTORIAL`, `PROCEDIMIENTO` o `REFERENCIA`.
+- **Lector dual Markdown + SVG:** Vista de lectura con pantalla dividida (50/50) o modos focalizados (`Texto`, `Diagrama`).
+- **Copia de comandos en un clic:** Botones de copia rápida en cada bloque de código con confirmación visual interactiva (`¡Copiado! ✓`).
+- **100% Offline y seguro ante CORS:** Todos los textos Markdown y gráficos vectoriales SVG están embebidos en el archivo, garantizando apertura inmediata con doble clic en cualquier navegador (Edge, Chrome, Firefox).
+
+### Uso y compilación
+- **Abrir en navegador:**
+  ```powershell
+  Start-Process "guides\index.html"
+  ```
+- **Recompilar catálogo:** Tras añadir o editar guías en `guides/`, actualiza el explorador ejecutando:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File scripts\build-guide-browser.ps1
+  ```
+
+---
+
 ## Categorías
 
 ### `guides/` — guías prácticas
